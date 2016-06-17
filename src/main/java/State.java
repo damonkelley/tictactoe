@@ -1,34 +1,32 @@
-import java.util.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class State {
-    private List<Player> board;
+    private Board board;
 
-    private static final int[][] wins = new int[][]{
-            {0, 1, 2},
-            {3, 4, 5},
-            {6, 7, 8},
-            {0, 3, 6},
-            {1, 4, 7},
-            {2, 5, 8},
-            {0, 4, 8},
-            {6, 4, 2}
-    };
+    private static final List<List<Point>> wins = Arrays.asList(
+            Arrays.asList(new Point(0, 0), new Point(1, 0), new Point(2, 0)),
+            Arrays.asList(new Point(0, 1), new Point(1, 1), new Point(2, 1)),
+            Arrays.asList(new Point(0, 2), new Point(1, 2), new Point(2, 2)),
+            Arrays.asList(new Point(0, 0), new Point(0, 1), new Point(0, 2)),
+            Arrays.asList(new Point(1, 0), new Point(1, 1), new Point(1, 2)),
+            Arrays.asList(new Point(2, 0), new Point(2, 1), new Point(2, 2)),
+            Arrays.asList(new Point(0, 0), new Point(1, 1), new Point(2, 2)),
+            Arrays.asList(new Point(0, 2), new Point(1, 1), new Point(2, 0))
+    );
 
     public State() {
-        this.board = new ArrayList<Player>();
-
-        for (int i = 0; i < 9; i++) {
-            this.board.add(null);
-        }
+        this.board = new Board();
     }
 
-    public List<Player> getBoard() {
+    public Board getBoard() {
         return board;
     }
 
     public Player getWinner() {
-        for (int[] win : wins) {
+        for (List<Point> win : wins) {
             if (isWinner(Player.X, win)) {
                 return Player.X;
             } else if (isWinner(Player.O, win)) {
@@ -38,10 +36,10 @@ public class State {
         return null;
     }
 
-    private boolean isWinner(Player player, int[] win) {
-        return player == board.get(win[0]) &&
-                player == board.get(win[1]) &&
-                player == board.get(win[2]);
+    private boolean isWinner(Player player, List<Point> win) {
+        return win.stream()
+            .map(p -> board.get(p) == player)
+            .allMatch(b -> b || !b);
     }
 
     public boolean isOver() {
@@ -53,13 +51,10 @@ public class State {
     }
 
     public boolean isDraw() {
-        List<Player> movesLeft = board.stream()
-                .filter(m -> m == null)
-                .collect(Collectors.toList());
-        return movesLeft.size() == 0 && !hasWinner();
+        return board.isFull() && !hasWinner();
     }
 
-    public void move(int spaceId, Player marker) {
-        board.set(spaceId, marker);
+    public void move(Point point, Player marker) {
+        board.put(point, marker);
     }
 }

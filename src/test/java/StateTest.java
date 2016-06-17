@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
+
 import static org.junit.Assert.*;
 
 
@@ -14,40 +16,40 @@ public class StateTest {
 
     @Test
     public void xWinsTheGame() {
-        state.move(0, Player.X);
-        state.move(1, Player.O);
-        state.move(4, Player.X);
-        state.move(2, Player.O);
-        state.move(8, Player.X);
+        state.move(new Point(0, 0), Player.X);
+        state.move(new Point(1, 0), Player.O);
+        state.move(new Point(1, 1), Player.X);
+        state.move(new Point(2, 0), Player.O);
+        state.move(new Point(2, 2), Player.X);
 
         assertEquals(state.getWinner(), Player.X);
     }
 
     @Test
     public void oWinsTheGame() {
-        state.move(0, Player.X);
-        state.move(1, Player.O);
-        state.move(2, Player.X);
-        state.move(4, Player.O);
-        state.move(8, Player.X);
-        state.move(7, Player.O);
+        state.move(new Point(0, 0), Player.X);
+        state.move(new Point(1, 0), Player.O);
+        state.move(new Point(2, 0), Player.X);
+        state.move(new Point(1, 1), Player.O);
+        state.move(new Point(2, 2), Player.X);
+        state.move(new Point(2, 1), Player.O);
 
         assertEquals(state.getWinner(), Player.O);
     }
 
     @Test
     public void moveAddsMarker() {
-        state.move(1, Player.X);
-        assertEquals(Player.X, state.getBoard().get(1));
+        state.move(new Point(1, 0), Player.X);
+        assertEquals(Player.X, state.getBoard().get(new Point(0,1)));
     }
 
     @Test
     public void gameIsOver() {
         assertEquals(false, state.isOver());
 
-        state.move(0, Player.X);
-        state.move(1, Player.X);
-        state.move(2, Player.X);
+        state.move(new Point(0,0), Player.X);
+        state.move(new Point(1,0), Player.X);
+        state.move(new Point(2,0), Player.X);
 
         assertEquals(Player.X, state.getWinner());
         assertEquals(true, state.isOver());
@@ -68,15 +70,15 @@ public class StateTest {
     }
 
     private void makeDraw() {
-        state.move(0, Player.X);
-        state.move(2, Player.O);
-        state.move(6, Player.X);
-        state.move(3, Player.O);
-        state.move(4, Player.X);
-        state.move(8, Player.O);
-        state.move(1, Player.X);
-        state.move(7, Player.O);
-        state.move(5, Player.X);
+        state.move(new Point(0,0), Player.X);
+        state.move(new Point(2, 0), Player.O);
+        state.move(new Point(0, 2), Player.X);
+        state.move(new Point(0, 1), Player.O);
+        state.move(new Point(1, 1), Player.X);
+        state.move(new Point(2, 2), Player.O);
+        state.move(new Point(1, 0), Player.X);
+        state.move(new Point(1, 2), Player.O);
+        state.move(new Point(2, 1), Player.X);
     }
 
 }
