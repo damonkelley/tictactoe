@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 public class BoardTest {
 
     @Test
-    public void getQueriesTheBoard() {
+    public void itCanQueryForTheContentsOfASpace() {
         Board board = new Board();
         assertEquals(null, board.get(new Point(0, 0)));
     }
 
     @Test
-    public void setAddsToBoard() {
+    public void itCanFillASpace() {
         Board board = new Board();
 
         board.put(new Point(0, 0), Player.X);
