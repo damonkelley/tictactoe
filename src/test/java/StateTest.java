@@ -22,7 +22,7 @@ public class StateTest {
         state.move(new Point(2, 0), Player.O);
         state.move(new Point(2, 2), Player.X);
 
-        assertEquals(state.getWinner(), Player.X);
+        assertEquals(Player.X, state.getWinner());
     }
 
     @Test
@@ -32,15 +32,15 @@ public class StateTest {
         state.move(new Point(2, 0), Player.X);
         state.move(new Point(1, 1), Player.O);
         state.move(new Point(2, 2), Player.X);
-        state.move(new Point(2, 1), Player.O);
+        state.move(new Point(1, 2), Player.O);
 
-        assertEquals(state.getWinner(), Player.O);
+        assertEquals(Player.O, state.getWinner());
     }
 
     @Test
     public void moveAddsMarker() {
         state.move(new Point(1, 0), Player.X);
-        assertEquals(Player.X, state.getBoard().get(new Point(0,1)));
+        assertEquals(Player.X, state.getBoard().get(new Point(1, 0)));
     }
 
     @Test
