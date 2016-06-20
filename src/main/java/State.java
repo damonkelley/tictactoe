@@ -19,6 +19,10 @@ public class State {
         this.board = new Board();
     }
 
+    private State(Board board) {
+        this.board = board;
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -52,8 +56,9 @@ public class State {
         return board.isFull() && !hasWinner();
     }
 
-    public void move(Point point, PlayerMarker marker) {
+    public State move(Point point, PlayerMarker marker) {
         board.put(point, marker);
+        return this;
     }
 
     @Override
@@ -71,4 +76,7 @@ public class State {
         return board != null ? board.hashCode() : 0;
     }
 
+    public State copy() {
+        return new State(this.board.copy());
+    }
 }

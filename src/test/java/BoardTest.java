@@ -48,4 +48,15 @@ public class BoardTest {
         assertNotEquals(new Board(), boardWithOneSpaceFilled);
         assertEquals(new Board().put(new Point(1, 0), PlayerMarker.O), boardWithOneSpaceFilled);
     }
+
+    @Test
+    public void itCanMakeACopyOfItself() {
+        Board board = new Board();
+        assertEquals(new Board(), board);
+
+        Board newBoard = board.copy()
+                .put(new Point(0, 1), PlayerMarker.X);
+
+        assertNotEquals(board, newBoard);
+    }
 }

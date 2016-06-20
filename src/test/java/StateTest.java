@@ -92,4 +92,14 @@ public class StateTest {
         assertEquals(newState, this.state);
     }
 
+    @Test
+    public void itCanMakeACopyOfItself() {
+        assertEquals(this.state, this.state.copy());
+
+        State newState = this.state.copy()
+                .move(new Point(0, 1), PlayerMarker.X);
+
+        assertNotEquals(this.state, newState);
+    }
+
 }

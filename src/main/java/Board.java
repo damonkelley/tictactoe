@@ -15,6 +15,10 @@ public class Board {
         }
     }
 
+    private Board(Map<Point, PlayerMarker> spaces) {
+        this.spaces = spaces;
+    }
+
     public PlayerMarker get(Point point) {
         return spaces.get(point);
     }
@@ -45,4 +49,7 @@ public class Board {
         return spaces != null ? spaces.hashCode() : 0;
     }
 
+    public Board copy() {
+        return new Board(new HashMap<Point, PlayerMarker>(this.spaces));
+    }
 }
