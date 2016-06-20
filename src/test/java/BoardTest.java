@@ -1,6 +1,8 @@
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -58,5 +60,27 @@ public class BoardTest {
                 .put(new Point(0, 1), PlayerMarker.X);
 
         assertNotEquals(board, newBoard);
+    }
+
+    @Test
+    public void itWillReportAllAvailableSpaces() {
+        List<Point> availableSpaces = Arrays.asList(
+                new Point(0, 0),
+                new Point(1, 0),
+                new Point(2, 0),
+                new Point(1, 0),
+                new Point(1, 1),
+                new Point(1, 2),
+                new Point(2, 0),
+                new Point(2, 1),
+                new Point(2, 2)
+        );
+
+        Board board =  new Board();
+
+        assertTrue(board.availableSpaces().containsAll(availableSpaces));
+
+        board.put(new Point(0, 0), PlayerMarker.X);
+        assertFalse(board.availableSpaces().containsAll(availableSpaces));
     }
 }

@@ -1,6 +1,7 @@
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
     private Map<Point, PlayerMarker> spaces;
@@ -52,4 +53,13 @@ public class Board {
     public Board copy() {
         return new Board(new HashMap<Point, PlayerMarker>(this.spaces));
     }
+
+    public List<Point> availableSpaces() {
+        return this.spaces.entrySet()
+                .stream()
+                .filter(space -> space.getValue() == null)
+                .map(space -> space.getKey())
+                .collect(Collectors.toList());
+    }
+
 }
