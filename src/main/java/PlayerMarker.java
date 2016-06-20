@@ -1,0 +1,4 @@
+enum PlayerMarker {
+    X,
+    O;
+}

@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class State {
     private Board board;
@@ -25,20 +24,20 @@ public class State {
         return board;
     }
 
-    public Player getWinner() {
+    public PlayerMarker getWinner() {
         for (List<Point> win : wins) {
-            if (isWinner(Player.X, win)) {
-                return Player.X;
-            } else if (isWinner(Player.O, win)) {
-                return Player.O;
+            if (isWinner(PlayerMarker.X, win)) {
+                return PlayerMarker.X;
+            } else if (isWinner(PlayerMarker.O, win)) {
+                return PlayerMarker.O;
             }
         }
         return null;
     }
 
-    private boolean isWinner(Player player, List<Point> win) {
+    private boolean isWinner(PlayerMarker marker, List<Point> win) {
         return win.stream()
-                .map(p -> board.get(p) == player)
+                .map(p -> board.get(p) == marker)
                 .allMatch(b -> b);
     }
 
@@ -54,7 +53,7 @@ public class State {
         return board.isFull() && !hasWinner();
     }
 
-    public void move(Point point, Player marker) {
+    public void move(Point point, PlayerMarker marker) {
         board.put(point, marker);
     }
 }

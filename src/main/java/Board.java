@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    private Map<Point, Player> spaces;
+    private Map<Point, PlayerMarker> spaces;
 
     public Board() {
         this.spaces = new HashMap<>();
@@ -15,11 +15,11 @@ public class Board {
         }
     }
 
-    public Player get(Point point) {
+    public PlayerMarker get(Point point) {
         return spaces.get(point);
     }
 
-    public void put(Point point, Player marker) {
+    public void put(Point point, PlayerMarker marker) {
         spaces.put(point, marker);
     }
 
