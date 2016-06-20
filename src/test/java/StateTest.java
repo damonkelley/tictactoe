@@ -1,7 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Point;
 
 import static org.junit.Assert.*;
 
@@ -100,6 +100,17 @@ public class StateTest {
                 .move(new Point(0, 1), PlayerMarker.X);
 
         assertNotEquals(this.state, newState);
+    }
+
+    @Test
+    public void itKnowsTheNextPlayerToMakeAMove() {
+        assertEquals(PlayerMarker.X, this.state.getNextTurnMarker());
+
+        this.state.move(new Point(0, 0), PlayerMarker.X);
+        assertEquals(PlayerMarker.O, this.state.getNextTurnMarker());
+
+        this.state.move(new Point(0, 2), PlayerMarker.O);
+        assertEquals(PlayerMarker.X, this.state.getNextTurnMarker());
     }
 
 }

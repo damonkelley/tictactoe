@@ -14,8 +14,10 @@ public class State {
             Arrays.asList(new Point(0, 2), new Point(1, 1), new Point(2, 0))  // diagonal 2
     );
     private Board board;
+    private PlayerMarker nextTurnMarker;
 
     public State() {
+        this.nextTurnMarker = PlayerMarker.X;
         this.board = new Board();
     }
 
@@ -58,6 +60,7 @@ public class State {
 
     public State move(Point point, PlayerMarker marker) {
         board.put(point, marker);
+        nextTurnMarker = (marker == PlayerMarker.X) ? PlayerMarker.O : PlayerMarker.X;
         return this;
     }
 
@@ -78,5 +81,9 @@ public class State {
 
     public State copy() {
         return new State(this.board.copy());
+    }
+
+    public PlayerMarker getNextTurnMarker() {
+        return nextTurnMarker;
     }
 }
