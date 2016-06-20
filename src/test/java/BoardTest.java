@@ -41,4 +41,11 @@ public class BoardTest {
         assertTrue(board.isFull());
     }
 
+    @Test
+    public void itCanTestEqualityWithOtherBoards() {
+        Board boardWithOneSpaceFilled = new Board().put(new Point(1, 0), PlayerMarker.O);
+
+        assertNotEquals(new Board(), boardWithOneSpaceFilled);
+        assertEquals(new Board().put(new Point(1, 0), PlayerMarker.O), boardWithOneSpaceFilled);
+    }
 }

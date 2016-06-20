@@ -47,9 +47,9 @@ public class StateTest {
     public void gameIsOver() {
         assertEquals(false, state.isOver());
 
-        state.move(new Point(0,0), PlayerMarker.X);
-        state.move(new Point(1,0), PlayerMarker.X);
-        state.move(new Point(2,0), PlayerMarker.X);
+        state.move(new Point(0, 0), PlayerMarker.X);
+        state.move(new Point(1, 0), PlayerMarker.X);
+        state.move(new Point(2, 0), PlayerMarker.X);
 
         assertEquals(PlayerMarker.X, state.getWinner());
         assertEquals(true, state.isOver());
@@ -70,7 +70,7 @@ public class StateTest {
     }
 
     private void makeDraw() {
-        state.move(new Point(0,0), PlayerMarker.X);
+        state.move(new Point(0, 0), PlayerMarker.X);
         state.move(new Point(2, 0), PlayerMarker.O);
         state.move(new Point(0, 2), PlayerMarker.X);
         state.move(new Point(0, 1), PlayerMarker.O);
@@ -79,6 +79,17 @@ public class StateTest {
         state.move(new Point(1, 0), PlayerMarker.X);
         state.move(new Point(1, 2), PlayerMarker.O);
         state.move(new Point(2, 1), PlayerMarker.X);
+    }
+
+    @Test
+    public void itCanTestEqualityWithOtherStates() {
+        this.state.move(new Point(1, 0), PlayerMarker.X);
+
+        State newState = new State();
+        assertNotEquals(newState, this.state);
+
+        newState.move(new Point(1, 0), PlayerMarker.X);
+        assertEquals(newState, this.state);
     }
 
 }

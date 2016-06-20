@@ -3,8 +3,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class State {
-    private Board board;
-
     private static final List<List<Point>> wins = Arrays.asList(
             Arrays.asList(new Point(0, 0), new Point(1, 0), new Point(2, 0)), // top row
             Arrays.asList(new Point(0, 1), new Point(1, 1), new Point(2, 1)), // middle row
@@ -15,6 +13,7 @@ public class State {
             Arrays.asList(new Point(0, 0), new Point(1, 1), new Point(2, 2)), // diagonal 1
             Arrays.asList(new Point(0, 2), new Point(1, 1), new Point(2, 0))  // diagonal 2
     );
+    private Board board;
 
     public State() {
         this.board = new Board();
@@ -56,4 +55,20 @@ public class State {
     public void move(Point point, PlayerMarker marker) {
         board.put(point, marker);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        State state = (State) o;
+
+        return board != null ? board.equals(state.board) : state.board == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return board != null ? board.hashCode() : 0;
+    }
+
 }

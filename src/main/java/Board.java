@@ -19,8 +19,9 @@ public class Board {
         return spaces.get(point);
     }
 
-    public void put(Point point, PlayerMarker marker) {
+    public Board put(Point point, PlayerMarker marker) {
         spaces.put(point, marker);
+        return this;
     }
 
     public boolean isFull() {
@@ -28,4 +29,20 @@ public class Board {
                 .stream()
                 .noneMatch(m -> m.getValue() == null);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+
+        return spaces != null ? spaces.equals(board.spaces) : board.spaces == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return spaces != null ? spaces.hashCode() : 0;
+    }
+
 }
