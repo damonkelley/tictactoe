@@ -1,15 +1,14 @@
 import java.awt.*;
 
-public class Player {
-    private final PlayerMarker marker;
+public abstract class Player {
+    protected PlayerMarker marker;
 
     public Player(PlayerMarker marker) {
         this.marker = marker;
     }
 
-    public void move(State state, Point point) {
-        state.move(point, marker);
-    }
+    abstract public void move(State state);
+    abstract public void move(State state, Point space);
 
     public PlayerMarker getMarker() {
         return marker;

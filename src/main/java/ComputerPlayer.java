@@ -1,21 +1,18 @@
 import java.awt.Point;
 import java.util.HashMap;
 
-public class ComputerPlayer {
-    private PlayerMarker marker;
+public class ComputerPlayer extends Player {
 
     public ComputerPlayer(PlayerMarker marker) {
-        this.marker = marker;
+        super(marker);
     }
+
+    public void move(State state, Point space) {}
 
     public void move(State state) {
         Finder finder = new Finder(this);
         finder.minimax(state, 6, true);
         state.move(finder.choice, getMarker());
-    }
-
-    public PlayerMarker getMarker() {
-        return marker;
     }
 
     private class Finder {
