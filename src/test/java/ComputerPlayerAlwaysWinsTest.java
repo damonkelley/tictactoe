@@ -12,10 +12,11 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class ComputerPlayerAlwaysWinsTest {
-    ComputerPlayer computerPlayer;
-    Player player;
-    State state;
-    Board board;
+    private ComputerPlayer computerPlayer;
+    private Player player;
+    private State state;
+    private Board board;
+    private Random generator = new Random();
 
     public ComputerPlayerAlwaysWinsTest(int n) {
     }
@@ -36,7 +37,6 @@ public class ComputerPlayerAlwaysWinsTest {
 
     @Test
     public void whenItMovesFirst() {
-        Random generator = new Random();
         while (!state.isOver()) {
             computerPlayer.move(state);
 
@@ -53,7 +53,6 @@ public class ComputerPlayerAlwaysWinsTest {
 
     @Test
     public void whenItMovesSecond() {
-        Random generator = new Random();
         while (!state.isOver()) {
             int spaceIndex = generator.nextInt(board.availableSpaces().size());
             player.move(state, board.availableSpaces().get(spaceIndex));
