@@ -54,6 +54,36 @@ public class Board {
         return new Board(new HashMap<Point, PlayerMarker>(this.spaces));
     }
 
+    @Override
+    public String toString() {
+        PlayerMarker space;
+        String marker;
+        StringBuffer output = new StringBuffer();
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+
+                space = spaces.get(new Point(j, i));
+                if (space == null) {
+                    marker = " ";
+                } else {
+                    marker = space.toString();
+                }
+
+                if (j < 2) {
+                    output.append(" ").append(marker).append(" |");
+                } else {
+                    output.append(" ").append(marker).append(" \n");
+                }
+
+            }
+            if (i < 2) {
+                output.append("---+---+---\n");
+            }
+        }
+        return output.toString();
+    }
+
     public List<Point> availableSpaces() {
         return this.spaces.entrySet()
                 .stream()
