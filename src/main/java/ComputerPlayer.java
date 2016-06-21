@@ -27,9 +27,7 @@ public class ComputerPlayer {
         }
 
         private int minimax(State state, int depth, boolean maximizingPlayer) {
-            if (state.isOver() || depth == 0) {
-                return score(state, depth);
-            }
+            if (state.isOver() || depth == 0) return score(state, depth);
 
             HashMap<Integer, Point> scores = new HashMap<>();
 
@@ -40,16 +38,9 @@ public class ComputerPlayer {
                 scores.put(minimax(futureState, depth - 1, !maximizingPlayer), space);
             }
 
-            int bestScore;
-            if (maximizingPlayer) {
-                bestScore = scores.keySet().stream()
-                        .reduce(Integer.MIN_VALUE, Integer::max);
-            } else {
-                bestScore = scores.keySet().stream()
-                        .reduce(Integer.MAX_VALUE, Integer::min);
-            }
-
+            int bestScore = getBestScore(maximizingPlayer, scores);
             choice = scores.get(bestScore);
+
             return bestScore;
         }
 
@@ -61,6 +52,25 @@ public class ComputerPlayer {
             }
             return 0;
         }
+
+        private int getBestScore(boolean maximizingPlayer, HashMap<Integer, Point> scores) {
+            if (maximizingPlayer) {
+                return findMaximumScore(scores);
+            } else {
+                return findMinimumScore(scores);
+            }
+        }
+
+        private Integer findMinimumScore(HashMap<Integer, Point> scores) {
+            return scores.keySet().stream()
+                    .reduce(Integer.MAX_VALUE, Integer::min);
+        }
+
+        private Integer findMaximumScore(HashMap<Integer, Point> scores) {
+            return scores.keySet().stream()
+                    .reduce(Integer.MIN_VALUE, Integer::max);
+        }
+
     }
 
 }
