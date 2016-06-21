@@ -21,8 +21,9 @@ public class State {
         this.board = new Board();
     }
 
-    private State(Board board) {
+    private State(Board board, PlayerMarker nextTurnMarker) {
         this.board = board;
+        this.nextTurnMarker = nextTurnMarker;
     }
 
     public Board getBoard() {
@@ -80,7 +81,7 @@ public class State {
     }
 
     public State copy() {
-        return new State(this.board.copy());
+        return new State(this.board.copy(), this.nextTurnMarker);
     }
 
     public PlayerMarker getNextTurnMarker() {

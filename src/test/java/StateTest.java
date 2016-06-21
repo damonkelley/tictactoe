@@ -95,11 +95,13 @@ public class StateTest {
     @Test
     public void itCanMakeACopyOfItself() {
         assertEquals(this.state, this.state.copy());
+        assertEquals(this.state.getNextTurnMarker(), this.state.copy().getNextTurnMarker());
 
         State newState = this.state.copy()
                 .move(new Point(0, 1), PlayerMarker.X);
 
         assertNotEquals(this.state, newState);
+        assertEquals(PlayerMarker.O, newState.getNextTurnMarker());
     }
 
     @Test
