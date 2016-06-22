@@ -49,4 +49,7 @@ public class Game {
         return state.isDraw();
     }
 
+    public Board getBoard() {
+        return state.getBoard();
+    }
 }
