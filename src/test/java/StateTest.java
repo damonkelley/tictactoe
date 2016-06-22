@@ -115,4 +115,10 @@ public class StateTest {
         assertEquals(Marker.X, this.state.getNextMarker());
     }
 
+    @Test
+    public void itIsConfiguredWithTheFirstMarkerToMove() {
+        assertEquals(Marker.O, new State(Marker.O).getNextMarker());
+        assertEquals(Marker.X, new State(Marker.X).getNextMarker());
+    }
+
 }

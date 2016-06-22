@@ -1,5 +1,4 @@
 import org.junit.Test;
-import sun.jvm.hotspot.oops.Mark;
 
 import java.awt.*;
 
@@ -11,8 +10,8 @@ public class GameTest {
 
     @Test
     public void itAlternatesPlayerMoves() {
-        HumanPlayer player1 = new HumanPlayer(Marker.X);
-        HumanPlayer player2 = new HumanPlayer(Marker.O);
+        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.X);
+        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.O);
         State state = new State();
 
         player1.queueMove(new Point(0, 0));
@@ -29,8 +28,8 @@ public class GameTest {
 
     @Test
     public void player1Wins() {
-        HumanPlayer player1 = new HumanPlayer(Marker.X);
-        HumanPlayer player2 = new HumanPlayer(Marker.O);
+        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.X);
+        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.O);
 
         player1.queueMove(new Point(0, 0));
         player2.queueMove(new Point(2, 0));
@@ -53,8 +52,8 @@ public class GameTest {
 
     @Test
     public void itIsADraw() {
-        HumanPlayer player1 = new HumanPlayer(Marker.O);
-        HumanPlayer player2 = new HumanPlayer(Marker.X);
+        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.O);
+        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.X);
 
         player1.queueMove(new Point(0, 0));
         player2.queueMove(new Point(1, 1));
@@ -66,7 +65,8 @@ public class GameTest {
         player2.queueMove(new Point(2, 2));
         player1.queueMove(new Point(0, 2));
 
-        Game game = new Game(player1, player2);
+        State state = new State(Marker.O);
+        Game game = new Game(new State(Marker.O), player1, player2);
 
         game.nextMove();
         game.nextMove();

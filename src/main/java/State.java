@@ -26,6 +26,11 @@ public class State {
         this.nextMarker = nextMarker;
     }
 
+    public State(Marker o) {
+        this();
+        this.nextMarker = o;
+    }
+
     public Board getBoard() {
         return board;
     }

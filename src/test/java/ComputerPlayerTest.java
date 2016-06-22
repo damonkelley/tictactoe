@@ -15,7 +15,7 @@ public class ComputerPlayerTest {
     @Test
     public void itWillChooseTheWinningSpaceIfThereIsOne() {
         ComputerPlayer computerPlayer = new ComputerPlayer(Marker.X);
-        Player player = new HumanPlayer(Marker.O);
+        Player player = new QueueBackedPlayer(Marker.O);
         State state = new State();
 
         state.move(new Point(0, 0), computerPlayer.getMarker());
@@ -31,7 +31,7 @@ public class ComputerPlayerTest {
     @Test
     public void itWillPreventALoss() {
         ComputerPlayer computerPlayer = new ComputerPlayer(Marker.O);
-        Player player = new HumanPlayer(Marker.X);
+        Player player = new QueueBackedPlayer(Marker.X);
         State state = new State();
 
         state.move(new Point(0, 0), player.getMarker());

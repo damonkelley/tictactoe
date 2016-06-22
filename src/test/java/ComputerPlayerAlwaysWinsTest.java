@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class ComputerPlayerAlwaysWinsTest {
     private ComputerPlayer computerPlayer;
-    private HumanPlayer player;
+    private QueueBackedPlayer player;
     private State state;
     private Board board;
     private Random generator = new Random();
@@ -29,7 +29,7 @@ public class ComputerPlayerAlwaysWinsTest {
     @Before
     public void setUp() throws Exception {
         computerPlayer = new ComputerPlayer(Marker.X);
-        player = new HumanPlayer(Marker.O);
+        player = new QueueBackedPlayer(Marker.O);
 
         state = new State();
         board = state.getBoard();
