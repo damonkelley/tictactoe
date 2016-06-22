@@ -15,9 +15,11 @@ public class HumanPlayerTest {
     @Test
     public void itCanMakeAMove() {
         State state = new State();
-        Player marker = new HumanPlayer(PlayerMarker.O);
+        HumanPlayer player = new HumanPlayer(PlayerMarker.O);
 
-        marker.move(state, new Point(0, 0));
+        player.queueMove(new Point(0, 0));
+        player.move(state);
+
         assertEquals(PlayerMarker.O, state.getBoard().get(new Point(0, 0)));
     }
 

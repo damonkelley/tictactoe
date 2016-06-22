@@ -8,7 +8,6 @@ public abstract class Player {
     }
 
     abstract public void move(State state);
-    abstract public void move(State state, Point space);
 
     public PlayerMarker getMarker() {
         return marker;

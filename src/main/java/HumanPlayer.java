@@ -1,16 +1,17 @@
 import java.awt.*;
+import java.util.*;
 
 public class HumanPlayer extends Player {
+
+    private Queue<Point> moveQueue = new ArrayDeque<>();
 
     public HumanPlayer(PlayerMarker marker) {
         super(marker);
     }
 
-    public void move(State state, Point space) {
-        state.move(space, marker);
+    public void move(State state) {
+        state.move(moveQueue.remove(), getMarker());
     }
-
-    public void move(State state) {}
 
     @Override
     public boolean equals(Object o) {
@@ -20,6 +21,10 @@ public class HumanPlayer extends Player {
         Player player = (Player) o;
 
         return marker == player.marker;
+    }
+
+    public void queueMove(Point space) {
+        moveQueue.add(space);
     }
 
 }

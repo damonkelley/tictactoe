@@ -7,8 +7,6 @@ public class ComputerPlayer extends Player {
         super(marker);
     }
 
-    public void move(State state, Point space) {}
-
     public void move(State state) {
         Finder finder = new Finder(this);
         finder.minimax(state, 6, true);
