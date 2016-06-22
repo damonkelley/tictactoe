@@ -16,42 +16,42 @@ public class StateTest {
 
     @Test
     public void xWinsTheGame() {
-        state.move(new Point(0, 0), PlayerMarker.X);
-        state.move(new Point(1, 0), PlayerMarker.O);
-        state.move(new Point(1, 1), PlayerMarker.X);
-        state.move(new Point(2, 0), PlayerMarker.O);
-        state.move(new Point(2, 2), PlayerMarker.X);
+        state.move(new Point(0, 0), Marker.X);
+        state.move(new Point(1, 0), Marker.O);
+        state.move(new Point(1, 1), Marker.X);
+        state.move(new Point(2, 0), Marker.O);
+        state.move(new Point(2, 2), Marker.X);
 
-        assertEquals(PlayerMarker.X, state.getWinner());
+        assertEquals(Marker.X, state.getWinner());
     }
 
     @Test
     public void oWinsTheGame() {
-        state.move(new Point(0, 0), PlayerMarker.X);
-        state.move(new Point(1, 0), PlayerMarker.O);
-        state.move(new Point(2, 0), PlayerMarker.X);
-        state.move(new Point(1, 1), PlayerMarker.O);
-        state.move(new Point(2, 2), PlayerMarker.X);
-        state.move(new Point(1, 2), PlayerMarker.O);
+        state.move(new Point(0, 0), Marker.X);
+        state.move(new Point(1, 0), Marker.O);
+        state.move(new Point(2, 0), Marker.X);
+        state.move(new Point(1, 1), Marker.O);
+        state.move(new Point(2, 2), Marker.X);
+        state.move(new Point(1, 2), Marker.O);
 
-        assertEquals(PlayerMarker.O, state.getWinner());
+        assertEquals(Marker.O, state.getWinner());
     }
 
     @Test
     public void moveAddsMarker() {
-        state.move(new Point(1, 0), PlayerMarker.X);
-        assertEquals(PlayerMarker.X, state.getBoard().get(new Point(1, 0)));
+        state.move(new Point(1, 0), Marker.X);
+        assertEquals(Marker.X, state.getBoard().get(new Point(1, 0)));
     }
 
     @Test
     public void gameIsOver() {
         assertEquals(false, state.isOver());
 
-        state.move(new Point(0, 0), PlayerMarker.X);
-        state.move(new Point(1, 0), PlayerMarker.X);
-        state.move(new Point(2, 0), PlayerMarker.X);
+        state.move(new Point(0, 0), Marker.X);
+        state.move(new Point(1, 0), Marker.X);
+        state.move(new Point(2, 0), Marker.X);
 
-        assertEquals(PlayerMarker.X, state.getWinner());
+        assertEquals(Marker.X, state.getWinner());
         assertEquals(true, state.isOver());
     }
 
@@ -70,49 +70,49 @@ public class StateTest {
     }
 
     private void makeDraw() {
-        state.move(new Point(0, 0), PlayerMarker.X);
-        state.move(new Point(2, 0), PlayerMarker.O);
-        state.move(new Point(0, 2), PlayerMarker.X);
-        state.move(new Point(0, 1), PlayerMarker.O);
-        state.move(new Point(1, 1), PlayerMarker.X);
-        state.move(new Point(2, 2), PlayerMarker.O);
-        state.move(new Point(1, 0), PlayerMarker.X);
-        state.move(new Point(1, 2), PlayerMarker.O);
-        state.move(new Point(2, 1), PlayerMarker.X);
+        state.move(new Point(0, 0), Marker.X);
+        state.move(new Point(2, 0), Marker.O);
+        state.move(new Point(0, 2), Marker.X);
+        state.move(new Point(0, 1), Marker.O);
+        state.move(new Point(1, 1), Marker.X);
+        state.move(new Point(2, 2), Marker.O);
+        state.move(new Point(1, 0), Marker.X);
+        state.move(new Point(1, 2), Marker.O);
+        state.move(new Point(2, 1), Marker.X);
     }
 
     @Test
     public void itCanTestEqualityWithOtherStates() {
-        this.state.move(new Point(1, 0), PlayerMarker.X);
+        this.state.move(new Point(1, 0), Marker.X);
 
         State newState = new State();
         assertNotEquals(newState, this.state);
 
-        newState.move(new Point(1, 0), PlayerMarker.X);
+        newState.move(new Point(1, 0), Marker.X);
         assertEquals(newState, this.state);
     }
 
     @Test
     public void itCanMakeACopyOfItself() {
         assertEquals(this.state, this.state.copy());
-        assertEquals(this.state.getNextTurnMarker(), this.state.copy().getNextTurnMarker());
+        assertEquals(this.state.getNextMarker(), this.state.copy().getNextMarker());
 
         State newState = this.state.copy()
-                .move(new Point(0, 1), PlayerMarker.X);
+                .move(new Point(0, 1), Marker.X);
 
         assertNotEquals(this.state, newState);
-        assertEquals(PlayerMarker.O, newState.getNextTurnMarker());
+        assertEquals(Marker.O, newState.getNextMarker());
     }
 
     @Test
     public void itKnowsTheNextPlayerToMakeAMove() {
-        assertEquals(PlayerMarker.X, this.state.getNextTurnMarker());
+        assertEquals(Marker.X, this.state.getNextMarker());
 
-        this.state.move(new Point(0, 0), PlayerMarker.X);
-        assertEquals(PlayerMarker.O, this.state.getNextTurnMarker());
+        this.state.move(new Point(0, 0), Marker.X);
+        assertEquals(Marker.O, this.state.getNextMarker());
 
-        this.state.move(new Point(0, 2), PlayerMarker.O);
-        assertEquals(PlayerMarker.X, this.state.getNextTurnMarker());
+        this.state.move(new Point(0, 2), Marker.O);
+        assertEquals(Marker.X, this.state.getNextMarker());
     }
 
 }

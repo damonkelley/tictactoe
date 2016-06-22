@@ -1,0 +1,4 @@
+enum Marker {
+    X,
+    O;
+}

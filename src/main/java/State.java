@@ -14,34 +14,34 @@ public class State {
             Arrays.asList(new Point(0, 2), new Point(1, 1), new Point(2, 0))  // diagonal 2
     );
     private Board board;
-    private PlayerMarker nextTurnMarker;
+    private Marker nextMarker;
 
     public State() {
-        this.nextTurnMarker = PlayerMarker.X;
+        this.nextMarker = Marker.X;
         this.board = new Board();
     }
 
-    private State(Board board, PlayerMarker nextTurnMarker) {
+    private State(Board board, Marker nextMarker) {
         this.board = board;
-        this.nextTurnMarker = nextTurnMarker;
+        this.nextMarker = nextMarker;
     }
 
     public Board getBoard() {
         return board;
     }
 
-    public PlayerMarker getWinner() {
+    public Marker getWinner() {
         for (List<Point> win : wins) {
-            if (isWinner(PlayerMarker.X, win)) {
-                return PlayerMarker.X;
-            } else if (isWinner(PlayerMarker.O, win)) {
-                return PlayerMarker.O;
+            if (isWinner(Marker.X, win)) {
+                return Marker.X;
+            } else if (isWinner(Marker.O, win)) {
+                return Marker.O;
             }
         }
         return null;
     }
 
-    private boolean isWinner(PlayerMarker marker, List<Point> win) {
+    private boolean isWinner(Marker marker, List<Point> win) {
         return win.stream()
                 .map(p -> board.get(p) == marker)
                 .allMatch(b -> b);
@@ -59,9 +59,9 @@ public class State {
         return board.isFull() && !hasWinner();
     }
 
-    public State move(Point point, PlayerMarker marker) {
+    public State move(Point point, Marker marker) {
         board.put(point, marker);
-        nextTurnMarker = (marker == PlayerMarker.X) ? PlayerMarker.O : PlayerMarker.X;
+        nextMarker = (marker == Marker.X) ? Marker.O : Marker.X;
         return this;
     }
 
@@ -81,10 +81,10 @@ public class State {
     }
 
     public State copy() {
-        return new State(this.board.copy(), this.nextTurnMarker);
+        return new State(this.board.copy(), this.nextMarker);
     }
 
-    public PlayerMarker getNextTurnMarker() {
-        return nextTurnMarker;
+    public Marker getNextMarker() {
+        return nextMarker;
     }
 }

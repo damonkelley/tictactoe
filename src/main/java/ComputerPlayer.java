@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class ComputerPlayer extends Player {
 
-    public ComputerPlayer(PlayerMarker marker) {
+    public ComputerPlayer(Marker marker) {
         super(marker);
     }
 
@@ -28,7 +28,7 @@ public class ComputerPlayer extends Player {
 
             for (Point space : state.getBoard().availableSpaces()) {
                 State futureState = state.copy();
-                futureState.move(space, futureState.getNextTurnMarker());
+                futureState.move(space, futureState.getNextMarker());
 
                 scores.put(minimax(futureState, depth - 1, !maximizingPlayer), space);
             }

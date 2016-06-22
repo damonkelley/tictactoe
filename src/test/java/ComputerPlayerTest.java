@@ -8,14 +8,14 @@ public class ComputerPlayerTest {
 
     @Test
     public void itIsConfiguredWithAPlayerMarker() {
-        ComputerPlayer player = new ComputerPlayer(PlayerMarker.O);
-        assertEquals(PlayerMarker.O, player.getMarker());
+        ComputerPlayer player = new ComputerPlayer(Marker.O);
+        assertEquals(Marker.O, player.getMarker());
     }
 
     @Test
     public void itWillChooseTheWinningSpaceIfThereIsOne() {
-        ComputerPlayer computerPlayer = new ComputerPlayer(PlayerMarker.X);
-        Player player = new HumanPlayer(PlayerMarker.O);
+        ComputerPlayer computerPlayer = new ComputerPlayer(Marker.X);
+        Player player = new HumanPlayer(Marker.O);
         State state = new State();
 
         state.move(new Point(0, 0), computerPlayer.getMarker());
@@ -30,8 +30,8 @@ public class ComputerPlayerTest {
 
     @Test
     public void itWillPreventALoss() {
-        ComputerPlayer computerPlayer = new ComputerPlayer(PlayerMarker.O);
-        Player player = new HumanPlayer(PlayerMarker.X);
+        ComputerPlayer computerPlayer = new ComputerPlayer(Marker.O);
+        Player player = new HumanPlayer(Marker.X);
         State state = new State();
 
         state.move(new Point(0, 0), player.getMarker());

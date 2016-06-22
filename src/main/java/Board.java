@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Board {
-    private Map<Point, PlayerMarker> spaces;
+    private Map<Point, Marker> spaces;
 
     public Board() {
         this.spaces = new HashMap<>();
@@ -16,15 +16,15 @@ public class Board {
         }
     }
 
-    private Board(Map<Point, PlayerMarker> spaces) {
+    private Board(Map<Point, Marker> spaces) {
         this.spaces = spaces;
     }
 
-    public PlayerMarker get(Point point) {
+    public Marker get(Point point) {
         return spaces.get(point);
     }
 
-    public Board put(Point point, PlayerMarker marker) {
+    public Board put(Point point, Marker marker) {
         spaces.put(point, marker);
         return this;
     }
@@ -51,29 +51,25 @@ public class Board {
     }
 
     public Board copy() {
-        return new Board(new HashMap<Point, PlayerMarker>(this.spaces));
+        return new Board(new HashMap<Point, Marker>(this.spaces));
     }
 
     @Override
     public String toString() {
-        PlayerMarker space;
-        String marker;
         StringBuffer output = new StringBuffer();
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
-                space = spaces.get(new Point(j, i));
-                if (space == null) {
-                    marker = " ";
-                } else {
-                    marker = space.toString();
-                }
-
+                Marker marker = spaces.get(new Point(j, i));
                 if (j < 2) {
-                    output.append(" ").append(marker).append(" |");
+                    output.append(" ")
+                            .append((marker != null) ? marker.toString() : " ")
+                            .append(" |");
                 } else {
-                    output.append(" ").append(marker).append(" \n");
+                    output.append(" ")
+                            .append((marker != null) ? marker.toString() : " ")
+                            .append(" \n");
                 }
 
             }

@@ -1,4 +1,0 @@
-enum PlayerMarker {
-    X,
-    O;
-}

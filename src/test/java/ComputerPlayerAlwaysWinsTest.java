@@ -28,8 +28,8 @@ public class ComputerPlayerAlwaysWinsTest {
 
     @Before
     public void setUp() throws Exception {
-        computerPlayer = new ComputerPlayer(PlayerMarker.X);
-        player = new HumanPlayer(PlayerMarker.O);
+        computerPlayer = new ComputerPlayer(Marker.X);
+        player = new HumanPlayer(Marker.O);
 
         state = new State();
         board = state.getBoard();

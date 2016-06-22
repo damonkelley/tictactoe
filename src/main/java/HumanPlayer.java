@@ -5,7 +5,7 @@ public class HumanPlayer extends Player {
 
     private Queue<Point> moveQueue = new ArrayDeque<>();
 
-    public HumanPlayer(PlayerMarker marker) {
+    public HumanPlayer(Marker marker) {
         super(marker);
     }
 

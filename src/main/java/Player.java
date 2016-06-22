@@ -1,15 +1,13 @@
-import java.awt.*;
-
 public abstract class Player {
-    protected PlayerMarker marker;
+    protected Marker marker;
 
-    public Player(PlayerMarker marker) {
+    public Player(Marker marker) {
         this.marker = marker;
     }
 
     abstract public void move(State state);
 
-    public PlayerMarker getMarker() {
+    public Marker getMarker() {
         return marker;
     }
 }

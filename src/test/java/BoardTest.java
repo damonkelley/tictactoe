@@ -18,11 +18,11 @@ public class BoardTest {
     public void itCanFillASpace() {
         Board board = new Board();
 
-        board.put(new Point(0, 0), PlayerMarker.X);
-        board.put(new Point(0, 1), PlayerMarker.O);
+        board.put(new Point(0, 0), Marker.X);
+        board.put(new Point(0, 1), Marker.O);
 
-        assertEquals(PlayerMarker.X, board.get(new Point(0, 0)));
-        assertEquals(PlayerMarker.O, board.get(new Point(0, 1)));
+        assertEquals(Marker.X, board.get(new Point(0, 0)));
+        assertEquals(Marker.O, board.get(new Point(0, 1)));
     }
 
     @Test
@@ -30,25 +30,25 @@ public class BoardTest {
         Board board = new Board();
         assertFalse(board.isFull());
 
-        board.put(new Point(0,0), PlayerMarker.X);
-        board.put(new Point(2, 0), PlayerMarker.O);
-        board.put(new Point(0, 2), PlayerMarker.X);
-        board.put(new Point(0, 1), PlayerMarker.O);
-        board.put(new Point(1, 1), PlayerMarker.X);
-        board.put(new Point(2, 2), PlayerMarker.O);
-        board.put(new Point(1, 0), PlayerMarker.X);
-        board.put(new Point(1, 2), PlayerMarker.O);
-        board.put(new Point(2, 1), PlayerMarker.X);
+        board.put(new Point(0,0), Marker.X);
+        board.put(new Point(2, 0), Marker.O);
+        board.put(new Point(0, 2), Marker.X);
+        board.put(new Point(0, 1), Marker.O);
+        board.put(new Point(1, 1), Marker.X);
+        board.put(new Point(2, 2), Marker.O);
+        board.put(new Point(1, 0), Marker.X);
+        board.put(new Point(1, 2), Marker.O);
+        board.put(new Point(2, 1), Marker.X);
 
         assertTrue(board.isFull());
     }
 
     @Test
     public void itCanTestEqualityWithOtherBoards() {
-        Board boardWithOneSpaceFilled = new Board().put(new Point(1, 0), PlayerMarker.O);
+        Board boardWithOneSpaceFilled = new Board().put(new Point(1, 0), Marker.O);
 
         assertNotEquals(new Board(), boardWithOneSpaceFilled);
-        assertEquals(new Board().put(new Point(1, 0), PlayerMarker.O), boardWithOneSpaceFilled);
+        assertEquals(new Board().put(new Point(1, 0), Marker.O), boardWithOneSpaceFilled);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class BoardTest {
         assertEquals(new Board(), board);
 
         Board newBoard = board.copy()
-                .put(new Point(0, 1), PlayerMarker.X);
+                .put(new Point(0, 1), Marker.X);
 
         assertNotEquals(board, newBoard);
     }
@@ -75,12 +75,11 @@ public class BoardTest {
                 new Point(2, 1),
                 new Point(2, 2)
         );
-
         Board board =  new Board();
 
         assertTrue(board.availableSpaces().containsAll(availableSpaces));
 
-        board.put(new Point(0, 0), PlayerMarker.X);
+        board.put(new Point(0, 0), Marker.X);
         assertFalse(board.availableSpaces().containsAll(availableSpaces));
     }
 }
