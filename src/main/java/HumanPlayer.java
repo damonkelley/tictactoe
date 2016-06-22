@@ -1,30 +1,13 @@
-import java.awt.*;
-import java.util.*;
-
 public class HumanPlayer extends Player {
+    private UI ui;
 
-    private Queue<Point> moveQueue = new ArrayDeque<>();
-
-    public HumanPlayer(Marker marker) {
+    public HumanPlayer(Marker marker, UI ui) {
         super(marker);
-    }
-
-    public void move(State state) {
-        state.move(moveQueue.remove(), getMarker());
+        this.ui = ui;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Player player = (Player) o;
-
-        return marker == player.marker;
+    public void move(State state) {
+        state.move(ui.getNextMove(), getMarker());
     }
-
-    public void queueMove(Point space) {
-        moveQueue.add(space);
-    }
-
 }
