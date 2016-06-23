@@ -3,7 +3,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class UI {
+public class UI implements Finder {
     private Game game;
     private BufferedReader reader;
     private BufferedWriter writer;

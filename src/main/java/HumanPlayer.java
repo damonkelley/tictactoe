@@ -1,13 +1,13 @@
 public class HumanPlayer extends Player {
-    private UI ui;
+    private Finder finder;
 
-    public HumanPlayer(Marker marker, UI ui) {
+    public HumanPlayer(Marker marker, Finder finder) {
         super(marker);
-        this.ui = ui;
+        this.finder = finder;
     }
 
     @Override
     public void move(State state) {
-        state.move(ui.getNextMove(), getMarker());
+        state.move(finder.getNextMove(), getMarker());
     }
 }
