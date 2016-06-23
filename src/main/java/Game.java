@@ -10,12 +10,6 @@ public class Game {
         state = new State(player1.getMarker());
     }
 
-    public Game(State state, Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.state = state;
-    }
-
     public void nextMove() {
         nextTurn().move(state);
     }
