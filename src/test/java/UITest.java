@@ -62,7 +62,7 @@ public class UITest {
 
     @Test
     public void itStartsTheGame() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1\n2\n".getBytes())));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1\n2\n4\n".getBytes())));
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
@@ -72,11 +72,11 @@ public class UITest {
         ui.start();
 
         String expectedBoard =
-                        " O | O | 3 \n" +
+                        " O | O | X \n" +
                         "---+---+---\n" +
-                        " 4 | 5 | 6 \n" +
+                        " O | X | 6 \n" +
                         "---+---+---\n" +
-                        " X | X | X \n";
+                        " X | 8 | 9 \n";
 
         assertTrue(out.toString().contains(expectedBoard));
         assertTrue(out.toString().contains("Game Over"));

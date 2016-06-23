@@ -7,16 +7,12 @@ public class UI {
     private Game game;
     private BufferedReader reader;
     private BufferedWriter writer;
-    private final HumanPlayer player1;
-    private final ComputerPlayer player2;
 
     public UI(BufferedReader reader, BufferedWriter writer) {
         this.reader = reader;
         this.writer = writer;
-        player1 = new HumanPlayer(Marker.O, this);
-        player2 = new ComputerPlayer(Marker.X);
 
-        this.game = new Game(player1, player2);
+        this.game = new Game(new HumanPlayer(Marker.O, this), new ComputerPlayer(Marker.X));
     }
 
     public Point getNextMove() {
