@@ -27,6 +27,19 @@ public class GameTest {
     }
 
     @Test
+    public void theFirstPlayerPassedIsTheFirstToMove() {
+        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.O);
+        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.X);
+
+        player1.queueMove(new Point(0, 0));
+
+        Game game = new Game(player1, player2);
+        game.nextMove();
+
+        assertEquals(Marker.O, game.getBoard().get(new Point(0, 0)));
+    }
+
+    @Test
     public void player1Wins() {
         QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.X);
         QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.O);
@@ -65,7 +78,6 @@ public class GameTest {
         player2.queueMove(new Point(2, 2));
         player1.queueMove(new Point(0, 2));
 
-        State state = new State(Marker.O);
         Game game = new Game(new State(Marker.O), player1, player2);
 
         game.nextMove();

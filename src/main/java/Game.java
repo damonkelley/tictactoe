@@ -7,7 +7,7 @@ public class Game {
     public Game(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        state = new State();
+        state = new State(player1.getMarker());
     }
 
     public Game(State state, Player player1, Player player2) {
@@ -27,7 +27,6 @@ public class Game {
             return player2;
         }
     }
-
 
     public Player getWinner() {
         Marker winningMarker = state.getWinner();
