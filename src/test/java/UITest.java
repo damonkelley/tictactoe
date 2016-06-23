@@ -26,7 +26,6 @@ public class UITest {
         assertEquals(new Point(0, 2), ui.getNextMove());
     }
 
-
     @Test
     public void itWritesToOut() throws IOException {
         BufferedReader reader = makeReaderWithInput("3\n");
@@ -86,7 +85,5 @@ public class UITest {
     private BufferedWriter makeWriter(OutputStream out) {
         return new BufferedWriter(new OutputStreamWriter(out));
     }
-
-
 
 }
