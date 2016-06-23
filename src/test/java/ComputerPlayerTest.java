@@ -15,7 +15,7 @@ public class ComputerPlayerTest {
     @Test
     public void itWillChooseTheWinningSpaceIfThereIsOne() {
         ComputerPlayer computerPlayer = new ComputerPlayer(Marker.X);
-        Player player = new QueueBackedPlayer(Marker.O);
+        Player player = new FakePlayer(Marker.O);
         State state = new State();
 
         state.move(new Point(0, 0), computerPlayer.getMarker());
@@ -31,7 +31,7 @@ public class ComputerPlayerTest {
     @Test
     public void itWillPreventALoss() {
         ComputerPlayer computerPlayer = new ComputerPlayer(Marker.O);
-        Player player = new QueueBackedPlayer(Marker.X);
+        Player player = new FakePlayer(Marker.X);
         State state = new State();
 
         state.move(new Point(0, 0), player.getMarker());
@@ -41,6 +41,14 @@ public class ComputerPlayerTest {
         computerPlayer.move(state);
 
         assertEquals(computerPlayer.getMarker(), state.getBoard().get(new Point(2, 2)));
+    }
+
+    private class FakePlayer extends Player {
+
+        FakePlayer(Marker marker) {super(marker);}
+
+        @Override
+        public void move(State state) {}
     }
 
 }

@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
@@ -7,29 +8,29 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UITest {
-    @Test
-    public void itReadsFromIn() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("2\n".getBytes())));
+    private OutputStream out;
 
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new ByteArrayOutputStream()));
-
-        UI ui = new UI(reader, writer);
-
-        assertEquals(new Point(0, 1), ui.getNextMove());
-
-        reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("3\n".getBytes())));
-        ui = new UI(reader, writer);
-
-        assertEquals(new Point(0, 2), ui.getNextMove());
+    @Before
+    public void setUp() throws Exception {
+        out = new ByteArrayOutputStream();
     }
 
     @Test
+    public void itReadsFromIn() throws IOException {
+        BufferedWriter writer = makeWriter(out);
+
+        UI ui = new UI(makeReaderWithInput("2\n"), writer);
+        assertEquals(new Point(0, 1), ui.getNextMove());
+
+        ui = new UI(makeReaderWithInput("3\n"), writer);
+        assertEquals(new Point(0, 2), ui.getNextMove());
+    }
+
+
+    @Test
     public void itWritesToOut() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("3\n".getBytes())));
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
-
+        BufferedReader reader = makeReaderWithInput("3\n");
+        BufferedWriter writer = makeWriter(out);
         UI ui = new UI(reader, writer);
 
         ui.render();
@@ -48,10 +49,8 @@ public class UITest {
 
     @Test
     public void itCanConvertASpaceIndexToAPoint() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1\n9\n".getBytes())));
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+        BufferedReader reader = makeReaderWithInput("1\n9\n");
+        BufferedWriter writer = makeWriter(out);
 
         UI ui = new UI(reader, writer);
 
@@ -62,10 +61,8 @@ public class UITest {
 
     @Test
     public void itStartsTheGame() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1\n2\n4\n".getBytes())));
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+        BufferedWriter writer = makeWriter(out);
+        BufferedReader reader = makeReaderWithInput("1\n2\n4\n");
 
         UI ui = new UI(reader, writer);
 
@@ -81,5 +78,15 @@ public class UITest {
         assertTrue(out.toString().contains(expectedBoard));
         assertTrue(out.toString().contains("Game Over"));
     }
+
+    private BufferedReader makeReaderWithInput(String input) {
+        return new BufferedReader(new InputStreamReader(new ByteArrayInputStream(input.getBytes())));
+    }
+
+    private BufferedWriter makeWriter(OutputStream out) {
+        return new BufferedWriter(new OutputStreamWriter(out));
+    }
+
+
 
 }

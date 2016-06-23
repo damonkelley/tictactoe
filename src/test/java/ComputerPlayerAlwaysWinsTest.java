@@ -3,20 +3,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(Parameterized.class)
 public class ComputerPlayerAlwaysWinsTest {
     private ComputerPlayer computerPlayer;
-    private QueueBackedPlayer player;
-    private State state;
-    private Board board;
-    private Random generator = new Random();
+    private RandomPlayer randomPlayer;
 
     public ComputerPlayerAlwaysWinsTest(int n) {
     }
@@ -28,41 +26,41 @@ public class ComputerPlayerAlwaysWinsTest {
 
     @Before
     public void setUp() throws Exception {
+        randomPlayer = new RandomPlayer(Marker.O);
         computerPlayer = new ComputerPlayer(Marker.X);
-        player = new QueueBackedPlayer(Marker.O);
-
-        state = new State();
-        board = state.getBoard();
     }
 
     @Test
     public void whenItMovesFirst() {
-        while (!state.isOver()) {
-            computerPlayer.move(state);
+        Game game = new Game(computerPlayer, randomPlayer);
+        while (!game.isOver()) game.nextMove();
 
-            if (!state.isOver()) {
-                int spaceIndex = generator.nextInt(board.availableSpaces().size());
-                player.queueMove(board.availableSpaces().get(spaceIndex));
-                player.move(state);
-            }
-        }
-
-        boolean notALoss = state.getWinner() == computerPlayer.getMarker() || state.isDraw();
-        assertTrue(notALoss);
+        assertNotEquals(randomPlayer, game.getWinner());
     }
-
 
     @Test
     public void whenItMovesSecond() {
-        while (!state.isOver()) {
-            int spaceIndex = generator.nextInt(board.availableSpaces().size());
-            player.queueMove(board.availableSpaces().get(spaceIndex));
-            player.move(state);
+        Game game = new Game(randomPlayer, computerPlayer);
+        while (!game.isOver()) game.nextMove();
 
-            if (!state.isOver()) computerPlayer.move(state);
+        assertNotEquals(randomPlayer, game.getWinner());
+    }
+
+    private class RandomPlayer extends Player {
+        private Random generator = new Random();
+
+        RandomPlayer(Marker marker) {
+            super(marker);
         }
 
-        boolean notALoss = state.getWinner() == computerPlayer.getMarker() || state.isDraw();
-        assertTrue(notALoss);
+        @Override
+        public void move(State state) {
+            state.move(pickRandomAvailableSpace(state), getMarker());
+        }
+
+        private Point pickRandomAvailableSpace(State state) {
+            int index = generator.nextInt(state.getBoard().availableSpaces().size());
+            return state.getBoard().availableSpaces().get(index);
+        }
     }
 }

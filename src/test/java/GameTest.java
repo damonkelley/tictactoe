@@ -1,37 +1,43 @@
 import org.junit.Test;
 
 import java.awt.*;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class GameTest {
 
     @Test
     public void itAlternatesPlayerMoves() {
-        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.X);
-        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.O);
-        State state = new State();
 
-        player1.queueMove(new Point(0, 0));
-        player2.queueMove(new Point(0, 1));
+        QueueBackedFinder player1Finder = new QueueBackedFinder();
+        QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        Game game = new Game(state, player1, player2);
+        Player player1 = new HumanPlayer(Marker.X, player1Finder);
+        Player player2 = new HumanPlayer(Marker.O, player2Finder);
+
+        player1Finder.queueMove(new Point(0, 0));
+        player2Finder.queueMove(new Point(0, 1));
+
+        Game game = new Game(player1, player2);
 
         game.nextMove();
         game.nextMove();
 
-        assertEquals(player1.getMarker(), state.getBoard().get(new Point(0, 0)));
-        assertEquals(player2.getMarker(), state.getBoard().get(new Point(0, 1)));
+        assertEquals(player1.getMarker(), game.getBoard().get(new Point(0, 0)));
+        assertEquals(player2.getMarker(), game.getBoard().get(new Point(0, 1)));
     }
 
     @Test
     public void theFirstPlayerPassedIsTheFirstToMove() {
-        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.O);
-        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.X);
+        QueueBackedFinder player1Finder = new QueueBackedFinder();
+        QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        player1.queueMove(new Point(0, 0));
+        Player player1 = new HumanPlayer(Marker.O, player1Finder);
+        Player player2 = new HumanPlayer(Marker.X, player2Finder);
+
+        player1Finder.queueMove(new Point(0, 0));
 
         Game game = new Game(player1, player2);
         game.nextMove();
@@ -41,14 +47,17 @@ public class GameTest {
 
     @Test
     public void player1Wins() {
-        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.X);
-        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.O);
+        QueueBackedFinder player1Finder = new QueueBackedFinder();
+        QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        player1.queueMove(new Point(0, 0));
-        player2.queueMove(new Point(2, 0));
-        player1.queueMove(new Point(1, 1));
-        player2.queueMove(new Point(0, 2));
-        player1.queueMove(new Point(2, 2));
+        Player player1 = new HumanPlayer(Marker.X, player1Finder);
+        Player player2 = new HumanPlayer(Marker.O, player2Finder);
+
+        player1Finder.queueMove(new Point(0, 0));
+        player2Finder.queueMove(new Point(2, 0));
+        player1Finder.queueMove(new Point(1, 1));
+        player2Finder.queueMove(new Point(0, 2));
+        player1Finder.queueMove(new Point(2, 2));
 
         Game game = new Game(player1, player2);
 
@@ -65,20 +74,23 @@ public class GameTest {
 
     @Test
     public void itIsADraw() {
-        QueueBackedPlayer player1 = new QueueBackedPlayer(Marker.O);
-        QueueBackedPlayer player2 = new QueueBackedPlayer(Marker.X);
+        QueueBackedFinder player1Finder = new QueueBackedFinder();
+        QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        player1.queueMove(new Point(0, 0));
-        player2.queueMove(new Point(1, 1));
-        player1.queueMove(new Point(2, 0));
-        player2.queueMove(new Point(1, 0));
-        player1.queueMove(new Point(2, 1));
-        player2.queueMove(new Point(0, 1));
-        player1.queueMove(new Point(1, 2));
-        player2.queueMove(new Point(2, 2));
-        player1.queueMove(new Point(0, 2));
+        Player player1 = new HumanPlayer(Marker.O, player1Finder);
+        Player player2 = new HumanPlayer(Marker.X, player2Finder);
 
-        Game game = new Game(new State(Marker.O), player1, player2);
+        player1Finder.queueMove(new Point(0, 0));
+        player2Finder.queueMove(new Point(1, 1));
+        player1Finder.queueMove(new Point(2, 0));
+        player2Finder.queueMove(new Point(1, 0));
+        player1Finder.queueMove(new Point(2, 1));
+        player2Finder.queueMove(new Point(0, 1));
+        player1Finder.queueMove(new Point(1, 2));
+        player2Finder.queueMove(new Point(2, 2));
+        player1Finder.queueMove(new Point(0, 2));
+
+        Game game = new Game(player1, player2);
 
         game.nextMove();
         game.nextMove();
@@ -92,5 +104,18 @@ public class GameTest {
 
         assertTrue(game.isDraw());
         assertTrue(game.isOver());
+    }
+
+    private class QueueBackedFinder implements Finder {
+        private Queue<Point> moveQueue = new ArrayDeque<>();
+
+        public void queueMove(Point space) {
+            moveQueue.add(space);
+        }
+
+        @Override
+        public Point getNextMove() {
+            return moveQueue.remove();
+        }
     }
 }
