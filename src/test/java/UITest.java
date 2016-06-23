@@ -35,11 +35,13 @@ public class UITest {
         ui.render();
 
         String expected =
+            "\u001B[2J\u001B[H" +
             " 1 | 2 | 3 \n" +
             "---+---+---\n" +
             " 4 | 5 | 6 \n" +
             "---+---+---\n" +
-            " 7 | 8 | 9 \n";
+            " 7 | 8 | 9 \n" +
+            "\n";
 
         assertEquals(expected, out.toString());
     }
@@ -60,7 +62,7 @@ public class UITest {
 
     @Test
     public void itStartsTheGame() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1\n2\n4\n3\n7\n".getBytes())));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1\n2\n".getBytes())));
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
@@ -70,13 +72,14 @@ public class UITest {
         ui.start();
 
         String expectedBoard =
-                        " X | O | O \n" +
+                        " O | O | 3 \n" +
                         "---+---+---\n" +
-                        " X | 5 | 6 \n" +
+                        " 4 | 5 | 6 \n" +
                         "---+---+---\n" +
-                        " X | 8 | 9 \n";
+                        " X | X | X \n";
 
         assertTrue(out.toString().contains(expectedBoard));
+        assertTrue(out.toString().contains("Game Over"));
     }
 
 }

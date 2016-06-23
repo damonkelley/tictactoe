@@ -55,13 +55,17 @@ public class UI {
     }
 
     public void render() throws IOException {
-        StringBuffer output = formatBoard();
-
-        writer.write(output.toString());
+        clearScreen();
+        writer.write(formatBoard());
         writer.flush();
     }
 
-    private StringBuffer formatBoard() {
+    private void clearScreen() throws IOException {
+        writer.write("\033[2J");
+        writer.write("\033[H");
+    }
+
+    private String formatBoard() {
         StringBuffer output = new StringBuffer();
         Board board = game.getBoard();
 
@@ -88,7 +92,7 @@ public class UI {
         }
         output.append("\n");
 
-        return output;
+        return output.toString();
     }
 
     public void start() throws IOException {
@@ -97,5 +101,8 @@ public class UI {
             game.nextMove();
             render();
         }
+
+        writer.write("Game Over\n");
+        writer.flush();
     }
 }
