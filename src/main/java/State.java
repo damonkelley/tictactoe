@@ -65,9 +65,15 @@ public class State {
     }
 
     public State move(Point point, Marker marker) {
-        board.put(point, marker);
-        nextMarker = (marker == Marker.X) ? Marker.O : Marker.X;
+        if (board.get(point) == null) {
+            board.put(point, marker);
+            alternateCurrentTurn(marker);
+        }
         return this;
+    }
+
+    private void alternateCurrentTurn(Marker marker) {
+        nextMarker = (marker == Marker.X) ? Marker.O : Marker.X;
     }
 
     @Override

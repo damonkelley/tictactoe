@@ -44,6 +44,15 @@ public class StateTest {
     }
 
     @Test
+    public void itOnlyAllowsMovesToAvailableSpaces() {
+        state.move(new Point(0, 0), Marker.X);
+        state.move(new Point(0, 0), Marker.O);
+
+        assertEquals(Marker.X, state.getBoard().get(new Point(0, 0)));
+        assertEquals(Marker.O, state.getNextMarker());
+    }
+
+    @Test
     public void gameIsOver() {
         assertEquals(false, state.isOver());
 
