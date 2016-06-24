@@ -11,8 +11,8 @@ public class Space extends Point implements Comparable {
 
         Space space = (Space) o;
 
-        if (this.x == space.x && this.y > space.y) return 1;
-        if (this.x > space.x) return 1;
+        if (this.y > space.y) return 1;
+        if (this.y == space.y && this.x > space.x) return 1;
         return -1;
     }
 }
