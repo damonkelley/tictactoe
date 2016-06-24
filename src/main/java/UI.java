@@ -51,43 +51,13 @@ public class UI implements Finder {
 
     public void render() throws IOException {
         clearScreen();
-        writer.write(formatBoard());
+        writer.write(new GamePresenter(game).present());
         writer.flush();
     }
 
     private void clearScreen() throws IOException {
         writer.write("\033[2J");
         writer.write("\033[H");
-    }
-
-    private String formatBoard() {
-        StringBuffer output = new StringBuffer();
-        Board board = game.getBoard();
-
-        int index = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-
-                Marker marker = board.get(new Space(i, j));
-                if (j < 2) {
-                    output.append(" ")
-                            .append((marker != null) ? marker.toString() : index)
-                            .append(" |");
-                } else {
-                    output.append(" ")
-                            .append((marker != null) ? marker.toString() : index)
-                            .append(" \n");
-                }
-
-                index++;
-            }
-            if (i < 2) {
-                output.append("---+---+---\n");
-            }
-        }
-        output.append("\n");
-
-        return output.toString();
     }
 
     public void start() throws IOException {
@@ -100,4 +70,5 @@ public class UI implements Finder {
         writer.write("Game Over\n");
         writer.flush();
     }
+
 }
