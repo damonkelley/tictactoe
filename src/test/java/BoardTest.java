@@ -81,4 +81,21 @@ public class BoardTest {
         board.put(new Space(0, 0), Marker.X);
         assertFalse(board.availableSpaces().containsAll(availableSpaces));
     }
+
+    @Test
+    public void itIsIterable() {
+        Board board = new Board();
+        for (Space space: board) {}
+    }
+
+    @Test
+    public void itIteratesOverTheSpacesInOrder() {
+        Board board = new Board();
+
+        Space min = new Space(-1, -1);
+        for (Space space: board) {
+            assertTrue(space.compareTo(min) > -1);
+            min = space;
+        }
+    }
 }

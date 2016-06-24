@@ -1,9 +1,7 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class Board {
+public class Board implements Iterable<Space> {
     private Map<Space, Marker> spaces;
 
     public Board() {
@@ -88,4 +86,11 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Iterator<Space> iterator() {
+        List<Space> keys = new ArrayList<>(spaces.keySet());
+
+        keys.sort((space, o) -> space.compareTo(o));
+        return keys.iterator();
+    }
 }
