@@ -15,79 +15,17 @@ public class StateTest {
     }
 
     @Test
-    public void xWinsTheGame() {
-        state.move(new Point(0, 0), Marker.X);
-        state.move(new Point(1, 0), Marker.O);
-        state.move(new Point(1, 1), Marker.X);
-        state.move(new Point(2, 0), Marker.O);
-        state.move(new Point(2, 2), Marker.X);
-
-        assertEquals(Marker.X, state.getWinner());
-    }
-
-    @Test
-    public void oWinsTheGame() {
-        state.move(new Point(0, 0), Marker.X);
-        state.move(new Point(1, 0), Marker.O);
-        state.move(new Point(2, 0), Marker.X);
-        state.move(new Point(1, 1), Marker.O);
-        state.move(new Point(2, 2), Marker.X);
-        state.move(new Point(1, 2), Marker.O);
-
-        assertEquals(Marker.O, state.getWinner());
-    }
-
-    @Test
     public void moveAddsMarker() {
         state.move(new Point(1, 0), Marker.X);
         assertEquals(Marker.X, state.getBoard().get(new Point(1, 0)));
     }
 
     @Test
-    public void itOnlyAllowsMovesToAvailableSpaces() {
+    public void itAllowsMovesToUnavailableSpaces() {
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(0, 0), Marker.O);
 
-        assertEquals(Marker.X, state.getBoard().get(new Point(0, 0)));
-        assertEquals(Marker.O, state.getNextMarker());
-    }
-
-    @Test
-    public void gameIsOver() {
-        assertEquals(false, state.isOver());
-
-        state.move(new Point(0, 0), Marker.X);
-        state.move(new Point(1, 0), Marker.X);
-        state.move(new Point(2, 0), Marker.X);
-
-        assertEquals(Marker.X, state.getWinner());
-        assertEquals(true, state.isOver());
-    }
-
-    @Test
-    public void gameIsOverWithADraw() {
-        makeDraw();
-        assertEquals(true, state.isDraw());
-        assertEquals(true, state.isOver());
-    }
-
-    @Test
-    public void gameIsDraw() {
-        assertEquals(false, state.isDraw());
-        makeDraw();
-        assertEquals(true, state.isDraw());
-    }
-
-    private void makeDraw() {
-        state.move(new Point(0, 0), Marker.X);
-        state.move(new Point(2, 0), Marker.O);
-        state.move(new Point(0, 2), Marker.X);
-        state.move(new Point(0, 1), Marker.O);
-        state.move(new Point(1, 1), Marker.X);
-        state.move(new Point(2, 2), Marker.O);
-        state.move(new Point(1, 0), Marker.X);
-        state.move(new Point(1, 2), Marker.O);
-        state.move(new Point(2, 1), Marker.X);
+        assertEquals(Marker.O, state.getBoard().get(new Point(0, 0)));
     }
 
     @Test

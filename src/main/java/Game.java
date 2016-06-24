@@ -1,5 +1,6 @@
 public class Game {
 
+    private GameRules rules;
     private State state;
     private Player player1;
     private Player player2;
@@ -8,6 +9,7 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
         state = new State(player1.getMarker());
+        rules = new GameRules(state);
     }
 
     public void nextMove() {
@@ -23,7 +25,7 @@ public class Game {
     }
 
     public Player getWinner() {
-        Marker winningMarker = state.getWinner();
+        Marker winningMarker = rules.determineWinner();
 
         if (winningMarker == player1.getMarker()) {
             return player1;
@@ -35,11 +37,11 @@ public class Game {
     }
 
     public boolean isOver() {
-        return state.isOver();
+        return rules.isOver();
     }
 
     public boolean isDraw() {
-        return state.isDraw();
+        return rules.isDraw();
     }
 
     public Board getBoard() {

@@ -25,7 +25,7 @@ public class ComputerPlayerTest {
 
         computerPlayer.move(state);
 
-        assertEquals(computerPlayer.getMarker(), state.getWinner());
+        assertEquals(computerPlayer.getMarker(), new GameRules(state).determineWinner());
     }
 
     @Test

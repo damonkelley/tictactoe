@@ -18,7 +18,7 @@ class ArtificialIntelligenceFinder implements Finder {
     }
 
     private int minimax(State state, int depth, boolean maximizingPlayer) {
-        if (state.isOver() || depth == 0) return scoreFor(state, depth);
+        if (new GameRules(state).isOver() || depth == 0) return scoreFor(state, depth);
 
         HashMap<Integer, Point> scores = new HashMap<>();
 
@@ -36,9 +36,10 @@ class ArtificialIntelligenceFinder implements Finder {
     }
 
     private int scoreFor(State state, int depth) {
-        if (state.getWinner() == player.getMarker()) {
+        GameRules rules = new GameRules(state);
+        if (rules.determineWinner() == player.getMarker()) {
             return 10 + depth;
-        } else if (state.isOver() && !state.isDraw()) {
+        } else if (rules.isOver() && !rules.isDraw()) {
             return -10 - depth;
         }
         return 0;

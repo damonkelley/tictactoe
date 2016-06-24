@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
@@ -7,6 +8,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class GameRulesTest {
+
+    private State state;
+    private GameRules rules;
 
     @Test
     public void itDeterminesIfAMoveCanBeMade() {
@@ -19,18 +23,19 @@ public class GameRulesTest {
         assertTrue(rules.canMove(state, new Point(1, 0)));
     }
 
+    @Before
+    public void setUp() throws Exception {
+        state = new State();
+        rules = new GameRules(state);
+    }
+
     @Test
     public void itIsNotOverWhenThereAreNoMarkersOnTheBoard() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
         assertEquals(false, rules.isOver());
     }
 
     @Test
     public void itIsOverWhenThereIsAWinner() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
-
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(1, 0), Marker.X);
         state.move(new Point(2, 0), Marker.X);
@@ -40,9 +45,6 @@ public class GameRulesTest {
 
     @Test
     public void itCanDetermineWhenOIsTheWinner() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
-
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(1, 0), Marker.O);
         state.move(new Point(2, 0), Marker.X);
@@ -55,9 +57,6 @@ public class GameRulesTest {
 
     @Test
     public void itCanDetermineWhenXIsTheWinner() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
-
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(1, 0), Marker.O);
         state.move(new Point(1, 1), Marker.X);
@@ -69,9 +68,6 @@ public class GameRulesTest {
 
     @Test
     public void itCanDetermineWhenThereIsNoWinner() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
-
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(1, 0), Marker.O);
 
@@ -80,9 +76,6 @@ public class GameRulesTest {
 
     @Test
     public void itIsNotADrawIfThereIsAWinner() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
-
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(1, 0), Marker.O);
         state.move(new Point(1, 1), Marker.X);
@@ -94,9 +87,6 @@ public class GameRulesTest {
 
     @Test
     public void itIsNotADrawIfTheBoardIsFullAndThereIsAWinner() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
-
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(2, 0), Marker.O);
         state.move(new Point(0, 2), Marker.X);
@@ -112,9 +102,6 @@ public class GameRulesTest {
 
     @Test
     public void itIsADrawIfThereIsNoWinnerAndNoMoreSpaces() {
-        State state = new State();
-        GameRules rules = new GameRules(state);
-
         state.move(new Point(0, 0), Marker.X);
         state.move(new Point(2, 0), Marker.O);
         state.move(new Point(0, 2), Marker.X);

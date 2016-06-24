@@ -16,8 +16,7 @@ public class ComputerPlayerAlwaysWinsTest {
     private ComputerPlayer computerPlayer;
     private RandomPlayer randomPlayer;
 
-    public ComputerPlayerAlwaysWinsTest(int n) {
-    }
+    public ComputerPlayerAlwaysWinsTest(int n) {}
 
     @Parameterized.Parameters(name = "Computer Always Wins")
     public static List<Integer> parameters() {
