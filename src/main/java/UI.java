@@ -19,19 +19,19 @@ public class UI implements Finder {
             case 1:
                 return new Space(0, 0);
             case 2:
-                return new Space(0, 1);
-            case 3:
-                return new Space(0, 2);
-            case 4:
                 return new Space(1, 0);
+            case 3:
+                return new Space(2, 0);
+            case 4:
+                return new Space(0, 1);
             case 5:
                 return new Space(1, 1);
             case 6:
-                return new Space(1, 2);
-            case 7:
-                return new Space(2, 0);
-            case 8:
                 return new Space(2, 1);
+            case 7:
+                return new Space(0, 2);
+            case 8:
+                return new Space(1, 2);
             case 9:
                 return new Space(2, 2);
             default:

@@ -19,10 +19,10 @@ public class UITest {
         BufferedWriter writer = makeWriter(out);
 
         UI ui = new UI(makeReaderWithInput("2\n"), writer);
-        assertEquals(new Space(0, 1), ui.getNextMove());
+        assertEquals(new Space(1, 0), ui.getNextMove());
 
         ui = new UI(makeReaderWithInput("3\n"), writer);
-        assertEquals(new Space(0, 2), ui.getNextMove());
+        assertEquals(new Space(2, 0), ui.getNextMove());
     }
 
     @Test
