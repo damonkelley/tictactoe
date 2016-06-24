@@ -12,7 +12,7 @@ class GamePresenter {
             addSpace(space);
             addSeparator();
 
-            if (shouldAddHorizontalRule(space)) addHorizontalRule();
+            if (shouldAddHorizontalRule()) addHorizontalRule();
             id++;
         }
         addNewLine();
@@ -34,8 +34,8 @@ class GamePresenter {
         }
     }
 
-    private boolean shouldAddHorizontalRule(Space space) {
-        return space.x == 2 && space.y < 2;
+    private boolean shouldAddHorizontalRule() {
+        return id == 3 || id == 6;
     }
 
     private void addHorizontalRule() {
