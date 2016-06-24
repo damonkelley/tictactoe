@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,28 +14,28 @@ public class UI implements Finder {
         this.game = new Game(new HumanPlayer(Marker.O, this), new ComputerPlayer(Marker.X));
     }
 
-    public Point getNextMove() {
+    public Space getNextMove() {
         switch (parseUserInput()) {
             case 1:
-                return new Point(0, 0);
+                return new Space(0, 0);
             case 2:
-                return new Point(0, 1);
+                return new Space(0, 1);
             case 3:
-                return new Point(0, 2);
+                return new Space(0, 2);
             case 4:
-                return new Point(1, 0);
+                return new Space(1, 0);
             case 5:
-                return new Point(1, 1);
+                return new Space(1, 1);
             case 6:
-                return new Point(1, 2);
+                return new Space(1, 2);
             case 7:
-                return new Point(2, 0);
+                return new Space(2, 0);
             case 8:
-                return new Point(2, 1);
+                return new Space(2, 1);
             case 9:
-                return new Point(2, 2);
+                return new Space(2, 2);
             default:
-                return new Point(0, 0);
+                return new Space(0, 0);
         }
     }
 
@@ -69,7 +68,7 @@ public class UI implements Finder {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
-                Marker marker = board.get(new Point(i, j));
+                Marker marker = board.get(new Space(i, j));
                 if (j < 2) {
                     output.append(" ")
                             .append((marker != null) ? marker.toString() : index)

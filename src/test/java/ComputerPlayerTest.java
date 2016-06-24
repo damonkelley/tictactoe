@@ -1,7 +1,5 @@
 import org.junit.Test;
 
-import java.awt.*;
-
 import static junit.framework.TestCase.assertEquals;
 
 public class ComputerPlayerTest {
@@ -18,10 +16,10 @@ public class ComputerPlayerTest {
         Player player = new FakePlayer(Marker.O);
         State state = new State();
 
-        state.move(new Point(0, 0), computerPlayer.getMarker());
-        state.move(new Point(2, 0), player.getMarker());
-        state.move(new Point(1, 1), computerPlayer.getMarker());
-        state.move(new Point(0, 2), player.getMarker());
+        state.move(new Space(0, 0), computerPlayer.getMarker());
+        state.move(new Space(2, 0), player.getMarker());
+        state.move(new Space(1, 1), computerPlayer.getMarker());
+        state.move(new Space(0, 2), player.getMarker());
 
         computerPlayer.move(state);
 
@@ -34,13 +32,13 @@ public class ComputerPlayerTest {
         Player player = new FakePlayer(Marker.X);
         State state = new State();
 
-        state.move(new Point(0, 0), player.getMarker());
-        state.move(new Point(2, 0), computerPlayer.getMarker());
-        state.move(new Point(1, 1), player.getMarker());
+        state.move(new Space(0, 0), player.getMarker());
+        state.move(new Space(2, 0), computerPlayer.getMarker());
+        state.move(new Space(1, 1), player.getMarker());
 
         computerPlayer.move(state);
 
-        assertEquals(computerPlayer.getMarker(), state.getBoard().get(new Point(2, 2)));
+        assertEquals(computerPlayer.getMarker(), state.getBoard().get(new Space(2, 2)));
     }
 
     private class FakePlayer extends Player {

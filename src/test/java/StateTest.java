@@ -1,8 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.Point;
-
 import static org.junit.Assert.*;
 
 
@@ -16,26 +14,27 @@ public class StateTest {
 
     @Test
     public void moveAddsMarker() {
-        state.move(new Point(1, 0), Marker.X);
-        assertEquals(Marker.X, state.getBoard().get(new Point(1, 0)));
+        state.move(new Space(1, 0), Marker.X);
+        assertEquals(Marker.X, state.getBoard().get(new Space(1, 0)));
     }
 
     @Test
-    public void itAllowsMovesToUnavailableSpaces() {
-        state.move(new Point(0, 0), Marker.X);
-        state.move(new Point(0, 0), Marker.O);
+    public void itOnlyAllowsMovesToAvailableSpaces() {
+        state.move(new Space(0, 0), Marker.X);
+        state.move(new Space(0, 0), Marker.O);
 
-        assertEquals(Marker.O, state.getBoard().get(new Point(0, 0)));
+        assertEquals(Marker.X, state.getBoard().get(new Space(0, 0)));
+        assertEquals(Marker.O, state.getNextMarker());
     }
 
     @Test
     public void itCanTestEqualityWithOtherStates() {
-        this.state.move(new Point(1, 0), Marker.X);
+        this.state.move(new Space(1, 0), Marker.X);
 
         State newState = new State();
         assertNotEquals(newState, this.state);
 
-        newState.move(new Point(1, 0), Marker.X);
+        newState.move(new Space(1, 0), Marker.X);
         assertEquals(newState, this.state);
     }
 
@@ -45,7 +44,7 @@ public class StateTest {
         assertEquals(this.state.getNextMarker(), this.state.copy().getNextMarker());
 
         State newState = this.state.copy()
-                .move(new Point(0, 1), Marker.X);
+                .move(new Space(0, 1), Marker.X);
 
         assertNotEquals(this.state, newState);
         assertEquals(Marker.O, newState.getNextMarker());
@@ -55,10 +54,10 @@ public class StateTest {
     public void itKnowsTheNextPlayerToMakeAMove() {
         assertEquals(Marker.X, this.state.getNextMarker());
 
-        this.state.move(new Point(0, 0), Marker.X);
+        this.state.move(new Space(0, 0), Marker.X);
         assertEquals(Marker.O, this.state.getNextMarker());
 
-        this.state.move(new Point(0, 2), Marker.O);
+        this.state.move(new Space(0, 2), Marker.O);
         assertEquals(Marker.X, this.state.getNextMarker());
     }
 

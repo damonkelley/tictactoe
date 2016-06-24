@@ -1,7 +1,5 @@
 import org.junit.Test;
 
-import java.awt.*;
-
 import static org.junit.Assert.assertEquals;
 
 public class HumanPlayerTest {
@@ -13,12 +11,12 @@ public class HumanPlayerTest {
         player.move(state);
         player.move(state);
 
-        assertEquals(player.getMarker(), state.getBoard().get(new Point(2, 2)));
+        assertEquals(player.getMarker(), state.getBoard().get(new Space(2, 2)));
     }
 
     private class FakeFinder implements Finder {
-        public Point getNextMove() {
-            return new Point(2, 2);
+        public Space getNextMove() {
+            return new Space(2, 2);
         }
     }
 }

@@ -1,31 +1,31 @@
-import java.awt.*;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
-    private Map<Point, Marker> spaces;
+    private Map<Space, Marker> spaces;
 
     public Board() {
         this.spaces = new HashMap<>();
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                this.spaces.put(new Point(i, j), null);
+                this.spaces.put(new Space(i, j), null);
             }
         }
     }
 
-    private Board(Map<Point, Marker> spaces) {
+    private Board(Map<Space, Marker> spaces) {
         this.spaces = spaces;
     }
 
-    public Marker get(Point point) {
-        return spaces.get(point);
+    public Marker get(Space space) {
+        return spaces.get(space);
     }
 
-    public Board put(Point point, Marker marker) {
-        spaces.put(point, marker);
+    public Board put(Space space, Marker marker) {
+        spaces.put(space, marker);
         return this;
     }
 
@@ -51,7 +51,7 @@ public class Board {
     }
 
     public Board copy() {
-        return new Board(new HashMap<Point, Marker>(this.spaces));
+        return new Board(new HashMap<>(this.spaces));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Board {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
-                Marker marker = spaces.get(new Point(j, i));
+                Marker marker = spaces.get(new Space(j, i));
                 if (j < 2) {
                     output.append(" ")
                             .append((marker != null) ? marker.toString() : " ")
@@ -80,7 +80,7 @@ public class Board {
         return output.toString();
     }
 
-    public List<Point> availableSpaces() {
+    public List<Space> availableSpaces() {
         return this.spaces.entrySet()
                 .stream()
                 .filter(space -> space.getValue() == null)

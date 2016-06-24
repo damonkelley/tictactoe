@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
 import java.io.*;
 
 import static org.junit.Assert.assertEquals;
@@ -20,10 +19,10 @@ public class UITest {
         BufferedWriter writer = makeWriter(out);
 
         UI ui = new UI(makeReaderWithInput("2\n"), writer);
-        assertEquals(new Point(0, 1), ui.getNextMove());
+        assertEquals(new Space(0, 1), ui.getNextMove());
 
         ui = new UI(makeReaderWithInput("3\n"), writer);
-        assertEquals(new Point(0, 2), ui.getNextMove());
+        assertEquals(new Space(0, 2), ui.getNextMove());
     }
 
     @Test
@@ -53,8 +52,8 @@ public class UITest {
 
         UI ui = new UI(reader, writer);
 
-        assertEquals(new Point(0, 0), ui.getNextMove());
-        assertEquals(new Point(2, 2), ui.getNextMove());
+        assertEquals(new Space(0, 0), ui.getNextMove());
+        assertEquals(new Space(2, 2), ui.getNextMove());
 
     }
 

@@ -23,7 +23,7 @@ public class State {
         return board;
     }
 
-    public State move(Point point, Marker marker) {
+    public State move(Space point, Marker marker) {
         if (board.get(point) == null) {
             board.put(point, marker);
             alternateCurrentTurn();

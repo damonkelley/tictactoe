@@ -1,10 +1,9 @@
-import java.awt.*;
 import java.util.HashMap;
 
 class ArtificialIntelligenceFinder implements Finder {
     private State state;
     private Player player;
-    private Point choice;
+    private Space choice;
 
     public ArtificialIntelligenceFinder(ComputerPlayer player, State state) {
         this.player = player;
@@ -12,7 +11,7 @@ class ArtificialIntelligenceFinder implements Finder {
     }
 
     @Override
-    public Point getNextMove() {
+    public Space getNextMove() {
         minimax(state, 6, true);
         return choice;
     }
@@ -20,9 +19,9 @@ class ArtificialIntelligenceFinder implements Finder {
     private int minimax(State state, int depth, boolean maximizingPlayer) {
         if (new GameRules(state).isOver() || depth == 0) return scoreFor(state, depth);
 
-        HashMap<Integer, Point> scores = new HashMap<>();
+        HashMap<Integer, Space> scores = new HashMap<>();
 
-        for (Point space : state.getBoard().availableSpaces()) {
+        for (Space space : state.getBoard().availableSpaces()) {
             State futureState = state.copy();
             futureState.move(space, futureState.getNextMarker());
 
@@ -45,7 +44,7 @@ class ArtificialIntelligenceFinder implements Finder {
         return 0;
     }
 
-    private int bestScoreFor(boolean maximizingPlayer, HashMap<Integer, Point> scores) {
+    private int bestScoreFor(boolean maximizingPlayer, HashMap<Integer, Space> scores) {
         if (maximizingPlayer) {
             return findMaximumScore(scores);
         } else {
@@ -53,12 +52,12 @@ class ArtificialIntelligenceFinder implements Finder {
         }
     }
 
-    private Integer findMinimumScore(HashMap<Integer, Point> scores) {
+    private Integer findMinimumScore(HashMap<Integer, Space> scores) {
         return scores.keySet().stream()
                 .reduce(Integer.MAX_VALUE, Integer::min);
     }
 
-    private Integer findMaximumScore(HashMap<Integer, Point> scores) {
+    private Integer findMaximumScore(HashMap<Integer, Space> scores) {
         return scores.keySet().stream()
                 .reduce(Integer.MIN_VALUE, Integer::max);
     }

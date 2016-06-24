@@ -57,7 +57,7 @@ public class ComputerPlayerAlwaysWinsTest {
             state.move(pickRandomAvailableSpace(state), getMarker());
         }
 
-        private Point pickRandomAvailableSpace(State state) {
+        private Space pickRandomAvailableSpace(State state) {
             int index = generator.nextInt(state.getBoard().availableSpaces().size());
             return state.getBoard().availableSpaces().get(index);
         }

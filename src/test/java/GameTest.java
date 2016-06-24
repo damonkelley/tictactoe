@@ -1,6 +1,5 @@
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -17,16 +16,16 @@ public class GameTest {
         Player player1 = new HumanPlayer(Marker.X, player1Finder);
         Player player2 = new HumanPlayer(Marker.O, player2Finder);
 
-        player1Finder.queueMove(new Point(0, 0));
-        player2Finder.queueMove(new Point(0, 1));
+        player1Finder.queueMove(new Space(0, 0));
+        player2Finder.queueMove(new Space(0, 1));
 
         Game game = new Game(player1, player2);
 
         game.nextMove();
         game.nextMove();
 
-        assertEquals(player1.getMarker(), game.getBoard().get(new Point(0, 0)));
-        assertEquals(player2.getMarker(), game.getBoard().get(new Point(0, 1)));
+        assertEquals(player1.getMarker(), game.getBoard().get(new Space(0, 0)));
+        assertEquals(player2.getMarker(), game.getBoard().get(new Space(0, 1)));
     }
 
     @Test
@@ -37,12 +36,12 @@ public class GameTest {
         Player player1 = new HumanPlayer(Marker.O, player1Finder);
         Player player2 = new HumanPlayer(Marker.X, player2Finder);
 
-        player1Finder.queueMove(new Point(0, 0));
+        player1Finder.queueMove(new Space(0, 0));
 
         Game game = new Game(player1, player2);
         game.nextMove();
 
-        assertEquals(Marker.O, game.getBoard().get(new Point(0, 0)));
+        assertEquals(Marker.O, game.getBoard().get(new Space(0, 0)));
     }
 
     @Test
@@ -53,11 +52,11 @@ public class GameTest {
         Player player1 = new HumanPlayer(Marker.X, player1Finder);
         Player player2 = new HumanPlayer(Marker.O, player2Finder);
 
-        player1Finder.queueMove(new Point(0, 0));
-        player2Finder.queueMove(new Point(2, 0));
-        player1Finder.queueMove(new Point(1, 1));
-        player2Finder.queueMove(new Point(0, 2));
-        player1Finder.queueMove(new Point(2, 2));
+        player1Finder.queueMove(new Space(0, 0));
+        player2Finder.queueMove(new Space(2, 0));
+        player1Finder.queueMove(new Space(1, 1));
+        player2Finder.queueMove(new Space(0, 2));
+        player1Finder.queueMove(new Space(2, 2));
 
         Game game = new Game(player1, player2);
 
@@ -80,15 +79,15 @@ public class GameTest {
         Player player1 = new HumanPlayer(Marker.O, player1Finder);
         Player player2 = new HumanPlayer(Marker.X, player2Finder);
 
-        player1Finder.queueMove(new Point(0, 0));
-        player2Finder.queueMove(new Point(1, 1));
-        player1Finder.queueMove(new Point(2, 0));
-        player2Finder.queueMove(new Point(1, 0));
-        player1Finder.queueMove(new Point(2, 1));
-        player2Finder.queueMove(new Point(0, 1));
-        player1Finder.queueMove(new Point(1, 2));
-        player2Finder.queueMove(new Point(2, 2));
-        player1Finder.queueMove(new Point(0, 2));
+        player1Finder.queueMove(new Space(0, 0));
+        player2Finder.queueMove(new Space(1, 1));
+        player1Finder.queueMove(new Space(2, 0));
+        player2Finder.queueMove(new Space(1, 0));
+        player1Finder.queueMove(new Space(2, 1));
+        player2Finder.queueMove(new Space(0, 1));
+        player1Finder.queueMove(new Space(1, 2));
+        player2Finder.queueMove(new Space(2, 2));
+        player1Finder.queueMove(new Space(0, 2));
 
         Game game = new Game(player1, player2);
 
@@ -107,14 +106,14 @@ public class GameTest {
     }
 
     private class QueueBackedFinder implements Finder {
-        private Queue<Point> moveQueue = new ArrayDeque<>();
+        private Queue<Space> moveQueue = new ArrayDeque<>();
 
-        public void queueMove(Point space) {
+        public void queueMove(Space space) {
             moveQueue.add(space);
         }
 
         @Override
-        public Point getNextMove() {
+        public Space getNextMove() {
             return moveQueue.remove();
         }
     }
