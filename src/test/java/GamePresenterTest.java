@@ -40,7 +40,7 @@ public class GamePresenterTest {
 
     private class FakeFinder implements Finder {
         @Override
-        public Space getNextMove(State state) {
+        public Space getNextMove(Game game) {
             return new Space(0, 2);
         }
     }

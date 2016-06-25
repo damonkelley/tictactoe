@@ -1,3 +1,3 @@
 public interface Finder {
-    Space getNextMove(State state);
+    Space getNextMove(Game game);
 }

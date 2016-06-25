@@ -7,8 +7,8 @@ public class Player {
         this.finder = finder;
     }
 
-    public void move(State state) {
-        state.move(finder.getNextMove(state), getMarker());
+    public void move(Game game) {
+        game.getState().move(finder.getNextMove(game), getMarker());
     }
 
     public Marker getMarker() {

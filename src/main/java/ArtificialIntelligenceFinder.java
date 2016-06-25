@@ -9,8 +9,8 @@ class ArtificialIntelligenceFinder implements Finder {
     }
 
     @Override
-    public Space getNextMove(State state) {
-        minimax(state, 6, true);
+    public Space getNextMove(Game game) {
+        minimax(game.getState(), 6, true);
         return choice;
     }
 

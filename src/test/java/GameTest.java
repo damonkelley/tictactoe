@@ -113,7 +113,7 @@ public class GameTest {
         }
 
         @Override
-        public Space getNextMove(State state) {
+        public Space getNextMove(Game game) {
             return moveQueue.remove();
         }
     }

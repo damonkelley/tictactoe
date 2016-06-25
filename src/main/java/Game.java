@@ -13,7 +13,7 @@ public class Game {
     }
 
     public void nextMove() {
-        nextTurn().move(state);
+        nextTurn().move(this);
     }
 
     private Player nextTurn() {
@@ -22,6 +22,10 @@ public class Game {
         } else {
             return player2;
         }
+    }
+
+    public State getState() {
+        return state;
     }
 
     public Player getWinner() {

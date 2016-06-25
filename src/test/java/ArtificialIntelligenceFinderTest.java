@@ -5,28 +5,28 @@ import static junit.framework.TestCase.assertEquals;
 public class ArtificialIntelligenceFinderTest {
     @Test
     public void itWillChooseTheWinningSpaceIfThereIsOne() {
-        State state = new State();
+        Game game = new Game(new Player(Marker.X, null), new Player(Marker.O, null));
 
-        state.move(new Space(0, 0), Marker.X);
-        state.move(new Space(2, 0), Marker.O);
-        state.move(new Space(1, 1), Marker.X);
-        state.move(new Space(0, 2), Marker.O);
+        game.getState().move(new Space(0, 0), Marker.X);
+        game.getState().move(new Space(2, 0), Marker.O);
+        game.getState().move(new Space(1, 1), Marker.X);
+        game.getState().move(new Space(0, 2), Marker.O);
 
         ArtificialIntelligenceFinder finder = new ArtificialIntelligenceFinder(Marker.X);
 
-        assertEquals(new Space(2, 2), finder.getNextMove(state));
+        assertEquals(new Space(2, 2), finder.getNextMove(game));
     }
 
     @Test
     public void itWillPreventALoss() {
-        State state = new State();
+        Game game = new Game(new Player(Marker.X, null), new Player(Marker.O, null));
 
-        state.move(new Space(0, 0), Marker.X);
-        state.move(new Space(2, 0), Marker.O);
-        state.move(new Space(1, 1), Marker.X);
+        game.getState().move(new Space(0, 0), Marker.X);
+        game.getState().move(new Space(2, 0), Marker.O);
+        game.getState().move(new Space(1, 1), Marker.X);
 
         ArtificialIntelligenceFinder finder = new ArtificialIntelligenceFinder(Marker.O);
 
-        assertEquals(new Space(2, 2), finder.getNextMove(state));
+        assertEquals(new Space(2, 2), finder.getNextMove(game));
     }
 }

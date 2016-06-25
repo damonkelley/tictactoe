@@ -18,11 +18,14 @@ public class UITest {
     public void itReadsFromIn() throws IOException {
         BufferedWriter writer = makeWriter(out);
 
+
         UI ui = new UI(makeReaderWithInput("2\n"), writer);
-        assertEquals(new Space(1, 0), ui.getNextMove(new State()));
+        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
+
+        assertEquals(new Space(1, 0), ui.getNextMove(game));
 
         ui = new UI(makeReaderWithInput("3\n"), writer);
-        assertEquals(new Space(2, 0), ui.getNextMove(new State()));
+        assertEquals(new Space(2, 0), ui.getNextMove(game));
     }
 
     @Test
@@ -51,10 +54,10 @@ public class UITest {
         BufferedWriter writer = makeWriter(out);
 
         UI ui = new UI(reader, writer);
+        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
-        assertEquals(new Space(0, 0), ui.getNextMove(new State()));
-        assertEquals(new Space(2, 2), ui.getNextMove(new State()));
-
+        assertEquals(new Space(0, 0), ui.getNextMove(game));
+        assertEquals(new Space(2, 2), ui.getNextMove(game));
     }
 
     @Test

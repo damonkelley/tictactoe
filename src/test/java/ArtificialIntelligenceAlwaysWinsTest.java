@@ -48,9 +48,9 @@ public class ArtificialIntelligenceAlwaysWinsTest {
         private Random generator = new Random();
 
         @Override
-        public Space getNextMove(State state) {
-            int index = generator.nextInt(state.getBoard().availableSpaces().size());
-            return state.getBoard().availableSpaces().get(index);
+        public Space getNextMove(Game game) {
+            int index = generator.nextInt(game.getBoard().availableSpaces().size());
+            return game.getBoard().availableSpaces().get(index);
         }
     }
 }
