@@ -1,5 +1,3 @@
-import java.awt.*;
-
 public class State {
     private Board board;
     private Marker nextMarker;
