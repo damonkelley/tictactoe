@@ -1,11 +1,15 @@
-public abstract class Player {
+class Player {
     protected Marker marker;
+    private Finder finder;
 
-    public Player(Marker marker) {
+    public Player(Marker marker, Finder finder) {
         this.marker = marker;
+        this.finder = finder;
     }
 
-    abstract public void move(State state);
+    public void move(State state) {
+        state.move(finder.getNextMove(state), getMarker());
+    }
 
     public Marker getMarker() {
         return marker;

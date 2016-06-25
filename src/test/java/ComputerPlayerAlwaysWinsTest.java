@@ -3,7 +3,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(Parameterized.class)
 public class ComputerPlayerAlwaysWinsTest {
     private ComputerPlayer computerPlayer;
-    private RandomPlayer randomPlayer;
+    private Player randomPlayer;
 
     public ComputerPlayerAlwaysWinsTest(int n) {}
 
@@ -25,7 +24,7 @@ public class ComputerPlayerAlwaysWinsTest {
 
     @Before
     public void setUp() throws Exception {
-        randomPlayer = new RandomPlayer(Marker.O);
+        randomPlayer = new Player(Marker.O, new RandomFinder());
         computerPlayer = new ComputerPlayer(Marker.X);
     }
 
@@ -45,19 +44,11 @@ public class ComputerPlayerAlwaysWinsTest {
         assertNotEquals(randomPlayer, game.getWinner());
     }
 
-    private class RandomPlayer extends Player {
+    private class RandomFinder implements Finder {
         private Random generator = new Random();
 
-        RandomPlayer(Marker marker) {
-            super(marker);
-        }
-
         @Override
-        public void move(State state) {
-            state.move(pickRandomAvailableSpace(state), getMarker());
-        }
-
-        private Space pickRandomAvailableSpace(State state) {
+        public Space getNextMove(State state) {
             int index = generator.nextInt(state.getBoard().availableSpaces().size());
             return state.getBoard().availableSpaces().get(index);
         }

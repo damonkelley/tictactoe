@@ -14,7 +14,7 @@ public class UI implements Finder {
         this.game = new Game(new HumanPlayer(Marker.O, this), new ComputerPlayer(Marker.X));
     }
 
-    public Space getNextMove() {
+    public Space getNextMove(State state) {
         switch (parseUserInput()) {
             case 1:
                 return new Space(0, 0);

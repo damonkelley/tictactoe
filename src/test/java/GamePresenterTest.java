@@ -1,11 +1,16 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
 public class GamePresenterTest {
+
     @Test
     public void itPresentsAnEmptyGame() {
-        Game game = new Game(new FakePlayer(Marker.X), new FakePlayer(Marker.O));
+        Player player1 = new Player(Marker.X, new FakeFinder());
+        Player player2 = new Player(Marker.O, new FakeFinder());
+        Game game = new Game(player1, player2);
+
         String expected = " 1 | 2 | 3 \n" +
                           "---+---+---\n" +
                           " 4 | 5 | 6 \n" +
@@ -18,7 +23,9 @@ public class GamePresenterTest {
 
     @Test
     public void itPresentsAGameWithMoves() {
-        Game game = new Game(new FakePlayer(Marker.X), new FakePlayer(Marker.O));
+        Player player1 = new Player(Marker.X, new FakeFinder());
+        Player player2 = new Player(Marker.O, new FakeFinder());
+        Game game = new Game(player1, player2);
 
         game.nextMove();
 
@@ -32,14 +39,10 @@ public class GamePresenterTest {
         assertEquals(expected, new GamePresenter(game).present());
     }
 
-    private class FakePlayer extends Player {
-        public FakePlayer(Marker marker) {
-            super(marker);
-        }
-
+    private class FakeFinder implements Finder {
         @Override
-        public void move(State state) {
-            state.move(new Space(0, 2), getMarker());
+        public Space getNextMove(State state) {
+            return new Space(0, 2);
         }
     }
 }

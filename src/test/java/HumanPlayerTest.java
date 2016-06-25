@@ -15,7 +15,7 @@ public class HumanPlayerTest {
     }
 
     private class FakeFinder implements Finder {
-        public Space getNextMove() {
+        public Space getNextMove(State state) {
             return new Space(2, 2);
         }
     }

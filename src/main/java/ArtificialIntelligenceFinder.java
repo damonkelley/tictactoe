@@ -1,17 +1,15 @@
 import java.util.HashMap;
 
 class ArtificialIntelligenceFinder implements Finder {
-    private State state;
-    private Player player;
+    private Marker marker;
     private Space choice;
 
-    public ArtificialIntelligenceFinder(ComputerPlayer player, State state) {
-        this.player = player;
-        this.state = state;
+    public ArtificialIntelligenceFinder(Marker marker) {
+        this.marker = marker;
     }
 
     @Override
-    public Space getNextMove() {
+    public Space getNextMove(State state) {
         minimax(state, 6, true);
         return choice;
     }
@@ -36,7 +34,7 @@ class ArtificialIntelligenceFinder implements Finder {
 
     private int scoreFor(State state, int depth) {
         GameRules rules = new GameRules(state);
-        if (rules.determineWinner() == player.getMarker()) {
+        if (rules.determineWinner() == marker) {
             return 10 + depth;
         } else if (rules.isOver() && !rules.isDraw()) {
             return -10 - depth;

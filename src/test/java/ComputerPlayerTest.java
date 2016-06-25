@@ -13,7 +13,7 @@ public class ComputerPlayerTest {
     @Test
     public void itWillChooseTheWinningSpaceIfThereIsOne() {
         ComputerPlayer computerPlayer = new ComputerPlayer(Marker.X);
-        Player player = new FakePlayer(Marker.O);
+        Player player = new Player(Marker.O, new NullFinder());
         State state = new State();
 
         state.move(new Space(0, 0), computerPlayer.getMarker());
@@ -29,7 +29,7 @@ public class ComputerPlayerTest {
     @Test
     public void itWillPreventALoss() {
         ComputerPlayer computerPlayer = new ComputerPlayer(Marker.O);
-        Player player = new FakePlayer(Marker.X);
+        Player player = new Player(Marker.X, new NullFinder());
         State state = new State();
 
         state.move(new Space(0, 0), player.getMarker());
@@ -41,12 +41,12 @@ public class ComputerPlayerTest {
         assertEquals(computerPlayer.getMarker(), state.getBoard().get(new Space(2, 2)));
     }
 
-    private class FakePlayer extends Player {
-
-        FakePlayer(Marker marker) {super(marker);}
+    private class NullFinder implements Finder {
 
         @Override
-        public void move(State state) {}
+        public Space getNextMove(State state) {
+            return null;
+        }
     }
 
 }
