@@ -11,7 +11,9 @@ public class UI implements Finder {
         this.reader = reader;
         this.writer = writer;
 
-        this.game = new Game(new HumanPlayer(Marker.O, this), new ComputerPlayer(Marker.X));
+        Player player1 = new Player(Marker.O, this);
+        Player player2 = new Player(Marker.X, new ArtificialIntelligenceFinder(Marker.X));
+        this.game =  new Game(player1, player2);
     }
 
     public Space getNextMove(State state) {

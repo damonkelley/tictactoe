@@ -11,11 +11,11 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(Parameterized.class)
-public class ComputerPlayerAlwaysWinsTest {
-    private ComputerPlayer computerPlayer;
+public class ArtificialIntelligenceAlwaysWinsTest {
+    private Player computerPlayer;
     private Player randomPlayer;
 
-    public ComputerPlayerAlwaysWinsTest(int n) {}
+    public ArtificialIntelligenceAlwaysWinsTest(int n) {}
 
     @Parameterized.Parameters(name = "Computer Always Wins")
     public static List<Integer> parameters() {
@@ -25,7 +25,7 @@ public class ComputerPlayerAlwaysWinsTest {
     @Before
     public void setUp() throws Exception {
         randomPlayer = new Player(Marker.O, new RandomFinder());
-        computerPlayer = new ComputerPlayer(Marker.X);
+        computerPlayer = new Player(Marker.X, new ArtificialIntelligenceFinder(Marker.X));
     }
 
     @Test

@@ -2,11 +2,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class HumanPlayerTest {
+public class PlayerTest {
     @Test
     public void itUsesAMoveFinderToFindAMove() {
         State state = new State();
-        HumanPlayer player = new HumanPlayer(Marker.O, new FakeFinder());
+        Player player = new Player(Marker.O, new FakeFinder());
 
         player.move(state);
         player.move(state);

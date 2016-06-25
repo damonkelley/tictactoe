@@ -13,8 +13,8 @@ public class GameTest {
         QueueBackedFinder player1Finder = new QueueBackedFinder();
         QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        Player player1 = new HumanPlayer(Marker.X, player1Finder);
-        Player player2 = new HumanPlayer(Marker.O, player2Finder);
+        Player player1 = new Player(Marker.X, player1Finder);
+        Player player2 = new Player(Marker.O, player2Finder);
 
         player1Finder.queueMove(new Space(0, 0));
         player2Finder.queueMove(new Space(0, 1));
@@ -33,8 +33,8 @@ public class GameTest {
         QueueBackedFinder player1Finder = new QueueBackedFinder();
         QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        Player player1 = new HumanPlayer(Marker.O, player1Finder);
-        Player player2 = new HumanPlayer(Marker.X, player2Finder);
+        Player player1 = new Player(Marker.O, player1Finder);
+        Player player2 = new Player(Marker.X, player2Finder);
 
         player1Finder.queueMove(new Space(0, 0));
 
@@ -49,8 +49,8 @@ public class GameTest {
         QueueBackedFinder player1Finder = new QueueBackedFinder();
         QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        Player player1 = new HumanPlayer(Marker.X, player1Finder);
-        Player player2 = new HumanPlayer(Marker.O, player2Finder);
+        Player player1 = new Player(Marker.X, player1Finder);
+        Player player2 = new Player(Marker.O, player2Finder);
 
         player1Finder.queueMove(new Space(0, 0));
         player2Finder.queueMove(new Space(2, 0));
@@ -76,8 +76,8 @@ public class GameTest {
         QueueBackedFinder player1Finder = new QueueBackedFinder();
         QueueBackedFinder player2Finder = new QueueBackedFinder();
 
-        Player player1 = new HumanPlayer(Marker.O, player1Finder);
-        Player player2 = new HumanPlayer(Marker.X, player2Finder);
+        Player player1 = new Player(Marker.O, player1Finder);
+        Player player2 = new Player(Marker.X, player2Finder);
 
         player1Finder.queueMove(new Space(0, 0));
         player2Finder.queueMove(new Space(1, 1));

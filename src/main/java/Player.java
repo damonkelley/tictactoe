@@ -1,4 +1,4 @@
-class Player {
+public class Player {
     protected Marker marker;
     private Finder finder;
 
