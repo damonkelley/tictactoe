@@ -17,32 +17,7 @@ public class UI implements Finder {
     }
 
     public Space getNextMove(Game game) {
-        return convertSpaceIdToSpace(getParsedUserInput());
-    }
-
-    private Space convertSpaceIdToSpace(int spaceId) {
-        switch (spaceId) {
-            case 1:
-                return new Space(0, 0);
-            case 2:
-                return new Space(1, 0);
-            case 3:
-                return new Space(2, 0);
-            case 4:
-                return new Space(0, 1);
-            case 5:
-                return new Space(1, 1);
-            case 6:
-                return new Space(2, 1);
-            case 7:
-                return new Space(0, 2);
-            case 8:
-                return new Space(1, 2);
-            case 9:
-                return new Space(2, 2);
-            default:
-                return new Space(0, 0);
-        }
+        return new SpaceIDConverter(3, 3).convert(getParsedUserInput());
     }
 
     private int getParsedUserInput() {
