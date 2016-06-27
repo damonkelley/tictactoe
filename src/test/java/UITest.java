@@ -48,6 +48,17 @@ public class UITest {
     }
 
     @Test
+    public void itCanHandleSpaceInvalidSpaceIds() {
+        BufferedWriter writer = makeWriter(out);
+
+        UI ui = new UI(makeReaderWithInput("1000\n2\n"), writer);
+        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
+
+        assertEquals(new Space(1, 0), ui.getNextMove(game));
+        assertThat(out.toString(), CoreMatchers.containsString("1000 is not a valid space\n"));
+    }
+
+    @Test
     public void itWritesToOut() throws IOException {
         BufferedReader reader = makeReaderWithInput("3\n");
         BufferedWriter writer = makeWriter(out);
@@ -68,7 +79,7 @@ public class UITest {
     }
 
     @Test
-    public void itCanConvertASpaceIndexToAPoint() throws IOException {
+    public void itCanConvertASpaceIdToAPoint() throws IOException {
         BufferedReader reader = makeReaderWithInput("1\n9\n");
         BufferedWriter writer = makeWriter(out);
 

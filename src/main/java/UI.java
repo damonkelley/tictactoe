@@ -31,7 +31,7 @@ public class UI implements Finder {
     }
 
     private boolean validate(String input) {
-        if (new IntegerInputValidator().isValid(input))
+        if (new IntegerRangeInputValidator(1, 9).isValid(input))
             return true;
         else {
             write(input + " is not a valid space\n");
