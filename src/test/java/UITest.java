@@ -71,6 +71,13 @@ public class UITest {
     }
 
     @Test
+    public void itCanSendAMessageToTheUser() {
+        UI ui = new UI(makeReaderWithInput(""), makeWriter(out));
+        ui.message("Hello world!");
+        assertThat(out.toString(), CoreMatchers.containsString("Hello world!\n"));
+    }
+
+    @Test
     public void itStartsTheGame() throws IOException {
         BufferedWriter writer = makeWriter(out);
         BufferedReader reader = makeReaderWithInput("1\n2\n4\n");

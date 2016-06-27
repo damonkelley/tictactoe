@@ -65,14 +65,12 @@ public class UI implements Finder {
         return Integer.parseInt(input);
     }
 
-    public void start() {
-        render();
-        while (!game.isOver()) {
-            game.nextMove();
-            render();
-        }
+    public void message(String contents) {
+        write(contents + "\n");
+    }
 
-        write("Game Over\n");
+    public void start() {
+        new GameLoop(game, this).play();
     }
 
     public void render() {
