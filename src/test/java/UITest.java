@@ -1,10 +1,10 @@
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class UITest {
     private OutputStream out;
@@ -18,7 +18,6 @@ public class UITest {
     public void itReadsFromIn() throws IOException {
         BufferedWriter writer = makeWriter(out);
 
-
         UI ui = new UI(makeReaderWithInput("2\n"), writer);
         Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
@@ -26,6 +25,17 @@ public class UITest {
 
         ui = new UI(makeReaderWithInput("3\n"), writer);
         assertEquals(new Space(2, 0), ui.getNextMove(game));
+    }
+
+    @Test
+    public void itCanHandleNonNumericCharacters() {
+        BufferedWriter writer = makeWriter(out);
+
+        UI ui = new UI(makeReaderWithInput("asdf\n1\n"), writer);
+        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
+
+        assertEquals(new Space(0, 0), ui.getNextMove(game));
+        assertThat(out.toString(), CoreMatchers.containsString("asdf is not a valid space\n"));
     }
 
     @Test
@@ -37,13 +47,13 @@ public class UITest {
         ui.render();
 
         String expected =
-            "\u001B[2J\u001B[H" +
-            " 1 | 2 | 3 \n" +
-            "---+---+---\n" +
-            " 4 | 5 | 6 \n" +
-            "---+---+---\n" +
-            " 7 | 8 | 9 \n" +
-            "\n";
+                "\u001B[2J\u001B[H" +
+                " 1 | 2 | 3 \n" +
+                "---+---+---\n" +
+                " 4 | 5 | 6 \n" +
+                "---+---+---\n" +
+                " 7 | 8 | 9 \n" +
+                "\n";
 
         assertEquals(expected, out.toString());
     }
@@ -70,11 +80,11 @@ public class UITest {
         ui.start();
 
         String expectedBoard =
-                        " O | O | X \n" +
-                        "---+---+---\n" +
-                        " O | X | 6 \n" +
-                        "---+---+---\n" +
-                        " X | 8 | 9 \n";
+                " O | O | X \n" +
+                "---+---+---\n" +
+                " O | X | 6 \n" +
+                "---+---+---\n" +
+                " X | 8 | 9 \n";
 
         assertTrue(out.toString().contains(expectedBoard));
         assertTrue(out.toString().contains("Game Over"));
@@ -87,5 +97,4 @@ public class UITest {
     private BufferedWriter makeWriter(OutputStream out) {
         return new BufferedWriter(new OutputStreamWriter(out));
     }
-
 }

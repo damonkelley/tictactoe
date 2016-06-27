@@ -13,11 +13,15 @@ public class UI implements Finder {
 
         Player player1 = new Player(Marker.O, this);
         Player player2 = new Player(Marker.X, new ArtificialIntelligenceFinder(Marker.X));
-        this.game =  new Game(player1, player2);
+        this.game = new Game(player1, player2);
     }
 
     public Space getNextMove(Game game) {
-        switch (parseUserInput()) {
+        return convertSpaceIdToSpace(getParsedUserInput());
+    }
+
+    private Space convertSpaceIdToSpace(int spaceId) {
+        switch (spaceId) {
             case 1:
                 return new Space(0, 0);
             case 2:
@@ -41,36 +45,60 @@ public class UI implements Finder {
         }
     }
 
-    private int parseUserInput() {
-        try {
-            return Integer.parseInt(reader.readLine());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
+    private int getParsedUserInput() {
+        String input;
+        do input = read(); while (!validate(input));
+
+        return parse(input);
+    }
+
+    private boolean validate(String input) {
+        if (new IntegerInputValidator().isValid(input))
+            return true;
+        else {
+            write(input + " is not a valid space\n");
+            return false;
         }
-        return 0;
     }
 
-    public void render() throws IOException {
-        clearScreen();
-        writer.write(new GamePresenter(game).present());
-        writer.flush();
+    private int parse(String input) {
+        return Integer.parseInt(input);
     }
 
-    private void clearScreen() throws IOException {
-        writer.write("\033[2J");
-        writer.write("\033[H");
-    }
-
-    public void start() throws IOException {
+    public void start() {
         render();
         while (!game.isOver()) {
             game.nextMove();
             render();
         }
 
-        writer.write("Game Over\n");
-        writer.flush();
+        write("Game Over\n");
     }
 
+    public void render() {
+        clearScreen();
+        write(new GamePresenter(game).present());
+    }
+
+    private void clearScreen() {
+        write("\033[2J\033[H");
+    }
+
+    private String read() {
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            System.exit(1);
+        }
+        return null;
+    }
+
+    private void write(String input) {
+        try {
+            writer.write(input);
+            writer.flush();
+        } catch (IOException e) {
+            System.exit(1);
+        }
+    }
 }
