@@ -8,10 +8,10 @@ public class GameLoop {
     }
 
     public void play() {
-        ui.render();
+        ui.render(game);
         while (!game.isOver()) {
             game.nextMove();
-            ui.render();
+            ui.render(game);
         }
         ui.message("Game Over");
     }

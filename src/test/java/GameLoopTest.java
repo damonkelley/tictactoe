@@ -45,7 +45,7 @@ public class GameLoopTest {
         }
 
         @Override
-        public void render() {
+        public void render(Game game) {
             log += "render ";
         }
 

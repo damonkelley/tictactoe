@@ -7,17 +7,12 @@ public class UI implements Finder {
     private final String CURSOR_HOME = "\033[H";
     private final String NEW_LINE = "\n";
 
-    private Game game;
     private BufferedReader reader;
     private BufferedWriter writer;
 
     public UI(BufferedReader reader, BufferedWriter writer) {
         this.reader = reader;
         this.writer = writer;
-
-        Player player1 = new Player(Marker.O, this);
-        Player player2 = new Player(Marker.X, new ArtificialIntelligenceFinder(Marker.X));
-        this.game = new Game(player1, player2);
     }
 
     public Space getNextMove(Game game) {
@@ -48,11 +43,7 @@ public class UI implements Finder {
         write(contents + NEW_LINE);
     }
 
-    public void start() {
-        new GameLoop(game, this).play();
-    }
-
-    public void render() {
+    public void render(Game game) {
         clearScreen();
         write(new GamePresenter(game).present());
     }

@@ -12,16 +12,17 @@ import java.util.Deque;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class UITest {
     private FakeWriter writer;
     private FakeReader reader;
+    private Game game;
 
     @Before
     public void setUp() throws Exception {
         reader = new FakeReader();
         writer = new FakeWriter();
+        game = new Game(new Player(Marker.O, null), new Player(Marker.X, null));
     }
 
     @Test
@@ -30,7 +31,6 @@ public class UITest {
             .addLine("3");
 
         UI ui = new UI(reader, writer);
-        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
         assertEquals(new Space(1, 0), ui.getNextMove(game));
         assertEquals(new Space(2, 0), ui.getNextMove(game));
@@ -42,7 +42,6 @@ public class UITest {
                 .addLine("1");
 
         UI ui = new UI(reader, writer);
-        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
         assertEquals(new Space(0, 0), ui.getNextMove(game));
         assertThat(writer.getOutput(), CoreMatchers.containsString("asdf is not a valid space\n"));
@@ -54,7 +53,6 @@ public class UITest {
                 .addLine("2");
 
         UI ui = new UI(reader, writer);
-        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
         assertEquals(new Space(1, 0), ui.getNextMove(game));
         assertThat(writer.getOutput(), CoreMatchers.containsString("1000 is not a valid space\n"));
@@ -62,9 +60,7 @@ public class UITest {
 
     @Test
     public void itWritesToOut() throws IOException {
-        reader.addLine("3");
-
-        new UI(reader, writer).render();
+        new UI(reader, writer).render(game);
 
         String expected =
                 "\u001B[2J\u001B[H" +
@@ -84,7 +80,6 @@ public class UITest {
             .addLine("9");
 
         UI ui = new UI(reader, writer);
-        Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
         assertEquals(new Space(0, 0), ui.getNextMove(game));
         assertEquals(new Space(2, 2), ui.getNextMove(game));
@@ -94,25 +89,6 @@ public class UITest {
     public void itCanSendAMessageToTheUser() {
         new UI(reader, writer).message("Hello world!");
         assertThat(writer.getOutput(), CoreMatchers.containsString("Hello world!\n"));
-    }
-
-    @Test
-    public void itStartsTheGame() throws IOException {
-        reader.addLine("1")
-            .addLine("2")
-            .addLine("4");
-
-        new UI(reader, writer).start();
-
-        String expectedBoard =
-                " O | O | X \n" +
-                "---+---+---\n" +
-                " O | X | 6 \n" +
-                "---+---+---\n" +
-                " X | 8 | 9 \n";
-
-        assertTrue(writer.getOutput().contains(expectedBoard));
-        assertTrue(writer.getOutput().contains("Game Over"));
     }
 
     private class FakeReader extends BufferedReader {
