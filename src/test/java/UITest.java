@@ -7,8 +7,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -37,6 +36,22 @@ public class UITest {
     }
 
     @Test
+    public void itWritesToOut() throws IOException {
+        new UI(reader, writer).render(game);
+
+        String expected =
+                "\u001B[2J\u001B[H" +
+                        " 1 | 2 | 3 \n" +
+                        "---+---+---\n" +
+                        " 4 | 5 | 6 \n" +
+                        "---+---+---\n" +
+                        " 7 | 8 | 9 \n" +
+                        "\n";
+
+        assertEquals(expected, writer.getOutput());
+    }
+
+    @Test
     public void itCanHandleNonNumericCharacters() {
         reader.addLine("asdf")
                 .addLine("1");
@@ -58,20 +73,13 @@ public class UITest {
         assertThat(writer.getOutput(), CoreMatchers.containsString("1000 is not a valid space\n"));
     }
 
-    @Test
-    public void itWritesToOut() throws IOException {
-        new UI(reader, writer).render(game);
+    @Test(expected = GameException.class)
+    public void itThrowsAnExceptionIfEndOfFileIsReached() {
+        String EOF = null;
+        reader.addLine(EOF);
 
-        String expected =
-                "\u001B[2J\u001B[H" +
-                " 1 | 2 | 3 \n" +
-                "---+---+---\n" +
-                " 4 | 5 | 6 \n" +
-                "---+---+---\n" +
-                " 7 | 8 | 9 \n" +
-                "\n";
-
-        assertEquals(expected, writer.getOutput());
+        UI ui = new UI(reader, writer);
+        ui.getNextMove(game);
     }
 
     @Test
@@ -93,7 +101,7 @@ public class UITest {
 
     private class FakeReader extends BufferedReader {
 
-        private Deque<String> lines = new ArrayDeque<>();
+        private ArrayList<String> lines = new ArrayList<>();
 
         public FakeReader() {
             super(new Reader() {
@@ -112,7 +120,7 @@ public class UITest {
 
         @Override
         public String readLine() throws IOException {
-            return lines.remove();
+            return lines.remove(0);
         }
     }
 

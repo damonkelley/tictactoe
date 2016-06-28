@@ -15,6 +15,21 @@ public class GameLoopTest {
         assertEquals("render render render render Game Over", ui.log);
     }
 
+    @Test
+    public void itQuitsTheGameIfAGameExceptionIsThrown() {
+        Game game = new Game(new Player(null, null), new Player(null, null)) {
+            @Override
+            public void nextMove() {
+                throw new GameException("End of game");
+            }
+        };
+        FakeUI ui = new FakeUI();
+
+        new GameLoop(game, ui).play();
+
+        assertEquals("render End of game", ui.log);
+    }
+
     private class FakeGame extends Game {
         private int iterations;
 

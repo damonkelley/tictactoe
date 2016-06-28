@@ -23,10 +23,13 @@ public class UI implements Finder {
         String input;
         do input = read(); while (!validate(input));
 
+        if (input == null) throw new GameException("Goodbye");
+
         return parse(input);
     }
 
     private boolean validate(String input) {
+        if (input == null) return true;
         if (new IntegerRangeInputValidator(1, 9).isValid(input))
             return true;
         else {
