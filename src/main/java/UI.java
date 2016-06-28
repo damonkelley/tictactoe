@@ -5,6 +5,7 @@ import java.io.IOException;
 public class UI implements Finder {
     private final String ERASE_SCREEN = "\033[2J";
     private final String CURSOR_HOME = "\033[H";
+    private final String NEW_LINE = "\n";
 
     private Game game;
     private BufferedReader reader;
@@ -34,7 +35,7 @@ public class UI implements Finder {
         if (new IntegerRangeInputValidator(1, 9).isValid(input))
             return true;
         else {
-            write(input + " is not a valid space\n");
+            message(input + " is not a valid space");
             return false;
         }
     }
@@ -44,7 +45,7 @@ public class UI implements Finder {
     }
 
     public void message(String contents) {
-        write(contents + "\n");
+        write(contents + NEW_LINE);
     }
 
     public void start() {
