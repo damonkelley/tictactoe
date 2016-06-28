@@ -20,26 +20,38 @@ public class UI implements Finder {
     }
 
     private int getParsedUserInput() {
-        String input;
-        do input = read(); while (!validate(input));
-
-        if (input == null) throw new GameException("Goodbye");
-
-        return parse(input);
-    }
-
-    private boolean validate(String input) {
-        if (input == null) return true;
-        if (new IntegerRangeInputValidator(1, 9).isValid(input))
-            return true;
-        else {
-            message(input + " is not a valid space");
-            return false;
-        }
+        return parse(getUserInput());
     }
 
     private int parse(String input) {
         return Integer.parseInt(input);
+    }
+
+    private String getUserInput() {
+        String input;
+
+        do {
+            input = read();
+            if (isEndOfFile(input)) quit();
+        } while (!validate(input));
+
+        return input;
+    }
+
+    private boolean isEndOfFile(String input) {
+        return input == null;
+    }
+
+    private boolean quit() {
+        throw new GameException("Goodbye");
+    }
+
+    private boolean validate(String input) {
+        if (!new IntegerRangeInputValidator(1, 9).isValid(input)) {
+            message(input + " is not a valid space");
+            return false;
+        }
+        return true;
     }
 
     public void message(String contents) {
