@@ -3,6 +3,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 public class UI implements Finder {
+    private final String ERASE_SCREEN = "\033[2J";
+    private final String CURSOR_HOME = "\033[H";
+
     private Game game;
     private BufferedReader reader;
     private BufferedWriter writer;
@@ -54,7 +57,7 @@ public class UI implements Finder {
     }
 
     private void clearScreen() {
-        write("\033[2J\033[H");
+        write(ERASE_SCREEN + CURSOR_HOME);
     }
 
     private String read() {
