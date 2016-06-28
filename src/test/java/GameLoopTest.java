@@ -23,9 +23,11 @@ public class GameLoopTest {
             this.iterations = iterations;
         }
 
+        @Override
         public void nextMove() {
         }
 
+        @Override
         public boolean isOver() {
             if (iterations == 0) {
                 return true;
