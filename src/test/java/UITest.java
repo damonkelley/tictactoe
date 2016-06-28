@@ -4,67 +4,67 @@ import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class UITest {
-    private OutputStream out;
+    private FakeWriter writer;
+    private FakeReader reader;
 
     @Before
     public void setUp() throws Exception {
-        out = new ByteArrayOutputStream();
+        reader = new FakeReader();
+        writer = new FakeWriter();
     }
 
     @Test
     public void itReadsFromIn() throws IOException {
-        BufferedWriter writer = makeWriter(out);
+        reader.addLine("2")
+            .addLine("3");
 
-        UI ui = new UI(makeReaderWithInput("2\n"), writer);
+        UI ui = new UI(reader, writer);
         Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
         assertEquals(new Space(1, 0), ui.getNextMove(game));
-
-        ui = new UI(makeReaderWithInput("3\n"), writer);
         assertEquals(new Space(2, 0), ui.getNextMove(game));
     }
 
     @Test
     public void itCanHandleNonNumericCharacters() {
-        BufferedWriter writer = makeWriter(out);
+        reader.addLine("asdf")
+                .addLine("1");
 
-        UI ui = new UI(makeReaderWithInput("asdf\n1\n"), writer);
+        UI ui = new UI(reader, writer);
         Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
         assertEquals(new Space(0, 0), ui.getNextMove(game));
-        assertThat(out.toString(), CoreMatchers.containsString("asdf is not a valid space\n"));
+        assertThat(writer.getOutput(), CoreMatchers.containsString("asdf is not a valid space\n"));
     }
 
     @Test
     public void itCanHandleSpaceInvalidSpaceIds() {
-        BufferedWriter writer = makeWriter(out);
+        reader.addLine("1000")
+                .addLine("2");
 
-        UI ui = new UI(makeReaderWithInput("1000\n2\n"), writer);
+        UI ui = new UI(reader, writer);
         Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
 
         assertEquals(new Space(1, 0), ui.getNextMove(game));
-        assertThat(out.toString(), CoreMatchers.containsString("1000 is not a valid space\n"));
+        assertThat(writer.getOutput(), CoreMatchers.containsString("1000 is not a valid space\n"));
     }
 
     @Test
     public void itWritesToOut() throws IOException {
-        BufferedReader reader = makeReaderWithInput("3\n");
-        BufferedWriter writer = makeWriter(out);
-        UI ui = new UI(reader, writer);
+        reader.addLine("3");
 
-        ui.render();
+        new UI(reader, writer).render();
 
         String expected =
                 "\u001B[2J\u001B[H" +
@@ -75,13 +75,13 @@ public class UITest {
                 " 7 | 8 | 9 \n" +
                 "\n";
 
-        assertEquals(expected, out.toString());
+        assertEquals(expected, writer.getOutput());
     }
 
     @Test
     public void itCanConvertASpaceIdToAPoint() throws IOException {
-        BufferedReader reader = makeReaderWithInput("1\n9\n");
-        BufferedWriter writer = makeWriter(out);
+        reader.addLine("1")
+            .addLine("9");
 
         UI ui = new UI(reader, writer);
         Game game = new Game(new Player(Marker.O, ui), new Player(Marker.X, ui));
@@ -92,19 +92,17 @@ public class UITest {
 
     @Test
     public void itCanSendAMessageToTheUser() {
-        UI ui = new UI(makeReaderWithInput(""), makeWriter(out));
-        ui.message("Hello world!");
-        assertThat(out.toString(), CoreMatchers.containsString("Hello world!\n"));
+        new UI(reader, writer).message("Hello world!");
+        assertThat(writer.getOutput(), CoreMatchers.containsString("Hello world!\n"));
     }
 
     @Test
     public void itStartsTheGame() throws IOException {
-        BufferedWriter writer = makeWriter(out);
-        BufferedReader reader = makeReaderWithInput("1\n2\n4\n");
+        reader.addLine("1")
+            .addLine("2")
+            .addLine("4");
 
-        UI ui = new UI(reader, writer);
-
-        ui.start();
+        new UI(reader, writer).start();
 
         String expectedBoard =
                 " O | O | X \n" +
@@ -113,15 +111,59 @@ public class UITest {
                 "---+---+---\n" +
                 " X | 8 | 9 \n";
 
-        assertTrue(out.toString().contains(expectedBoard));
-        assertTrue(out.toString().contains("Game Over"));
+        assertTrue(writer.getOutput().contains(expectedBoard));
+        assertTrue(writer.getOutput().contains("Game Over"));
     }
 
-    private BufferedReader makeReaderWithInput(String input) {
-        return new BufferedReader(new InputStreamReader(new ByteArrayInputStream(input.getBytes())));
+    private class FakeReader extends BufferedReader {
+
+        private Deque<String> lines = new ArrayDeque<>();
+
+        public FakeReader() {
+            super(new Reader() {
+                @Override
+                public int read(char[] cbuf, int off, int len) throws IOException {return 0;}
+
+                @Override
+                public void close() throws IOException {}
+            });
+        }
+
+        public FakeReader addLine(String line) {
+            lines.add(line);
+            return this;
+        }
+
+        @Override
+        public String readLine() throws IOException {
+            return lines.remove();
+        }
     }
 
-    private BufferedWriter makeWriter(OutputStream out) {
-        return new BufferedWriter(new OutputStreamWriter(out));
+    private class FakeWriter extends BufferedWriter {
+
+        private StringBuffer out = new StringBuffer();
+
+        public FakeWriter() {
+            super(new Writer() {
+                @Override
+                public void write(char[] cbuf, int off, int len) throws IOException {}
+
+                @Override
+                public void flush() throws IOException {}
+
+                @Override
+                public void close() throws IOException {}
+            });
+        }
+
+        @Override
+        public void write(String str) throws IOException {
+            out.append(str);
+        }
+
+        public String getOutput() {
+            return out.toString();
+        }
     }
 }
