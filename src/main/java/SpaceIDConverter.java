@@ -8,7 +8,7 @@ public class SpaceIDConverter {
         this.height = height;
     }
 
-    Space convert(int spaceId) {
+    public Space convert(int spaceId) {
         return new Space(calculateX(spaceId), calculateY(spaceId));
     }
 
