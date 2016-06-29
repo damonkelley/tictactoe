@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class UI implements Finder {
+public class UI {
     private final String ERASE_SCREEN = "\033[2J";
     private final String CURSOR_HOME = "\033[H";
     private final String NEW_LINE = "\n";
@@ -15,25 +15,10 @@ public class UI implements Finder {
         this.writer = writer;
     }
 
-    public Space getNextMove(Game game) {
-        return new SpaceIDConverter(3, 3).convert(getParsedUserInput());
-    }
+    public String getUserInput() {
+        String input = read();
 
-    private int getParsedUserInput() {
-        return parse(getUserInput());
-    }
-
-    private int parse(String input) {
-        return Integer.parseInt(input);
-    }
-
-    private String getUserInput() {
-        String input;
-
-        do {
-            input = read();
-            if (isEndOfFile(input)) quit();
-        } while (!validate(input));
+        if (isEndOfFile(input)) quit();
 
         return input;
     }
@@ -44,14 +29,6 @@ public class UI implements Finder {
 
     private void quit() {
         throw new GameException("Goodbye");
-    }
-
-    private boolean validate(String input) {
-        if (!new IntegerRangeInputValidator(1, 9).isValid(input)) {
-            message(input + " is not a valid space");
-            return false;
-        }
-        return true;
     }
 
     public void message(String contents) {

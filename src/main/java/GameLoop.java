@@ -18,9 +18,17 @@ public class GameLoop {
 
     private void loop() {
         while (!game.isOver()) {
-            game.nextMove();
-            ui.render(game);
+            nextTurn();
         }
         ui.message("Game Over");
+    }
+
+    private void nextTurn() {
+        try {
+            game.nextMove();
+            ui.render(game);
+        } catch (InputValidationError e) {
+            ui.message(e.getMessage());
+        }
     }
 }

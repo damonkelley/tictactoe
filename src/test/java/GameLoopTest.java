@@ -30,6 +30,21 @@ public class GameLoopTest {
         assertEquals("render End of game", ui.log);
     }
 
+    @Test
+    public void itLogsValidationErrorsToTheUI() {
+        Game game = new FakeGame(3) {
+            @Override
+            public void nextMove() {
+                throw new InputValidationError("Bad Argument ");
+            }
+        };
+        FakeUI ui = new FakeUI();
+
+        new GameLoop(game, ui).play();
+
+        assertEquals("render Bad Argument Bad Argument Bad Argument Game Over", ui.log);
+    }
+
     private class FakeGame extends Game {
         private int iterations;
 
