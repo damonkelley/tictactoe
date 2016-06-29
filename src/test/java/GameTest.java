@@ -105,7 +105,7 @@ public class GameTest {
         assertTrue(game.isOver());
     }
 
-    private class QueueBackedFinder implements Finder {
+    private class QueueBackedFinder extends Finder {
         private Queue<Space> moveQueue = new ArrayDeque<>();
 
         public void queueMove(Space space) {

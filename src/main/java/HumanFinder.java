@@ -1,4 +1,4 @@
-public class HumanFinder implements Finder {
+public class HumanFinder extends Finder {
     private UI ui;
 
     public HumanFinder(UI ui) {

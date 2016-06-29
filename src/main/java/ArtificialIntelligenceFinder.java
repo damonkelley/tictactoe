@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-class ArtificialIntelligenceFinder implements Finder {
+class ArtificialIntelligenceFinder extends Finder {
     private Marker marker;
     private Space choice;
 

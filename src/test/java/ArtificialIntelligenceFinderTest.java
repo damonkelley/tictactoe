@@ -29,4 +29,10 @@ public class ArtificialIntelligenceFinderTest {
 
         assertEquals(new Space(2, 2), finder.getNextMove(game));
     }
+
+    @Test
+    public void allInstancesAreEqual() {
+        assertEquals(new ArtificialIntelligenceFinder(Marker.X), new ArtificialIntelligenceFinder(null));
+        assertEquals(new ArtificialIntelligenceFinder(null), new ArtificialIntelligenceFinder(null));
+    }
 }

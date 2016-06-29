@@ -49,4 +49,10 @@ public class HumanFinderTest {
 
         assertEquals(new Space(1, 0), finder.getNextMove(game));
     }
+
+    @Test
+    public void allInstancesAreEqual() {
+        assertEquals(new HumanFinder(ui), new HumanFinder(null));
+        assertEquals(new HumanFinder(null), new HumanFinder(null));
+    }
 }

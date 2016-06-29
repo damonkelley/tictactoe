@@ -44,7 +44,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
         assertNotEquals(randomPlayer, game.getWinner());
     }
 
-    private class RandomFinder implements Finder {
+    private class RandomFinder extends Finder {
         private Random generator = new Random();
 
         @Override

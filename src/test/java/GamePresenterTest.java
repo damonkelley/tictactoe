@@ -38,7 +38,7 @@ public class GamePresenterTest {
         assertEquals(expected, new GamePresenter(game).present());
     }
 
-    private class FakeFinder implements Finder {
+    private class FakeFinder extends Finder {
         @Override
         public Space getNextMove(Game game) {
             return new Space(0, 2);
