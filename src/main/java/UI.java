@@ -42,7 +42,7 @@ public class UI implements Finder {
         return input == null;
     }
 
-    private boolean quit() {
+    private void quit() {
         throw new GameException("Goodbye");
     }
 
