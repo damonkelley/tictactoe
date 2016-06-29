@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class PlayerTest {
     @Test
@@ -14,7 +15,17 @@ public class PlayerTest {
         assertEquals(player.getMarker(), game.getBoard().get(new Space(2, 2)));
     }
 
-    private class FakeFinder implements Finder {
+    @Test
+    public void equalityIsBasedOnMarkerAndFinderType() {
+        assertEquals(new Player(Marker.O, null), new Player(Marker.O, null));
+        assertEquals(new Player(Marker.O, new FakeFinder()), new Player(Marker.O, new FakeFinder()));
+
+        assertNotEquals(new Player(Marker.X, new FakeFinder()), new Player(Marker.O, new FakeFinder()));
+        assertNotEquals(new Player(Marker.O, null), new Player(Marker.O, new FakeFinder()));
+        assertNotEquals(new Player(Marker.X, null), new Player(Marker.O, null));
+    }
+
+    private class FakeFinder extends Finder {
         public Space getNextMove(Game game) {
             return new Space(2, 2);
         }
