@@ -6,9 +6,9 @@ public class Configurator {
     }
 
     public Game configure() {
-        Player xPlayer = askPlayerTypeFor(Marker.X);
-        Player oPlayer = askPlayerTypeFor(Marker.O);
-        Marker first = askFirstMarker();
+        Player xPlayer = getPlayerTypeFor(Marker.X);
+        Player oPlayer = getPlayerTypeFor(Marker.O);
+        Marker first = getFirstMarker();
 
         if (first == Marker.X) {
             return new Game(xPlayer, oPlayer);
@@ -17,23 +17,20 @@ public class Configurator {
         }
     }
 
-    private Player askPlayerTypeFor(Marker marker) {
-        ui.message(String.format("Is %s a human or a computer? H/C", marker));
+    private Player getPlayerTypeFor(Marker marker) {
+        PlayerTypeInputValidator validator = new PlayerTypeInputValidator();
 
-        if (ui.getUserInput().equals("H")) {
+        String type = ui.prompt(String.format("Is %s a human or a computer? H/C", marker), validator);
+
+        if (type.equals(validator.HUMAN_TYPE)) {
             return PlayerFactory.human(marker, ui);
+        } else {
+            return PlayerFactory.computer(marker);
         }
-
-        return PlayerFactory.computer(marker);
     }
 
-    private Marker askFirstMarker() {
-        ui.message(String.format("Who will go first? X/O"));
-
-        if (ui.getUserInput().equals("X")) {
-            return Marker.X;
-        }
-
-        return Marker.O;
+    private Marker getFirstMarker() {
+        String input = ui.prompt("Who will go first? X/O", new MarkerInputValidator());
+        return Marker.valueOf(input);
     }
 }
