@@ -1,4 +1,4 @@
-public class IntegerRangeInputValidator {
+public class IntegerRangeInputValidator implements Validator {
     private int low;
     private int high;
 
@@ -7,6 +7,7 @@ public class IntegerRangeInputValidator {
         this.high = high;
     }
 
+    @Override
     public boolean isValid(String input) {
         try {
             return isInRange(Integer.parseInt(input));
