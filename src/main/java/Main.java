@@ -12,11 +12,6 @@ public class Main {
 
         UI ui = new UI(reader, writer);
 
-        Player player1 = new Player(Marker.O, new HumanFinder(ui));
-        Player player2 = new Player(Marker.X, new ArtificialIntelligenceFinder(Marker.X));
-
-        Game game = new Game(player1, player2);
-
-        new GameLoop(game, ui).play();
+        new GameLoop(new Configurator(ui).configure(), ui).play();
     }
 }
