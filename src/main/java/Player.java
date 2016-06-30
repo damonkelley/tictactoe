@@ -29,6 +29,9 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{marker=" + marker + '}';
+        return "Player{" +
+                "marker=" + marker +
+                ", finder=" + finder +
+                '}';
     }
 }
