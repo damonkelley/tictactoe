@@ -27,9 +27,8 @@ public class ConfiguratorTest {
 
         configurator.configure();
 
-        assertThat(writer.getOutput(), CoreMatchers.containsString("Is X a human or a computer? H/C"));
-        assertThat(writer.getOutput(), CoreMatchers.containsString("Is O a human or a computer? H/C"));
-        assertThat(writer.getOutput(), CoreMatchers.containsString("Who will go first? X/O"));
+        assertThat(writer.getOutput(), CoreMatchers.containsString("Is O a human (H) or a computer (C)?\nH/C: "));
+        assertThat(writer.getOutput(), CoreMatchers.containsString("Who will go first?\nX/O: "));
     }
 
     @Test

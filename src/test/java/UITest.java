@@ -93,6 +93,6 @@ public class UITest {
                 .addLine("yes");
 
         assertEquals("yes", ui.prompt("prompt?", validator));
-        assertThat(writer.getOutput(), CoreMatchers.containsString("prompt?\nprompt?"));
+        assertThat(writer.getOutput(), CoreMatchers.containsString("prompt?prompt?"));
     }
 }

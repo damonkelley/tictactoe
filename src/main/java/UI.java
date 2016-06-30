@@ -66,7 +66,7 @@ public class UI {
         String input;
 
         do {
-            message(contents);
+            write(contents);
             input = getUserInput();
         } while (!validator.isValid(input));
 

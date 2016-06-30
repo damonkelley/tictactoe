@@ -16,7 +16,7 @@ public class Configurator {
     private Player getPlayerTypeFor(Marker marker) {
         PlayerTypeInputValidator validator = new PlayerTypeInputValidator();
 
-        String type = ui.prompt(String.format("Is %s a human or a computer? H/C", marker), validator);
+        String type = ui.prompt(String.format("Is %s a human (H) or a computer (C)?\nH/C: ", marker), validator);
 
         if (type.equals(validator.HUMAN_TYPE)) {
             return PlayerFactory.human(marker, ui);
@@ -26,7 +26,7 @@ public class Configurator {
     }
 
     private Marker getFirstMarker() {
-        String input = ui.prompt("Who will go first? X/O", new MarkerInputValidator());
+        String input = ui.prompt("Who will go first?\nX/O: ", new MarkerInputValidator());
         return Marker.valueOf(input);
     }
 }
