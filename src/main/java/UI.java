@@ -61,4 +61,15 @@ public class UI {
             System.exit(1);
         }
     }
+
+    public String prompt(String contents, Validator validator) {
+        String input;
+
+        do {
+            message(contents);
+            input = getUserInput();
+        } while (!validator.isValid(input));
+
+        return input;
+    }
 }

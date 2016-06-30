@@ -59,4 +59,40 @@ public class UITest {
         new UI(reader, writer).message("Hello world!");
         assertThat(writer.getOutput(), CoreMatchers.containsString("Hello world!\n"));
     }
+
+    @Test
+    public void itPromptsTheUserForInput() {
+        UI ui = new UI(reader, writer);
+        Validator validator = new Validator() {
+            @Override
+            public boolean isValid(String input) {
+                return true;
+            }
+        };
+
+        reader.addLine("yes");
+
+        assertEquals("yes", ui.prompt("Did I prompt you?", validator));
+        assertThat(writer.getOutput(), CoreMatchers.containsString("Did I prompt you?"));
+    }
+
+    @Test
+    public void itWillContinueToPromptUntilItGetsValidInput() {
+        UI ui = new UI(reader, writer);
+        Validator validator = new Validator() {
+            @Override
+            public boolean isValid(String input) {
+                if ("yes".equals(input)) {
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        reader.addLine("no")
+                .addLine("yes");
+
+        assertEquals("yes", ui.prompt("prompt?", validator));
+        assertThat(writer.getOutput(), CoreMatchers.containsString("prompt?\nprompt?"));
+    }
 }
