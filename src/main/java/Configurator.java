@@ -6,15 +6,11 @@ public class Configurator {
     }
 
     public Game configure() {
-        Player xPlayer = getPlayerTypeFor(Marker.X);
-        Player oPlayer = getPlayerTypeFor(Marker.O);
-        Marker first = getFirstMarker();
-
-        if (first == Marker.X) {
-            return new Game(xPlayer, oPlayer);
-        } else {
-            return new Game(oPlayer, xPlayer);
-        }
+        return new GameBuilder()
+                .setXPlayer(getPlayerTypeFor(Marker.X))
+                .setOPlayer(getPlayerTypeFor(Marker.O))
+                .setFirstMarker(getFirstMarker())
+                .build();
     }
 
     private Player getPlayerTypeFor(Marker marker) {
