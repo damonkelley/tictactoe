@@ -12,6 +12,10 @@ public class Main {
 
         UI ui = new UI(reader, writer);
 
-        new GameLoop(new Configurator(ui).configure(), ui).play();
+        try {
+            new GameLoop(new Configurator(ui).configure(), ui).play();
+        } catch (GameException e) {
+            ui.message(e.getMessage());
+        }
     }
 }

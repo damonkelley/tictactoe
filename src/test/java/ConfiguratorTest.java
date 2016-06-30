@@ -34,37 +34,34 @@ public class ConfiguratorTest {
 
     @Test
     public void itSetsUpAHumanVsHumanGame() {
-        Configurator configurator = new Configurator(ui);
         reader.addLine("H")
                 .addLine("H")
                 .addLine("X");
 
         Game game = new Game(PlayerFactory.human(Marker.X, ui), PlayerFactory.human(Marker.O, ui));
 
-        assertEquals(game, configurator.configure());
+        assertEquals(game, new Configurator(ui).configure());
     }
 
     @Test
     public void itSetsUpAHumanVsComputerGame() {
-        Configurator configurator = new Configurator(ui);
         reader.addLine("H")
                 .addLine("C")
                 .addLine("X");
 
         Game game = new Game(PlayerFactory.human(Marker.X, ui), PlayerFactory.computer(Marker.O));
 
-        assertEquals(game, configurator.configure());
+        assertEquals(game, new Configurator(ui).configure());
     }
 
     @Test
     public void itSetsUpTheGameWithThePlayerThatIsGoingFirst() {
-        Configurator configurator = new Configurator(ui);
         reader.addLine("C")
                 .addLine("C")
                 .addLine("O");
 
         Game game = new Game(PlayerFactory.computer(Marker.O), PlayerFactory.computer(Marker.X));
 
-        assertEquals(game, configurator.configure());
+        assertEquals(game, new Configurator(ui).configure());
     }
 }

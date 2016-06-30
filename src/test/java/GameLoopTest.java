@@ -16,21 +16,6 @@ public class GameLoopTest {
     }
 
     @Test
-    public void itQuitsTheGameIfAGameExceptionIsThrown() {
-        Game game = new Game(new Player(null, null), new Player(null, null)) {
-            @Override
-            public void nextMove() {
-                throw new GameException("End of game");
-            }
-        };
-        FakeUI ui = new FakeUI();
-
-        new GameLoop(game, ui).play();
-
-        assertEquals("render End of game", ui.log);
-    }
-
-    @Test
     public void itLogsValidationErrorsToTheUI() {
         Game game = new FakeGame(3) {
             @Override
