@@ -51,4 +51,26 @@ public class Game {
     public Board getBoard() {
         return state.getBoard();
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "rules=" + rules +
+                ", state=" + state +
+                ", player1=" + player1 +
+                ", player2=" + player2 +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Game game = (Game) o;
+
+        if (state != null ? !state.equals(game.state) : game.state != null) return false;
+        if (player1 != null ? !player1.equals(game.player1) : game.player1 != null) return false;
+        return player2 != null ? player2.equals(game.player2) : game.player2 == null;
+    }
 }
