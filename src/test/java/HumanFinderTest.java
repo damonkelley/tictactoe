@@ -1,7 +1,9 @@
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class HumanFinderTest {
 
@@ -28,6 +30,18 @@ public class HumanFinderTest {
 
         assertEquals(new Space(1, 0), finder.getNextMove(game));
         assertEquals(new Space(2, 0), finder.getNextMove(game));
+    }
+
+    @Test
+    public void itPromptsTheUserForTheNextMove() {
+        reader.addLine("2")
+                .addLine("3");
+
+        Finder finder = new HumanFinder(ui);
+
+        finder.getNextMove(game);
+
+        assertThat(writer.getOutput(), CoreMatchers.containsString("Space #: "));
     }
 
     @Test(expected = InputValidationError.class)

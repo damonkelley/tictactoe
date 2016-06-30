@@ -15,24 +15,10 @@ public class HumanFinder extends Finder {
     }
 
     private String getUserInput() {
-        String input;
-
-        do {
-            input = ui.getUserInput();
-        } while (!validate(input));
-
-        return input;
+        return ui.prompt("Space #: ", new SpaceIDInputValidator(1, 9));
     }
 
     private int parse(String input) {
         return Integer.parseInt(input);
-    }
-
-    private boolean validate(String input) {
-        if (new IntegerRangeInputValidator(1, 9).isValid(input)) {
-            return true;
-        } else {
-            throw new InputValidationError(input + " is not a valid space");
-        }
     }
 }
