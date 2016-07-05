@@ -61,7 +61,7 @@ public class GameTest {
                 .move(new Space(0, 2), Marker.O)
                 .move(new Space(2, 2), Marker.X);
 
-        assertEquals(player1, game.getWinner());
+        assertEquals(player1.getMarker(), game.determineWinner());
         assertFalse(game.isDraw());
         assertTrue(game.isOver());
     }
@@ -168,16 +168,6 @@ public class GameTest {
         gameCopy.nextMove();
 
         assertNotEquals(game, gameCopy);
-    }
-
-    @Test
-    public void itDeterminesIfAMoveCanBeMade() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
-
-        game.move(new Space(0, 0), Marker.X);
-
-        assertFalse(game.canMove(new Space(0, 0)));
-        assertTrue(game.canMove(new Space(1, 0)));
     }
 
     @Test

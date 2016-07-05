@@ -39,7 +39,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
         Game game = new Game(computerPlayer, randomPlayer);
         while (!game.isOver()) game.nextMove();
 
-        assertNotEquals(randomPlayer, game.getWinner());
+        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
         Game game = new Game(randomPlayer, computerPlayer);
         while (!game.isOver()) game.nextMove();
 
-        assertNotEquals(randomPlayer, game.getWinner());
+        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
     }
 
     private class RandomFinder extends Finder {

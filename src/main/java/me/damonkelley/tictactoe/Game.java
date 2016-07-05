@@ -39,7 +39,7 @@ public class Game {
         return this;
     }
 
-    public boolean canMove(Space point) {
+    private boolean canMove(Space point) {
         return state.getBoard().get(point) == null;
     }
 
@@ -58,18 +58,6 @@ public class Game {
 
     public Marker nextTurn() {
         return state.getNextMarker();
-    }
-
-    public Player getWinner() {
-        Marker winningMarker = determineWinner();
-
-        if (winningMarker == player1.getMarker()) {
-            return player1;
-        } else if (winningMarker == player2.getMarker()) {
-            return player2;
-        }
-
-        return null;
     }
 
     public Marker determineWinner() {

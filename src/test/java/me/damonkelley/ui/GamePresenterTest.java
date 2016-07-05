@@ -33,7 +33,7 @@ public class GamePresenterTest {
         Player player2 = new Player(Marker.O, new FakeFinder());
         Game game = new Game(player1, player2);
 
-        game.nextMove();
+        player1.move(game);
 
         String expected = " 1 | 2 | 3 \n" +
                           "---+---+---\n" +
