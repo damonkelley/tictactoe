@@ -32,11 +32,23 @@ public class Game {
         this.state = state;
     }
 
-    public void nextMove() {
-        nextTurn().move(this);
+    public Game move(Space space, Marker marker) {
+        if (canMove(space)) {
+            state.move(space, marker);
+        }
+        return this;
     }
 
-    private Player nextTurn() {
+    public boolean canMove(Space point) {
+        return state.getBoard().get(point) == null;
+    }
+
+    public Game nextMove() {
+        nextPlayer().move(this);
+        return this;
+    }
+
+    private Player nextPlayer() {
         if (state.getNextMarker() == player1.getMarker()) {
             return player1;
         } else {
@@ -44,8 +56,8 @@ public class Game {
         }
     }
 
-    public State getState() {
-        return state;
+    public Marker nextTurn() {
+        return state.getNextMarker();
     }
 
     public Player getWinner() {
@@ -58,48 +70,6 @@ public class Game {
         }
 
         return null;
-    }
-
-    public Board getBoard() {
-        return state.getBoard();
-    }
-
-    @Override
-    public String toString() {
-        return "me.damonkelley.tictactoe.Game{" +
-                "state=" + state +
-                ", player1=" + player1 +
-                ", player2=" + player2 +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Game game = (Game) o;
-
-        if (state != null ? !state.equals(game.state) : game.state != null) return false;
-        if (player1 != null ? !player1.equals(game.player1) : game.player1 != null) return false;
-        return player2 != null ? player2.equals(game.player2) : game.player2 == null;
-    }
-
-    public Game reset() {
-        state = new State(player1.getMarker());
-        return this;
-    }
-
-    public Game copy() {
-        return new Game(player1, player2, state.copy());
-    }
-
-    public boolean isOver() {
-        return determineWinner() != null || isDraw();
-    }
-
-    public boolean canMove(State state, Space point) {
-        return state.getBoard().get(point) == null;
     }
 
     public Marker determineWinner() {
@@ -119,11 +89,45 @@ public class Game {
                 .allMatch(b -> b);
     }
 
+    public boolean isOver() {
+        return determineWinner() != null || isDraw();
+    }
+
     public boolean isDraw() {
         return state.getBoard().isFull() && determineWinner() == null;
     }
 
-    public void move(Space space, Marker marker) {
-        state.move(space, marker);
+    public Board getBoard() {
+        return state.getBoard();
+    }
+
+    public Game reset() {
+        state = new State(player1.getMarker());
+        return this;
+    }
+
+    public Game copy() {
+        return new Game(player1, player2, state.copy());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Game game = (Game) o;
+
+        if (state != null ? !state.equals(game.state) : game.state != null) return false;
+        if (player1 != null ? !player1.equals(game.player1) : game.player1 != null) return false;
+        return player2 != null ? player2.equals(game.player2) : game.player2 == null;
+    }
+
+    @Override
+    public String toString() {
+        return "me.damonkelley.tictactoe.Game{" +
+                "state=" + state +
+                ", player1=" + player1 +
+                ", player2=" + player2 +
+                '}';
     }
 }

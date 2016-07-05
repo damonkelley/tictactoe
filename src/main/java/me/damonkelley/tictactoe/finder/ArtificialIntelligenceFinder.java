@@ -27,7 +27,7 @@ public class ArtificialIntelligenceFinder extends Finder {
 
         for (Space space : game.getBoard().availableSpaces()) {
             Game futureGame = game.copy();
-            futureGame.getState().move(space, futureGame.getState().getNextMarker());
+            futureGame.move(space, futureGame.nextTurn());
 
             scores.put(minimax(futureGame, depth - 1, !maximizingPlayer), space);
         }

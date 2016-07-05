@@ -23,7 +23,7 @@ public class GameLoopTest {
     public void itLogsValidationErrorsToTheUI() {
         Game game = new FakeGame(3) {
             @Override
-            public void nextMove() {
+            public Game nextMove() {
                 throw new InputValidationError("Bad Argument");
             }
         };
@@ -58,7 +58,8 @@ public class GameLoopTest {
         }
 
         @Override
-        public void nextMove() {
+        public Game nextMove() {
+            return this;
         }
 
         @Override
