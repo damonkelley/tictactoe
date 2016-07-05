@@ -58,32 +58,6 @@ public class Board implements Iterable<Space> {
         return new Board(new HashMap<>(this.spaces));
     }
 
-    @Override
-    public String toString() {
-        StringBuffer output = new StringBuffer();
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-
-                Marker marker = spaces.get(new Space(j, i));
-                if (j < 2) {
-                    output.append(" ")
-                            .append((marker != null) ? marker.toString() : " ")
-                            .append(" |");
-                } else {
-                    output.append(" ")
-                            .append((marker != null) ? marker.toString() : " ")
-                            .append(" \n");
-                }
-
-            }
-            if (i < 2) {
-                output.append("---+---+---\n");
-            }
-        }
-        return output.toString();
-    }
-
     public List<Space> availableSpaces() {
         return this.spaces.entrySet()
                 .stream()
