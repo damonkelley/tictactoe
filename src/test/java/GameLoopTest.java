@@ -72,22 +72,4 @@ public class GameLoopTest {
             return this;
         }
     }
-
-    private class FakeUI extends UI {
-        public String log = "";
-
-        public FakeUI() {
-            super(null, null);
-        }
-
-        @Override
-        public void render(Game game) {
-            log += "render ";
-        }
-
-        @Override
-        public void message(String contents) {
-            log += contents + " ";
-        }
-    }
 }
