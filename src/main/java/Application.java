@@ -12,7 +12,6 @@ public class Application {
         this.ui = ui;
     }
 
-
     public void start() {
         try {
             newGame();
@@ -37,15 +36,14 @@ public class Application {
 
     private boolean playAgain() {
         playAgainMenu.display();
+        boolean shouldPlayAgain = playAgainMenu.shouldPlayAgain();
 
-        if (playAgainMenu.shouldPlayAgain()) {
-            resetGame();
-            return true;
-        }
-        return false;
+        if (shouldPlayAgain) reset();
+
+        return shouldPlayAgain;
     }
 
-    private void resetGame() {
+    private void reset() {
         if (playAgainMenu.shouldReconfigure()) {
             newGame();
         } else {
