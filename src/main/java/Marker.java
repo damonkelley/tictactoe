@@ -1,4 +1,0 @@
-enum Marker {
-    X,
-    O;
-}
