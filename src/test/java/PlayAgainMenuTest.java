@@ -8,11 +8,12 @@ public class PlayAgainMenuTest {
     @Test
     public void itWillDisplayTheMenu() {
         FakeUI ui = new FakeUI();
+        ui.input.add("Y");
         ui.input.add("N");
 
         new PlayAgainMenu(ui).display();
 
-        assertEquals("Play again?\nY/N:  ", ui.log);
+        assertEquals("Play again?\nY/N:  Do you want to use a different game configuration?\nY/N:  ", ui.log);
     }
 
     @Test
@@ -30,13 +31,17 @@ public class PlayAgainMenuTest {
     @Test
     public void itDeterminesIfTheGameShouldBePlayedAgain() {
         FakeUI ui = new FakeUI();
-        ui.input.add("N");
         ui.input.add("Y");
+        ui.input.add("Y");
+        ui.input.add("Y");
+        ui.input.add("N");
 
         PlayAgainMenu menu = new PlayAgainMenu(ui).display();
-        assertFalse(menu.shouldPlayAgain());
+        assertTrue(menu.shouldPlayAgain());
+        assertTrue(menu.shouldReconfigure());
 
         menu.display();
         assertTrue(menu.shouldPlayAgain());
+        assertFalse(menu.shouldReconfigure());
     }
 }

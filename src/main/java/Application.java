@@ -16,6 +16,7 @@ public class Application {
     public void start() {
         try {
             newGame();
+            play();
         } catch (GameException e) {
             ui.message(e.getMessage());
         }
@@ -28,22 +29,27 @@ public class Application {
                 .setOPlayer(configMenu.getOPlayer())
                 .setFirstMarker(configMenu.getFirstMarker())
                 .build();
-        play();
+    }
+
+    private void play() {
+        do gameLoop.play(game); while (playAgain());
     }
 
     private boolean playAgain() {
         playAgainMenu.display();
 
         if (playAgainMenu.shouldPlayAgain()) {
-            gameLoop.reset(game);
+            resetGame();
             return true;
         }
         return false;
     }
 
-    private void play() {
-        do {
-            gameLoop.play(game);
-        } while (playAgain());
+    private void resetGame() {
+        if (playAgainMenu.shouldReconfigure()) {
+            newGame();
+        } else {
+            gameLoop.reset(game);
+        }
     }
 }

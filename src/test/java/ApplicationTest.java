@@ -29,11 +29,20 @@ public class ApplicationTest {
     }
 
     @Test
-    public void itWillPlayTheGameAgain() {
+    public void itWillPlayTheGameAgainWithTheSameConfiguration() {
         playAgainMenu.iterations++;
 
         new Application(configMenu, gameLoop, playAgainMenu, ui).start();
         assertEquals("config-menu play play-again-menu reset play play-again-menu ", log);
+    }
+
+    @Test
+    public void itCanBeReconfiguredAfterAGameHasBeenPlayed() {
+        playAgainMenu.iterations++;
+        playAgainMenu.reconfigure = true;
+
+        new Application(configMenu, gameLoop, playAgainMenu, ui).start();
+        assertEquals("config-menu play play-again-menu config-menu play play-again-menu ", log);
     }
 
     @Test
@@ -82,6 +91,7 @@ public class ApplicationTest {
 
     private class FakePlayAgainMenu extends PlayAgainMenu {
         public int iterations = 1;
+        public boolean reconfigure = false;
 
         public FakePlayAgainMenu(UI ui) {
             super(ui);
@@ -97,6 +107,11 @@ public class ApplicationTest {
         @Override
         public boolean shouldPlayAgain() {
             return iterations > 0;
+        }
+
+        @Override
+        public boolean shouldReconfigure() {
+            return reconfigure;
         }
     }
 
