@@ -1,10 +1,8 @@
 package me.damonkelley.tictactoe.finder;
 
 import me.damonkelley.tictactoe.Game;
-import me.damonkelley.tictactoe.GameRules;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe.State;
 
 import java.util.HashMap;
 
@@ -18,20 +16,20 @@ public class ArtificialIntelligenceFinder extends Finder {
 
     @Override
     public Space getNextMove(Game game) {
-        minimax(game.getState(), 6, true);
+        minimax(game, 6, true);
         return choice;
     }
 
-    private int minimax(State state, int depth, boolean maximizingPlayer) {
-        if (new GameRules(state).isOver() || depth == 0) return scoreFor(state, depth);
+    private int minimax(Game game, int depth, boolean maximizingPlayer) {
+        if (game.isOver() || depth == 0) return scoreFor(game, depth);
 
         HashMap<Integer, Space> scores = new HashMap<>();
 
-        for (Space space : state.getBoard().availableSpaces()) {
-            State futureState = state.copy();
-            futureState.move(space, futureState.getNextMarker());
+        for (Space space : game.getBoard().availableSpaces()) {
+            Game futureGame = game.copy();
+            futureGame.getState().move(space, futureGame.getState().getNextMarker());
 
-            scores.put(minimax(futureState, depth - 1, !maximizingPlayer), space);
+            scores.put(minimax(futureGame, depth - 1, !maximizingPlayer), space);
         }
 
         int bestScore = bestScoreFor(maximizingPlayer, scores);
@@ -40,11 +38,10 @@ public class ArtificialIntelligenceFinder extends Finder {
         return bestScore;
     }
 
-    private int scoreFor(State state, int depth) {
-        GameRules rules = new GameRules(state);
-        if (rules.determineWinner() == marker) {
+    private int scoreFor(Game game, int depth) {
+        if (game.determineWinner() == marker) {
             return 10 + depth;
-        } else if (rules.isOver() && !rules.isDraw()) {
+        } else if (game.isOver() && !game.isDraw()) {
             return -10 - depth;
         }
         return 0;
