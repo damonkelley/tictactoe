@@ -10,24 +10,22 @@ class FakeUI extends UI {
     }
 
     @Override
+    public String getUserInput() {
+        return input.remove(0);
+    }
+
+    @Override
+    protected void write(String input) {
+        log += input + " ";
+    }
+
+    @Override
     public void render(Game game) {
-        log += "render ";
+        write("render");
     }
 
     @Override
     public void message(String contents) {
-        log += contents + " ";
-    }
-
-    @Override
-    public String prompt(String contents, Validator validator) {
-        String userInput;
-
-        do {
-            log += contents + " ";
-            userInput = input.remove(0);
-        } while(!validator.isValid(userInput));
-
-        return userInput;
+        write(contents);
     }
 }

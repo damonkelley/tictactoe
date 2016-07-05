@@ -44,7 +44,7 @@ public class UI {
         write(ERASE_SCREEN + CURSOR_HOME);
     }
 
-    private String read() {
+    protected String read() {
         try {
             return reader.readLine();
         } catch (IOException e) {
@@ -53,7 +53,7 @@ public class UI {
         return null;
     }
 
-    private void write(String input) {
+    protected void write(String input) {
         try {
             writer.write(input);
             writer.flush();
