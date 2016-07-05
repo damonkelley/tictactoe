@@ -16,18 +16,18 @@ public class GameLoopTest {
     }
 
     @Test
-    public void itQuitsTheGameIfAGameExceptionIsThrown() {
-        Game game = new Game(new Player(null, null), new Player(null, null)) {
+    public void itLogsValidationErrorsToTheUI() {
+        Game game = new FakeGame(3) {
             @Override
             public void nextMove() {
-                throw new GameException("End of game");
+                throw new InputValidationError("Bad Argument ");
             }
         };
         FakeUI ui = new FakeUI();
 
         new GameLoop(game, ui).play();
 
-        assertEquals("render End of game", ui.log);
+        assertEquals("render Bad Argument Bad Argument Bad Argument Game Over", ui.log);
     }
 
     private class FakeGame extends Game {

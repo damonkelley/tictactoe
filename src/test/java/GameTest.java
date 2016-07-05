@@ -105,7 +105,30 @@ public class GameTest {
         assertTrue(game.isOver());
     }
 
-    private class QueueBackedFinder implements Finder {
+    @Test
+    public void equalityIsDeteriminedByState() {
+        Game game1 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+        Game game2 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+
+        assertEquals(game1, game2);
+
+        game2.nextMove();
+
+        assertNotEquals(game1, game2);
+    }
+
+    @Test
+    public void equalityIsDeterminedByPlayers() {
+        Game game1 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+        Game game2 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+
+        Game game3 = new Game(PlayerFactory.computer(Marker.O), PlayerFactory.computer(Marker.X));
+
+        assertEquals(game1, game2);
+        assertNotEquals(game1, game3);
+    }
+
+    private class QueueBackedFinder extends Finder {
         private Queue<Space> moveQueue = new ArrayDeque<>();
 
         public void queueMove(Space space) {

@@ -22,11 +22,16 @@ public class Player {
 
         Player player = (Player) o;
 
-        return marker == player.marker;
+        if (marker != player.marker) return false;
+        return finder != null ? finder.equals(player.finder) : player.finder == null;
+
     }
 
     @Override
     public String toString() {
-        return "Player{marker=" + marker + '}';
+        return "Player{" +
+                "marker=" + marker +
+                ", finder=" + finder +
+                '}';
     }
 }
