@@ -9,10 +9,10 @@ public class GameLoopTest {
         FakeUI ui = new FakeUI();
         Game game = new FakeGame(3);
 
-        GameLoop loop = new GameLoop(game, ui);
-        loop.play();
+        GameLoop loop = new GameLoop(ui);
+        loop.play(game);
 
-        assertEquals("render render render render Game Over", ui.log);
+        assertEquals("render render render render Game Over ", ui.log);
     }
 
     @Test
@@ -20,22 +20,37 @@ public class GameLoopTest {
         Game game = new FakeGame(3) {
             @Override
             public void nextMove() {
-                throw new InputValidationError("Bad Argument ");
+                throw new InputValidationError("Bad Argument");
             }
         };
         FakeUI ui = new FakeUI();
 
-        new GameLoop(game, ui).play();
+        new GameLoop(ui).play(game);
 
-        assertEquals("render Bad Argument Bad Argument Bad Argument Game Over", ui.log);
+        assertEquals("render Bad Argument Bad Argument Bad Argument Game Over ", ui.log);
+    }
+
+    @Test
+    public void itCanResetTheGame() {
+        FakeUI ui = new FakeUI();
+        FakeGame game = new FakeGame(1);
+
+        GameLoop gameLoop = new GameLoop(ui);
+        gameLoop.play(game);
+        gameLoop.reset(game);
+        gameLoop.play(game);
+
+        assertEquals("render render Game Over render render Game Over ", ui.log);
+
     }
 
     private class FakeGame extends Game {
         private int iterations;
+        private int currentIteration;
 
         public FakeGame(int iterations) {
             super(new Player(Marker.X, null), new Player(Marker.O, null));
-            this.iterations = iterations;
+            this.currentIteration = this.iterations = iterations;
         }
 
         @Override
@@ -44,11 +59,17 @@ public class GameLoopTest {
 
         @Override
         public boolean isOver() {
-            if (iterations == 0) {
+            if (currentIteration == 0) {
                 return true;
             }
-            iterations--;
+            currentIteration--;
             return false;
+        }
+
+        @Override
+        public Game reset() {
+            currentIteration = iterations;
+            return this;
         }
     }
 
@@ -66,7 +87,7 @@ public class GameLoopTest {
 
         @Override
         public void message(String contents) {
-            log += contents;
+            log += contents + " ";
         }
     }
 }
