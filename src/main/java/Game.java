@@ -73,4 +73,10 @@ public class Game {
         if (player1 != null ? !player1.equals(game.player1) : game.player1 != null) return false;
         return player2 != null ? player2.equals(game.player2) : game.player2 == null;
     }
+
+    public Game reset() {
+        state = new State(player1.getMarker());
+        rules = new GameRules(state);
+        return this;
+    }
 }
