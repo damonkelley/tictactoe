@@ -1,7 +1,6 @@
 package me.damonkelley;
 
 import me.damonkelley.tictactoe.Game;
-import me.damonkelley.tictactoe.GameBuilder;
 import me.damonkelley.tictactoe.GameException;
 import me.damonkelley.tictactoe.GameLoop;
 import me.damonkelley.tictactoe.Players;
@@ -36,12 +35,7 @@ public class Application {
 
     private void newGame() {
         configMenu.display();
-        game = new GameBuilder()
-                .setXPlayer(configMenu.getXPlayer())
-                .setOPlayer(configMenu.getOPlayer())
-                .setFirstMarker(configMenu.getFirstMarker())
-                .build();
-
+        game = new Game(configMenu.getFirstMarker());
         players = new Players(configMenu.getOPlayer(), configMenu.getXPlayer());
     }
 
