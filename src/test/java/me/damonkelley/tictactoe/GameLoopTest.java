@@ -1,7 +1,7 @@
 package me.damonkelley.tictactoe;
 
+import me.damonkelley.fake.FakeUI;
 import me.damonkelley.io.validators.InputValidationError;
-import me.damonkelley.ui.UI;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
