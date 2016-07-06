@@ -17,6 +17,14 @@ public class GameConfigurationMenuTest {
     }
 
     @Test
+    public void itHasDefaults() {
+        GameConfigurationMenu menu = new GameConfigurationMenu(ui);
+        assertEquals(PlayerFactory.human(Marker.X, ui), menu.getXPlayer());
+        assertEquals(PlayerFactory.computer(Marker.O), menu.getOPlayer());
+        assertEquals(Marker.X, menu.getFirstMarker());
+    }
+
+    @Test
     public void itAsksTheUserHowTheGameShouldBeSetUp() {
         GameConfigurationMenu menu = new GameConfigurationMenu(ui);
 

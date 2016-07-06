@@ -19,7 +19,7 @@ public class GameConfigurationMenu {
     private final PlayerTypeInputValidator validator;
 
     public GameConfigurationMenu(UI ui) {
-        xPlayer = PlayerFactory.human(Marker.O, ui);
+        xPlayer = PlayerFactory.human(Marker.X, ui);
         oPlayer = PlayerFactory.computer(Marker.O);
         firstMarker = Marker.X;
 

@@ -5,6 +5,7 @@ import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.GameLoop;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Player;
+import me.damonkelley.tictactoe.Players;
 import me.damonkelley.tictactoe.Space;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,14 +40,20 @@ public class ArtificialIntelligenceAlwaysWinsTest {
     @Test
     public void whenItMovesFirst() {
         Game game = new Game(computerPlayer, randomPlayer);
-        new GameLoop(new FakeUI()).play(game);
+        Players players = new Players(computerPlayer, randomPlayer);
+
+        new GameLoop(new FakeUI()).play(players, game);
+
         assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
     }
 
     @Test
     public void whenItMovesSecond() {
         Game game = new Game(randomPlayer, computerPlayer);
-        new GameLoop(new FakeUI()).play(game);
+        Players players = new Players(computerPlayer, randomPlayer);
+
+        new GameLoop(new FakeUI()).play(players, game);
+
         assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
     }
 

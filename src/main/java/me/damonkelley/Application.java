@@ -4,6 +4,7 @@ import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.GameBuilder;
 import me.damonkelley.tictactoe.GameException;
 import me.damonkelley.tictactoe.GameLoop;
+import me.damonkelley.tictactoe.Players;
 import me.damonkelley.ui.GameConfigurationMenu;
 import me.damonkelley.ui.PlayAgainMenu;
 import me.damonkelley.ui.UI;
@@ -15,6 +16,7 @@ public class Application {
     private final UI ui;
 
     private Game game;
+    private Players players;
 
     public Application(GameConfigurationMenu configMenu, GameLoop gameLoop, PlayAgainMenu playAgainMenu, UI ui) {
         this.configMenu = configMenu;
@@ -39,10 +41,12 @@ public class Application {
                 .setOPlayer(configMenu.getOPlayer())
                 .setFirstMarker(configMenu.getFirstMarker())
                 .build();
+
+        players = new Players(configMenu.getOPlayer(), configMenu.getXPlayer());
     }
 
     private void play() {
-        do gameLoop.play(game); while (playAgain());
+        do gameLoop.play(players, game); while (playAgain());
     }
 
     private boolean playAgain() {
