@@ -106,7 +106,7 @@ public class GameTest {
     }
 
     @Test
-    public void equalityIsDeteriminedByState() {
+    public void equalityIsDeterminedByState() {
         Game game1 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
         Game game2 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
 
@@ -126,6 +126,25 @@ public class GameTest {
 
         assertEquals(game1, game2);
         assertNotEquals(game1, game3);
+    }
+
+    @Test
+    public void itCanResetItself() {
+        Game game = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+
+        game.nextMove();
+        game.nextMove();
+        game.nextMove();
+        game.nextMove();
+        game.nextMove();
+        game.nextMove();
+        game.nextMove();
+        game.nextMove();
+        game.nextMove();
+
+        assertTrue(game.isOver());
+        game.reset();
+        assertFalse(game.isOver());
     }
 
     private class QueueBackedFinder extends Finder {

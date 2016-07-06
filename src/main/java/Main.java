@@ -11,11 +11,6 @@ public class Main {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         UI ui = new UI(reader, writer);
-
-        try {
-            new GameLoop(new Configurator(ui).configure(), ui).play();
-        } catch (GameException e) {
-            ui.message(e.getMessage());
-        }
+        new Application(new GameConfigurationMenu(ui), new GameLoop(ui), new PlayAgainMenu(ui), ui).start();
     }
 }
