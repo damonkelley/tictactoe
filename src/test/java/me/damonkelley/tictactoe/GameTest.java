@@ -1,5 +1,6 @@
 package me.damonkelley.tictactoe;
 
+import me.damonkelley.fake.NullFinder;
 import me.damonkelley.tictactoe.finder.Finder;
 import org.junit.Test;
 
@@ -285,14 +286,6 @@ public class GameTest {
         @Override
         public Space getNextMove(Game game) {
             return moveQueue.remove();
-        }
-    }
-
-    private class NullFinder extends Finder {
-
-        @Override
-        public Space getNextMove(Game game) {
-            return null;
         }
     }
 }

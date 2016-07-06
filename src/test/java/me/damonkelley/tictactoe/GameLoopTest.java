@@ -1,6 +1,7 @@
 package me.damonkelley.tictactoe;
 
 import me.damonkelley.fake.FakeUI;
+import me.damonkelley.fake.NullFinder;
 import me.damonkelley.io.validators.InputValidationError;
 import me.damonkelley.tictactoe.finder.Finder;
 import org.junit.Test;
@@ -55,13 +56,6 @@ public class GameLoopTest {
         gameLoop.play(players, game);
 
         assertEquals("render render Game Over render render Game Over ", ui.log);
-    }
-
-    private class NullFinder extends Finder {
-        @Override
-        public Space getNextMove(Game game) {
-            return null;
-        }
     }
 
     private class FakeGame extends Game {
