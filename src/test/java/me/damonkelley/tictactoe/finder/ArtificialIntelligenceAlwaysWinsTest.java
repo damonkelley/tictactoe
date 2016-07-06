@@ -1,6 +1,8 @@
 package me.damonkelley.tictactoe.finder;
 
+import me.damonkelley.fake.FakeUI;
 import me.damonkelley.tictactoe.Game;
+import me.damonkelley.tictactoe.GameLoop;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Player;
 import me.damonkelley.tictactoe.Space;
@@ -37,16 +39,14 @@ public class ArtificialIntelligenceAlwaysWinsTest {
     @Test
     public void whenItMovesFirst() {
         Game game = new Game(computerPlayer, randomPlayer);
-        while (!game.isOver()) game.nextMove();
-
+        new GameLoop(new FakeUI()).play(game);
         assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
     }
 
     @Test
     public void whenItMovesSecond() {
         Game game = new Game(randomPlayer, computerPlayer);
-        while (!game.isOver()) game.nextMove();
-
+        new GameLoop(new FakeUI()).play(game);
         assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
     }
 

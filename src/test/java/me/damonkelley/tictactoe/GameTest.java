@@ -15,7 +15,6 @@ public class GameTest {
 
     @Test
     public void itAlternatesPlayerMoves() {
-
         QueueBackedFinder player1Finder = new QueueBackedFinder();
         QueueBackedFinder player2Finder = new QueueBackedFinder();
 
@@ -27,8 +26,8 @@ public class GameTest {
 
         Game game = new Game(player1, player2);
 
-        game.nextMove();
-        game.nextMove();
+        player1.move(game);
+        player2.move(game);
 
         assertEquals(player1.getMarker(), game.getBoard().get(new Space(0, 0)));
         assertEquals(player2.getMarker(), game.getBoard().get(new Space(0, 1)));
@@ -44,7 +43,7 @@ public class GameTest {
         player1Finder.queueMove(new Space(0, 0));
 
         Game game = new Game(player1, player2);
-        game.nextMove();
+        player1.move(game);
 
         assertEquals(Marker.O, game.getBoard().get(new Space(0, 0)));
     }
@@ -101,7 +100,7 @@ public class GameTest {
 
         assertEquals(game1, game2);
 
-        game2.nextMove();
+        game2.move(new Space(0, 1), game1.nextTurn());
 
         assertNotEquals(game1, game2);
     }
@@ -139,17 +138,21 @@ public class GameTest {
 
     @Test
     public void itCanResetItself() {
-        Game game = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
 
-        game.nextMove()
-                .nextMove()
-                .nextMove()
-                .nextMove()
-                .nextMove()
-                .nextMove()
-                .nextMove()
-                .nextMove()
-                .nextMove();
+        Player player1 = PlayerFactory.computer(Marker.X);
+        Player player2 = PlayerFactory.computer(Marker.O);
+        Game game = new Game(player1, player2);
+
+
+        player1.move(game);
+        player2.move(game);
+        player1.move(game);
+        player2.move(game);
+        player1.move(game);
+        player2.move(game);
+        player1.move(game);
+        player2.move(game);
+        player1.move(game);
 
         assertTrue(game.isOver());
 
@@ -165,7 +168,7 @@ public class GameTest {
 
         assertEquals(game, gameCopy);
 
-        gameCopy.nextMove();
+        game.move(new Space(0, 0), game.nextTurn());
 
         assertNotEquals(game, gameCopy);
     }
