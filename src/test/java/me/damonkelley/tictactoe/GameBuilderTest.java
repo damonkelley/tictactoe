@@ -13,7 +13,7 @@ public class GameBuilderTest {
                 .setFirstMarker(Marker.X);
 
 
-        Game expectedGame = new Game(PlayerFactory.human(Marker.X, null), PlayerFactory.computer(Marker.O));
+        Game expectedGame = new Game(Marker.X);
         assertEquals(expectedGame, builder.build());
     }
 
@@ -25,7 +25,7 @@ public class GameBuilderTest {
                 .setFirstMarker(Marker.O);
 
 
-        Game expectedGame = new Game(PlayerFactory.computer(Marker.O), PlayerFactory.human(Marker.X, null));
+        Game expectedGame = new Game(Marker.X);
         assertEquals(expectedGame, builder.build());
     }
 }

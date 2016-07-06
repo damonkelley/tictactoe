@@ -34,9 +34,9 @@ public class GameBuilder {
 
     public Game build() {
         if (getFirstMarker() == Marker.X) {
-            return new Game(getXPlayer(), getOPlayer());
+            return new Game(Marker.X);
         } else {
-            return new Game(getOPlayer(), getXPlayer());
+            return new Game(Marker.O);
         }
     }
 }

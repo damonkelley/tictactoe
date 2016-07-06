@@ -39,7 +39,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
 
     @Test
     public void whenItMovesFirst() {
-        Game game = new Game(computerPlayer, randomPlayer);
+        Game game = new Game(computerPlayer.getMarker());
         Players players = new Players(computerPlayer, randomPlayer);
 
         new GameLoop(new FakeUI()).play(players, game);
@@ -49,7 +49,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
 
     @Test
     public void whenItMovesSecond() {
-        Game game = new Game(randomPlayer, computerPlayer);
+        Game game = new Game(randomPlayer.getMarker());
         Players players = new Players(computerPlayer, randomPlayer);
 
         new GameLoop(new FakeUI()).play(players, game);

@@ -15,45 +15,14 @@ import static org.junit.Assert.assertTrue;
 public class GameTest {
 
     @Test
-    public void itAlternatesPlayerMoves() {
-        QueueBackedFinder player1Finder = new QueueBackedFinder();
-        QueueBackedFinder player2Finder = new QueueBackedFinder();
-
-        Player player1 = new Player(Marker.X, player1Finder);
-        Player player2 = new Player(Marker.O, player2Finder);
-
-        player1Finder.queueMove(new Space(0, 0));
-        player2Finder.queueMove(new Space(0, 1));
-
-        Game game = new Game(player1, player2);
-
-        player1.move(game);
-        player2.move(game);
-
-        assertEquals(player1.getMarker(), game.getBoard().get(new Space(0, 0)));
-        assertEquals(player2.getMarker(), game.getBoard().get(new Space(0, 1)));
-    }
-@Test
-    public void theFirstPlayerPassedIsTheFirstToMove() {
-        QueueBackedFinder player1Finder = new QueueBackedFinder();
-        QueueBackedFinder player2Finder = new QueueBackedFinder();
-
-        Player player1 = new Player(Marker.O, player1Finder);
-        Player player2 = new Player(Marker.X, player2Finder);
-
-        player1Finder.queueMove(new Space(0, 0));
-
-        Game game = new Game(player1, player2);
-        player1.move(game);
-
-        assertEquals(Marker.O, game.getBoard().get(new Space(0, 0)));
+    public void theMarkerPassedIsTheFirstToMove() {
+        assertEquals(Marker.O, new Game(Marker.O).nextTurn());
+        assertEquals(Marker.X, new Game(Marker.X).nextTurn());
     }
 
     @Test
     public void player1Wins() {
-        Player player1 = new Player(Marker.X, new NullFinder());
-        Player player2 = new Player(Marker.O, new NullFinder());
-        Game game = new Game(player1, player2);
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(2, 0), Marker.O)
@@ -61,14 +30,14 @@ public class GameTest {
                 .move(new Space(0, 2), Marker.O)
                 .move(new Space(2, 2), Marker.X);
 
-        assertEquals(player1.getMarker(), game.determineWinner());
+        assertEquals(Marker.X, game.determineWinner());
         assertFalse(game.isDraw());
         assertTrue(game.isOver());
     }
 
     @Test
     public void itIsADraw() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.O)
                 .move(new Space(1, 1), Marker.X)
@@ -86,7 +55,7 @@ public class GameTest {
 
     @Test
     public void itKnowsWhichMarkerIsNext() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
         assertEquals(Marker.O, game.nextTurn());
         assertEquals(Marker.O, game.nextTurn());
 
@@ -96,8 +65,8 @@ public class GameTest {
 
     @Test
     public void equalityIsDeterminedByState() {
-        Game game1 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
-        Game game2 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+        Game game1 = new Game(Marker.X);
+        Game game2 = new Game(Marker.X);
 
         assertEquals(game1, game2);
 
@@ -107,27 +76,17 @@ public class GameTest {
     }
 
     @Test
-    public void equalityIsDeterminedByPlayers() {
-        Game game1 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
-        Game game2 = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
-
-        Game game3 = new Game(PlayerFactory.computer(Marker.O), PlayerFactory.computer(Marker.X));
-
-        assertEquals(game1, game2);
-        assertNotEquals(game1, game3);
-    }
-
-    @Test
     public void itCanMove() {
-        Game game = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X);
+
         assertEquals(game.getBoard().get(new Space(0, 0)), Marker.X);
     }
 
     @Test
     public void itOnlyAllowsMovesToAvailableSpaces() {
-        Game game = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+        Game game = new Game(Marker.X);
 
         assertEquals(game.getBoard().get(new Space(0, 0)), null);
 
@@ -139,10 +98,10 @@ public class GameTest {
 
     @Test
     public void itCanResetItself() {
-
         Player player1 = PlayerFactory.computer(Marker.X);
         Player player2 = PlayerFactory.computer(Marker.O);
-        Game game = new Game(player1, player2);
+
+        Game game = new Game(Marker.X);
 
 
         player1.move(game);
@@ -164,7 +123,7 @@ public class GameTest {
 
     @Test
     public void itCanCopyItself() {
-        Game game = new Game(PlayerFactory.computer(Marker.X), PlayerFactory.computer(Marker.O));
+        Game game = new Game(Marker.X);
         Game gameCopy = game.copy();
 
         assertEquals(game, gameCopy);
@@ -176,14 +135,12 @@ public class GameTest {
 
     @Test
     public void itIsNotOverWhenThereAreNoMarkersOnTheBoard() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
-
-        assertEquals(false, game.isOver());
+        assertEquals(false, new Game(Marker.O).isOver());
     }
 
     @Test
     public void itIsOverWhenThereIsAWinner() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.X)
@@ -194,7 +151,7 @@ public class GameTest {
 
     @Test
     public void itCanDetermineWhenOIsTheWinner() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O)
@@ -208,7 +165,7 @@ public class GameTest {
 
     @Test
     public void itCanDetermineWhenXIsTheWinner() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O)
@@ -221,7 +178,7 @@ public class GameTest {
 
     @Test
     public void itCanDetermineWhenThereIsNoWinner() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O);
@@ -231,7 +188,7 @@ public class GameTest {
 
     @Test
     public void itIsNotADrawIfThereIsAWinner() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O)
@@ -244,7 +201,7 @@ public class GameTest {
 
     @Test
     public void itIsNotADrawIfTheBoardIsFullAndThereIsAWinner() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(2, 0), Marker.O)
@@ -261,7 +218,7 @@ public class GameTest {
 
     @Test
     public void itIsADrawIfThereIsNoWinnerAndNoMoreSpaces() {
-        Game game = new Game(new Player(Marker.O, new NullFinder()), new Player(Marker.X, new NullFinder()));
+        Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(2, 0), Marker.O)
@@ -274,18 +231,5 @@ public class GameTest {
                 .move(new Space(2, 1), Marker.X);
 
         assertEquals(true, game.isDraw());
-    }
-
-    private class QueueBackedFinder extends Finder {
-        private Queue<Space> moveQueue = new ArrayDeque<>();
-
-        public void queueMove(Space space) {
-            moveQueue.add(space);
-        }
-
-        @Override
-        public Space getNextMove(Game game) {
-            return moveQueue.remove();
-        }
     }
 }

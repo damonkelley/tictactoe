@@ -11,7 +11,7 @@ import static junit.framework.TestCase.assertEquals;
 public class ArtificialIntelligenceFinderTest {
     @Test
     public void itWillChooseTheWinningSpaceIfThereIsOne() {
-        Game game = new Game(new Player(Marker.X, null), new Player(Marker.O, null));
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X);
         game.move(new Space(2, 0), Marker.O);
@@ -25,7 +25,7 @@ public class ArtificialIntelligenceFinderTest {
 
     @Test
     public void itWillPreventALoss() {
-        Game game = new Game(new Player(Marker.X, null), new Player(Marker.O, null));
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X);
         game.move(new Space(2, 0), Marker.O);

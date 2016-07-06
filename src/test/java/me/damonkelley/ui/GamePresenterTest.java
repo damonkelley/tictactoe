@@ -13,9 +13,7 @@ public class GamePresenterTest {
 
     @Test
     public void itPresentsAnEmptyGame() {
-        Player player1 = new Player(Marker.X, new FakeFinder());
-        Player player2 = new Player(Marker.O, new FakeFinder());
-        Game game = new Game(player1, player2);
+        Game game = new Game(Marker.X);
 
         String expected = " 1 | 2 | 3 \n" +
                           "---+---+---\n" +
@@ -29,11 +27,11 @@ public class GamePresenterTest {
 
     @Test
     public void itPresentsAGameWithMoves() {
-        Player player1 = new Player(Marker.X, new FakeFinder());
-        Player player2 = new Player(Marker.O, new FakeFinder());
-        Game game = new Game(player1, player2);
+        Player player = new Player(Marker.X, new FakeFinder());
 
-        player1.move(game);
+        Game game = new Game(Marker.X);
+
+        player.move(game);
 
         String expected = " 1 | 2 | 3 \n" +
                           "---+---+---\n" +

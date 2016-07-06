@@ -17,18 +17,15 @@ public class Game {
             asList(new Space(0, 2), new Space(1, 1), new Space(2, 0))  // diagonal 2
     );
     private State state;
-    private Player player1;
-    private Player player2;
+    private Marker initialMarker;
 
-    public Game(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        state = new State(player1.getMarker());
+    public Game(Marker marker) {
+        initialMarker = marker;
+        state = new State(marker);
     }
 
-    private Game(Player player1, Player player2, State state) {
-        this.player1 = player1;
-        this.player2 = player2;
+    private Game(State state) {
+        initialMarker = state.getNextMarker();
         this.state = state;
     }
 
@@ -41,19 +38,6 @@ public class Game {
 
     private boolean canMove(Space point) {
         return state.getBoard().get(point) == null;
-    }
-
-    public Game nextMove() {
-        nextPlayer().move(this);
-        return this;
-    }
-
-    private Player nextPlayer() {
-        if (state.getNextMarker() == player1.getMarker()) {
-            return player1;
-        } else {
-            return player2;
-        }
     }
 
     public Marker nextTurn() {
@@ -90,12 +74,19 @@ public class Game {
     }
 
     public Game reset() {
-        state = new State(player1.getMarker());
+        state = new State(initialMarker);
         return this;
     }
 
     public Game copy() {
-        return new Game(player1, player2, state.copy());
+        return new Game(state.copy());
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "state=" + state +
+                '}';
     }
 
     @Override
@@ -105,17 +96,7 @@ public class Game {
 
         Game game = (Game) o;
 
-        if (state != null ? !state.equals(game.state) : game.state != null) return false;
-        if (player1 != null ? !player1.equals(game.player1) : game.player1 != null) return false;
-        return player2 != null ? player2.equals(game.player2) : game.player2 == null;
-    }
+        return state != null ? state.equals(game.state) : game.state == null;
 
-    @Override
-    public String toString() {
-        return "me.damonkelley.tictactoe.Game{" +
-                "state=" + state +
-                ", player1=" + player1 +
-                ", player2=" + player2 +
-                '}';
     }
 }

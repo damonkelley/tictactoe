@@ -63,13 +63,8 @@ public class GameLoopTest {
         private int currentIteration;
 
         public FakeGame(int iterations) {
-            super(new Player(Marker.X, null), new Player(Marker.O, null));
+            super(Marker.X);
             this.currentIteration = this.iterations = iterations;
-        }
-
-        @Override
-        public Game nextMove() {
-            return this;
         }
 
         @Override

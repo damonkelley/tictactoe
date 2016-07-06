@@ -29,7 +29,7 @@ public class HumanFinderTest {
         writer = new FakeWriter();
         ui = new UI(reader, writer);
 
-        game = new Game(new Player(Marker.O, null), new Player(Marker.X, null));
+        game = new Game(Marker.O);
     }
 
     @Test
