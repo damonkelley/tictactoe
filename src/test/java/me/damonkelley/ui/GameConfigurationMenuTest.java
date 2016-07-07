@@ -29,16 +29,16 @@ public class GameConfigurationMenuTest {
     public void itAsksTheUserHowTheGameShouldBeSetUp() {
         GameConfigurationMenu menu = new GameConfigurationMenu(ui);
 
-        ui.input.add("H");
-        ui.input.add("H");
         ui.input.add("4");
+        ui.input.add("H");
+        ui.input.add("H");
         ui.input.add("X");
 
         menu.display();
 
-        String expected = "Is X a human (H) or a computer (C)?\nH/C:  " +
+        String expected = "How large is the board? 3x3 (3) or 4x4 (4)?\n3/4:  " +
+                          "Is X a human (H) or a computer (C)?\nH/C:  " +
                           "Is O a human (H) or a computer (C)?\nH/C:  " +
-                          "How large is the board? 3x3 (3) or 4x4 (4)?\n3/4:  " +
                           "Who will go first?\nX/O:  " ;
 
         assertEquals(expected, ui.log);
@@ -46,9 +46,9 @@ public class GameConfigurationMenuTest {
 
     @Test
     public void itCreatesTwoHumanPlayers() {
-        ui.input.add("H");
-        ui.input.add("H");
         ui.input.add("3");
+        ui.input.add("H");
+        ui.input.add("H");
         ui.input.add("X");
 
         GameConfigurationMenu config = new GameConfigurationMenu(ui);
@@ -61,9 +61,9 @@ public class GameConfigurationMenuTest {
 
     @Test
     public void itCreatesAHumanAndComputerPlayer() {
+        ui.input.add("3");
         ui.input.add("H");
         ui.input.add("C");
-        ui.input.add("3");
         ui.input.add("X");
 
         GameConfigurationMenu config = new GameConfigurationMenu(ui);
@@ -76,9 +76,9 @@ public class GameConfigurationMenuTest {
 
     @Test
     public void itCollectsTheBoardSizeOption() {
-        ui.input.add("C");
-        ui.input.add("C");
         ui.input.add("4");
+        ui.input.add("C");
+        ui.input.add("C");
         ui.input.add("O");
 
         GameConfigurationMenu config = new GameConfigurationMenu(ui);
@@ -89,15 +89,14 @@ public class GameConfigurationMenuTest {
 
     @Test
     public void itWillOnlyAcceptABoardSizeOf3or4() {
-        ui.input.add("C");
-        ui.input.add("C");
-
         ui.input.add("5");
         ui.input.add("8");
         ui.input.add("1");
         ui.input.add("2");
         ui.input.add("3");
 
+        ui.input.add("C");
+        ui.input.add("C");
         ui.input.add("O");
 
         GameConfigurationMenu config = new GameConfigurationMenu(ui);
@@ -108,9 +107,9 @@ public class GameConfigurationMenuTest {
 
     @Test
     public void itCreatesTwoComputerPlayers() {
-        ui.input.add("C");
-        ui.input.add("C");
         ui.input.add("3");
+        ui.input.add("C");
+        ui.input.add("C");
         ui.input.add("O");
 
         GameConfigurationMenu config = new GameConfigurationMenu(ui);

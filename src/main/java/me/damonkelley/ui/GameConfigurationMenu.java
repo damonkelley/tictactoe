@@ -33,9 +33,9 @@ public class GameConfigurationMenu {
     }
 
     public GameConfigurationMenu display() {
+        promptForBoardSize();
         promptXPlayerType();
         promptOPlayerType();
-        promptForBoardSize();
         promptForFirstMarker();
 
         return this;
