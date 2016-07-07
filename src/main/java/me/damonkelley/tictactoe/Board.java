@@ -13,8 +13,8 @@ public class Board implements Iterable<Space> {
     public Board() {
         this.spaces = new HashMap<>();
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
                 this.spaces.put(new Space(i, j), null);
             }
         }
@@ -37,6 +37,10 @@ public class Board implements Iterable<Space> {
         return spaces.entrySet()
                 .stream()
                 .noneMatch(m -> m.getValue() == null);
+    }
+
+    Map<Space, Marker> getSpaces() {
+        return spaces;
     }
 
     @Override

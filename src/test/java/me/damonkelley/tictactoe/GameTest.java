@@ -1,11 +1,6 @@
 package me.damonkelley.tictactoe;
 
-import me.damonkelley.fake.NullFinder;
-import me.damonkelley.tictactoe.finder.Finder;
 import org.junit.Test;
-
-import java.util.ArrayDeque;
-import java.util.Queue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
