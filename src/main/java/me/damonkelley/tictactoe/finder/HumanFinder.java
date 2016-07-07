@@ -8,14 +8,17 @@ import me.damonkelley.ui.UI;
 
 public class HumanFinder extends Finder {
     private UI ui;
+    private int size;
 
     public HumanFinder(UI ui) {
         this.ui = ui;
+        this.size = 3;
     }
 
     @Override
     public Space getNextMove(Game game) {
-        return new SpaceIDConverter(3, 3).convert(getParsedUserInput());
+        size = game.getBoard().getSize();
+        return new SpaceIDConverter(size, size).convert(getParsedUserInput());
     }
 
     private int getParsedUserInput() {
@@ -23,7 +26,7 @@ public class HumanFinder extends Finder {
     }
 
     private String getUserInput() {
-        return ui.prompt("Space #: ", new SpaceIDInputValidator(1, 9));
+        return ui.prompt("Space #: ", new SpaceIDInputValidator(1, size*size));
     }
 
     private int parse(String input) {
