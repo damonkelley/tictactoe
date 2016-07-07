@@ -25,6 +25,7 @@ public class GamePresenterTest {
         assertEquals(expected, new GamePresenter(game).present());
     }
 
+
     @Test
     public void itPresentsAGameWithMoves() {
         Player player = new Player(Marker.X, new FakeFinder());
@@ -38,6 +39,41 @@ public class GamePresenterTest {
                           " 4 | 5 | 6 \n" +
                           "---+---+---\n" +
                           " X | 8 | 9 \n" +
+                          "\n";
+
+        assertEquals(expected, new GamePresenter(game).present());
+    }
+
+    @Test
+    public void itPresentsA4By4Game() {
+        Game game = new Game(Marker.X, 4);
+
+        String expected = "  1  |  2  |  3  |  4  \n" +
+                          "-----+-----+-----+-----\n" +
+                          "  5  |  6  |  7  |  8  \n"  +
+                          "-----+-----+-----+-----\n" +
+                          "  9  |  10 |  11 |  12 \n"  +
+                          "-----+-----+-----+-----\n" +
+                          "  13 |  14 |  15 |  16 \n"  +
+                          "\n";
+
+        assertEquals(expected, new GamePresenter(game).present());
+    }
+
+    @Test
+    public void itPresentsA4By4GameWithMoves() {
+        Game game = new Game(Marker.X, 4);
+
+        game.move(new Space(2, 3), Marker.X);
+        game.move(new Space(1, 1), Marker.O);
+
+        String expected = "  1  |  2  |  3  |  4  \n" +
+                          "-----+-----+-----+-----\n" +
+                          "  5  |  O  |  7  |  8  \n"  +
+                          "-----+-----+-----+-----\n" +
+                          "  9  |  10 |  11 |  12 \n"  +
+                          "-----+-----+-----+-----\n" +
+                          "  13 |  14 |  X  |  16 \n"  +
                           "\n";
 
         assertEquals(expected, new GamePresenter(game).present());

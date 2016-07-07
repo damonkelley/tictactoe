@@ -2,63 +2,90 @@ package me.damonkelley.ui;
 
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
-import me.damonkelley.tictactoe.Space;
+
+import java.util.ArrayList;
 
 class GamePresenter {
-    private StringBuffer output = new StringBuffer();
     private Game game;
     private int id = 1;
+
+    private final String THREE_BY_THREE = " %s | %s | %s \n" +
+                                          "---+---+---\n" +
+                                          " %s | %s | %s \n" +
+                                          "---+---+---\n" +
+                                          " %s | %s | %s \n" +
+                                          "\n";
+
+   private final String FOUR_BY_FOUR =    " %s | %s | %s | %s \n" +
+                                          "-----+-----+-----+-----\n" +
+                                          " %s | %s | %s | %s \n"  +
+                                          "-----+-----+-----+-----\n" +
+                                          " %s | %s | %s | %s \n"  +
+                                          "-----+-----+-----+-----\n" +
+                                          " %s | %s | %s | %s \n"  +
+                                          "\n";
 
     public GamePresenter(Game game) {
         this.game = game;
     }
 
     public String present() {
-        for (Space space : game.getBoard()) {
-            addSpace(space);
-            addSeparator();
+        String template = (game.getBoard().getSize() == 4)? FOUR_BY_FOUR : THREE_BY_THREE;
+        return addMarkersToTemplate(template, getMarkersFromBoard());
+    }
 
-            if (shouldAddHorizontalRule()) addHorizontalRule();
+    private String addMarkersToTemplate(String template, ArrayList<String> markers) {
+        return String.format(template, markers.toArray());
+    }
+
+    private ArrayList<String> getMarkersFromBoard() {
+        ArrayList<String> markers = new ArrayList<>();
+
+        game.getBoard().forEach(space -> {
+            MarkerPresenter presenter = new MarkerPresenter(id, game.getBoard().get(space));
+            markers.add(center(presenter.present()));
             id++;
-        }
-        addNewLine();
+        });
 
-        return output.toString();
+        return markers;
     }
 
-    private void addSpace(Space space) {
-        output.append(" ")
-                .append(new MarkerPresenter(id, game.getBoard().get(space)))
-                .append(" ");
+    private String center(String s) {
+        int width = calculateSpaceWidth();
+        int paddingLeft = calculateLeftPadding(s, width);
+        int paddingRight = calculateRightPadding(s, width);
+
+        s = padLeft(s, paddingLeft);
+        s = padRight(s, paddingRight);
+        return s;
     }
 
-    private void addSeparator() {
-        if (isEndOfRow()) {
-            addNewLine();
-        } else {
-            addVerticalSeparator();
-        }
+    private int calculateRightPadding(String s, int width) {
+        if (hasEvenLength(s)) width--;
+        return width;
     }
 
-    private boolean shouldAddHorizontalRule() {
-        return id == 3 || id == 6;
+    private int calculateLeftPadding(String s, int width) {
+        int padding = s.length() + (width - s.length()) / 2;
+        if (hasEvenLength(s)) padding++;
+        return padding;
     }
 
-    private void addHorizontalRule() {
-        output.append("---+---+---");
-        addNewLine();
+    private boolean hasEvenLength(String s) {
+        return s.length() % 2 == 0;
     }
 
-    private boolean isEndOfRow() {
-        return id % 3 == 0;
+    private int calculateSpaceWidth() {
+        int width = game.getBoard().getSize() / 2;
+        return (width % 2 == 0)? width + 1 : width;
     }
 
-    private void addNewLine() {
-        output.append("\n");
+    private String padRight(String s, int width) {
+        return String.format("%-" + width  + "s", s);
     }
 
-    private void addVerticalSeparator() {
-        output.append("|");
+    private String padLeft(String s, int padStart) {
+        return String.format("%" + padStart + "s", s);
     }
 
     private class MarkerPresenter {
@@ -70,8 +97,7 @@ class GamePresenter {
             this.marker = marker;
         }
 
-        @Override
-        public String toString() {
+        public String present() {
             return (marker != null) ? marker.toString() : id.toString();
         }
     }

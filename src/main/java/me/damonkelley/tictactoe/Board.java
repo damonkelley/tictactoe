@@ -8,9 +8,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board implements Iterable<Space> {
+
+    private final int size;
     private Map<Space, Marker> spaces;
 
     public Board(int size) {
+        this.size = size;
         this.spaces = new HashMap<>();
         build(size);
     }
@@ -19,16 +22,21 @@ public class Board implements Iterable<Space> {
         this(3);
     }
 
+    private Board(Map<Space, Marker> spaces) {
+        this.size = 3;
+        this.spaces = spaces;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
     private void build(int size) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 this.spaces.put(new Space(i, j), null);
             }
         }
-    }
-
-    private Board(Map<Space, Marker> spaces) {
-        this.spaces = spaces;
     }
 
     public Marker get(Space space) {
