@@ -2,7 +2,6 @@ package me.damonkelley.tictactoe.finder;
 
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
-import me.damonkelley.tictactoe.Player;
 import me.damonkelley.tictactoe.Space;
 import org.junit.Test;
 

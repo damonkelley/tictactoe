@@ -66,4 +66,24 @@ public class ArtificialIntelligenceAlwaysWinsTest {
             return game.getBoard().availableSpaces().get(index);
         }
     }
+
+    @Test
+    public void whenItMovesFirstInA4By4Game() {
+        Game game = new Game(computerPlayer.getMarker(), 4);
+        Players players = new Players(computerPlayer, randomPlayer);
+
+        new GameLoop(new FakeUI()).play(players, game);
+
+        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
+    }
+
+    @Test
+    public void whenItMovesSecondInA4By4Game() {
+        Game game = new Game(randomPlayer.getMarker(), 4);
+        Players players = new Players(computerPlayer, randomPlayer);
+
+        new GameLoop(new FakeUI()).play(players, game);
+
+        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
+    }
 }

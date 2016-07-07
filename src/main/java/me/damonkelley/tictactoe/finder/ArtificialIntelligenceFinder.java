@@ -10,14 +10,25 @@ public class ArtificialIntelligenceFinder extends Finder {
     private Marker marker;
     private Space choice;
 
+    private final int FOUR_BY_FOUR_DEPTH = 4;
+    private final int THREE_BY_THREE_DEPTH = 6;
+
     public ArtificialIntelligenceFinder(Marker marker) {
         this.marker = marker;
     }
 
     @Override
     public Space getNextMove(Game game) {
-        minimax(game, 6, true);
+        minimax(game, getOptimumDepthFor(game), true);
         return choice;
+    }
+
+    private int getOptimumDepthFor(Game game) {
+        if (game.getBoard().getSize() == 4) {
+            return FOUR_BY_FOUR_DEPTH;
+        } else {
+            return THREE_BY_THREE_DEPTH;
+        }
     }
 
     private int minimax(Game game, int depth, boolean maximizingPlayer) {
@@ -44,7 +55,7 @@ public class ArtificialIntelligenceFinder extends Finder {
         } else if (game.isOver() && !game.isDraw()) {
             return -10 - depth;
         }
-        return 0;
+        return depth;
     }
 
     private int bestScoreFor(boolean maximizingPlayer, HashMap<Integer, Space> scores) {
