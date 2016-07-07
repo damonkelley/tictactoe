@@ -13,6 +13,12 @@ import static org.junit.Assert.assertTrue;
 public class BoardTest {
 
     @Test
+    public void itCanBeDifferentSizes() {
+        assertEquals(9, new Board().getSpaces().size());
+        assertEquals(16, new Board(4).getSpaces().size());
+    }
+
+    @Test
     public void itCanQueryForTheContentsOfASpace() {
         Board board = new Board();
         assertEquals(null, board.get(new Space(0, 0)));

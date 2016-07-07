@@ -10,11 +10,18 @@ import java.util.stream.Collectors;
 public class Board implements Iterable<Space> {
     private Map<Space, Marker> spaces;
 
-    public Board() {
+    public Board(int size) {
         this.spaces = new HashMap<>();
+        build(size);
+    }
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+    public Board() {
+        this(3);
+    }
+
+    private void build(int size) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 this.spaces.put(new Space(i, j), null);
             }
         }
