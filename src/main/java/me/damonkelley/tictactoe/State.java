@@ -14,7 +14,7 @@ class State {
         this.nextMarker = marker;
     }
 
-    private State(Board board, Marker nextMarker) {
+    public State(Board board, Marker nextMarker) {
         this.board = board;
         this.nextMarker = nextMarker;
     }

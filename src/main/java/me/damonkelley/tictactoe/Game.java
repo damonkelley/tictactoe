@@ -10,6 +10,11 @@ public class Game {
         state = new State(marker);
     }
 
+    public Game(Marker marker, int boardSize) {
+        initialMarker = marker;
+        state = new State(new Board(boardSize), marker);
+    }
+
     private Game(State state) {
         initialMarker = state.getNextMarker();
         this.state = state;

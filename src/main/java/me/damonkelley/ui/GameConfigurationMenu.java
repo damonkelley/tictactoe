@@ -1,5 +1,6 @@
 package me.damonkelley.ui;
 
+import me.damonkelley.io.validators.IntegerRangeInputValidator;
 import me.damonkelley.io.validators.MarkerInputValidator;
 import me.damonkelley.io.validators.PlayerTypeInputValidator;
 import me.damonkelley.tictactoe.Marker;
@@ -9,10 +10,12 @@ import me.damonkelley.tictactoe.PlayerFactory;
 public class GameConfigurationMenu {
     private final String FIRST_MARKER_MESSAGE = "Who will go first?\nX/O: ";
     private final String PLAYER_TYPE_MESSAGE_TEMPLATE = "Is %s a human (H) or a computer (C)?\nH/C: ";
+    private final String BOARD_SIZE_MESSAGE = "How large is the board? 3x3 (3) or 4x4 (4)?\n3/4: ";
 
     private Player xPlayer;
     private Player oPlayer;
     private Marker firstMarker;
+    private int boardSize;
 
     private UI ui;
 
@@ -21,6 +24,7 @@ public class GameConfigurationMenu {
     public GameConfigurationMenu(UI ui) {
         xPlayer = PlayerFactory.human(Marker.X, ui);
         oPlayer = PlayerFactory.computer(Marker.O);
+        boardSize = 3;
         firstMarker = Marker.X;
 
         validator = new PlayerTypeInputValidator();
@@ -31,15 +35,19 @@ public class GameConfigurationMenu {
     public GameConfigurationMenu display() {
         promptXPlayerType();
         promptOPlayerType();
+        promptForBoardSize();
         promptForFirstMarker();
 
         return this;
     }
 
-    private Marker promptForFirstMarker() {
+    private void promptForBoardSize() {
+       boardSize = Integer.parseInt(ui.prompt(BOARD_SIZE_MESSAGE, new IntegerRangeInputValidator(3, 4)));
+    }
+
+    private void promptForFirstMarker() {
         String input = ui.prompt(FIRST_MARKER_MESSAGE, new MarkerInputValidator());
         firstMarker = Marker.valueOf(input);
-        return firstMarker;
     }
 
     private void promptXPlayerType() {
@@ -73,5 +81,9 @@ public class GameConfigurationMenu {
 
     public Marker getFirstMarker() {
         return firstMarker;
+    }
+
+    public int getBoardSize() {
+        return boardSize;
     }
 }

@@ -35,7 +35,7 @@ public class Application {
 
     private void newGame() {
         configMenu.display();
-        game = new Game(configMenu.getFirstMarker());
+        game = new Game(configMenu.getFirstMarker(), configMenu.getBoardSize());
         players = new Players(configMenu.getOPlayer(), configMenu.getXPlayer());
     }
 
