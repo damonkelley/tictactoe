@@ -2,6 +2,7 @@
 .idea/
 /out/
 .idea_modules/
+*.iml
 
 # Maven
 target/
