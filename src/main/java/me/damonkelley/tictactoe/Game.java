@@ -67,7 +67,7 @@ public class Game {
     }
 
     public Game reset() {
-        state = new State(initialMarker);
+        state = new State(new Board(getBoard().getSize()), initialMarker);
         return this;
     }
 

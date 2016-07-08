@@ -93,27 +93,21 @@ public class GameTest {
 
     @Test
     public void itCanResetItself() {
-        Player player1 = PlayerFactory.computer(Marker.X);
-        Player player2 = PlayerFactory.computer(Marker.O);
-
         Game game = new Game(Marker.X);
-
-
-        player1.move(game);
-        player2.move(game);
-        player1.move(game);
-        player2.move(game);
-        player1.move(game);
-        player2.move(game);
-        player1.move(game);
-        player2.move(game);
-        player1.move(game);
+        game.move(new Space(0, 0), Marker.O);
+        game.move(new Space(1, 1), Marker.O);
+        game.move(new Space(2, 2), Marker.O);
 
         assertTrue(game.isOver());
-
         game.reset();
-
         assertFalse(game.isOver());
+    }
+
+    @Test
+    public void itMaintainsTheSameBoardSizeAfterResetting() {
+        Game game = new Game(Marker.X, 4);
+        game.reset();
+        assertEquals(4, game.getBoard().getSize());
     }
 
     @Test
