@@ -59,6 +59,7 @@ public class BoardTest {
 
         assertNotEquals(new Board(), boardWithOneSpaceFilled);
         assertEquals(new Board().put(new Space(1, 0), Marker.O), boardWithOneSpaceFilled);
+        assertNotEquals(new Board(), new Board(4));
     }
 
     @Test
@@ -70,6 +71,12 @@ public class BoardTest {
                 .put(new Space(0, 1), Marker.X);
 
         assertNotEquals(board, newBoard);
+    }
+
+    @Test
+    public void itMaintainsTheSameSizeAfterBeingCopied() {
+        Board board = new Board(4);
+        assertEquals(board.getSize(), board.copy().getSize());
     }
 
     @Test

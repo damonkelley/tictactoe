@@ -22,8 +22,8 @@ public class Board implements Iterable<Space> {
         this(3);
     }
 
-    private Board(Map<Space, Marker> spaces) {
-        this.size = 3;
+    private Board(Map<Space, Marker> spaces, int size) {
+        this.size = size;
         this.spaces = spaces;
     }
 
@@ -74,7 +74,7 @@ public class Board implements Iterable<Space> {
     }
 
     public Board copy() {
-        return new Board(new HashMap<>(this.spaces));
+        return new Board(new HashMap<>(this.spaces), size);
     }
 
     public List<Space> availableSpaces() {
