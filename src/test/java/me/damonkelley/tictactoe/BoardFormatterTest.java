@@ -12,7 +12,6 @@ public class BoardFormatterTest {
         Board board  = new Board();
 
         BoardFormatter formatter = new BoardFormatter(board);
-        assertTrue(formatter.collect().contains(asList(null, null, null)));
         assertEquals(8, formatter.collect().size());
     }
 
@@ -86,5 +85,39 @@ public class BoardFormatterTest {
 
         BoardFormatter formatter = new BoardFormatter(board);
         assertTrue(formatter.collect().contains(asList(Marker.X, Marker.X, Marker.X)));
+    }
+
+    @Test
+    public void itWillCollectTheClusters() {
+        Board board  = new Board(4);
+
+        BoardFormatter formatter = new BoardFormatter(board);
+        assertEquals(19, formatter.collect().size());
+    }
+
+    @Test
+    public void itWillCollectAClusterOfXMarkers() {
+        Board board  = new Board(4);
+
+        board.put(new Space(0, 0), Marker.X);
+        board.put(new Space(1, 0), Marker.X);
+        board.put(new Space(0, 1), Marker.X);
+        board.put(new Space(1, 1), Marker.X);
+
+        BoardFormatter formatter = new BoardFormatter(board);
+        assertTrue(formatter.collect().contains(asList(Marker.X, Marker.X, Marker.X, Marker.X)));
+    }
+
+    @Test
+    public void itWillCollectAClusterOfOMarkers() {
+        Board board  = new Board(4);
+
+        board.put(new Space(0, 1), Marker.O);
+        board.put(new Space(1, 1), Marker.O);
+        board.put(new Space(0, 2), Marker.O);
+        board.put(new Space(1, 2), Marker.O);
+
+        BoardFormatter formatter = new BoardFormatter(board);
+        assertTrue(formatter.collect().contains(asList(Marker.O, Marker.O, Marker.O, Marker.O)));
     }
 }
