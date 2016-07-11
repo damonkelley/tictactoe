@@ -10,9 +10,9 @@ public class Players {
         players = Arrays.asList(playerA, playerB);
     }
 
-    public Player get(Marker x) {
+    public Player get(Marker marker) {
         return players.stream()
-                .filter(player -> player.getMarker() == x)
+                .filter(player -> player.getMarker() == marker)
                 .findFirst()
                 .get();
     }
