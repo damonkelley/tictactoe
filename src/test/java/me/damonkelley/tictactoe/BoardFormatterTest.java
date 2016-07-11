@@ -120,4 +120,13 @@ public class BoardFormatterTest {
         BoardFormatter formatter = new BoardFormatter(board);
         assertTrue(formatter.collect().contains(asList(Marker.O, Marker.O, Marker.O, Marker.O)));
     }
+
+    @Test
+    public void allCollectionsHaveTheSameLengthAsTheBoardSize() {
+        BoardFormatter formatter = new BoardFormatter(new Board());
+        formatter.collect().forEach(collection -> assertEquals(3, collection.size()));
+
+        formatter = new BoardFormatter(new Board(4));
+        formatter.collect().forEach(collection -> assertEquals(4, collection.size()));
+    }
 }

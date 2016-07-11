@@ -47,7 +47,7 @@ public class BoardFormatter {
     private List<Space> getClusterParents() {
         return board.getSpaces().entrySet()
                 .stream()
-                .filter(e -> e.getKey().y < 3 && e.getKey().x < 3)
+                .filter(e -> e.getKey().y < maxXOrYValue() && e.getKey().x < maxXOrYValue())
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
@@ -93,8 +93,8 @@ public class BoardFormatter {
     }
 
     private List<Marker> getRightDiagonal() {
-        int x = 2;
-        int y = 0;
+        int x = maxXOrYValue();
+        int y = minXorYValue();
         List<Marker> markers = new ArrayList<>();
 
         for (Space space : board) {
@@ -105,5 +105,13 @@ public class BoardFormatter {
             }
         }
         return markers;
+    }
+
+    private int minXorYValue() {
+        return 0;
+    }
+
+    private int maxXOrYValue() {
+        return board.getSize() - 1;
     }
 }
