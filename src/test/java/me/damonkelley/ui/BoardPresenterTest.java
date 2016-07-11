@@ -1,19 +1,17 @@
 package me.damonkelley.ui;
 
-import me.damonkelley.tictactoe.Game;
+import me.damonkelley.tictactoe.Board;
 import me.damonkelley.tictactoe.Marker;
-import me.damonkelley.tictactoe.Player;
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe.finder.Finder;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class GamePresenterTest {
+public class BoardPresenterTest {
 
     @Test
-    public void itPresentsAnEmptyGame() {
-        Game game = new Game(Marker.X);
+    public void itPresentsAnEmptyBoard() {
+        Board board = new Board();
 
         String expected = " 1 | 2 | 3 \n" +
                           "---+---+---\n" +
@@ -22,17 +20,14 @@ public class GamePresenterTest {
                           " 7 | 8 | 9 \n" +
                           "\n";
 
-        assertEquals(expected, new GamePresenter(game).present());
+        assertEquals(expected, new BoardPresenter(board).present());
     }
 
 
     @Test
     public void itPresentsAGameWithMoves() {
-        Player player = new Player(Marker.X, new FakeFinder());
-
-        Game game = new Game(Marker.X);
-
-        player.move(game);
+        Board board = new Board()
+                .put(new Space(0, 2), Marker.X);
 
         String expected = " 1 | 2 | 3 \n" +
                           "---+---+---\n" +
@@ -41,13 +36,11 @@ public class GamePresenterTest {
                           " X | 8 | 9 \n" +
                           "\n";
 
-        assertEquals(expected, new GamePresenter(game).present());
+        assertEquals(expected, new BoardPresenter(board).present());
     }
 
     @Test
     public void itPresentsA4By4Game() {
-        Game game = new Game(Marker.X, 4);
-
         String expected = "  1  |  2  |  3  |  4  \n" +
                           "-----+-----+-----+-----\n" +
                           "  5  |  6  |  7  |  8  \n"  +
@@ -57,15 +50,14 @@ public class GamePresenterTest {
                           "  13 |  14 |  15 |  16 \n"  +
                           "\n";
 
-        assertEquals(expected, new GamePresenter(game).present());
+        assertEquals(expected, new BoardPresenter(new Board(4)).present());
     }
 
     @Test
     public void itPresentsA4By4GameWithMoves() {
-        Game game = new Game(Marker.X, 4);
-
-        game.move(new Space(2, 3), Marker.X);
-        game.move(new Space(1, 1), Marker.O);
+        Board board = new Board(4)
+                .put(new Space(2, 3), Marker.X)
+                .put(new Space(1, 1), Marker.O);
 
         String expected = "  1  |  2  |  3  |  4  \n" +
                           "-----+-----+-----+-----\n" +
@@ -76,13 +68,6 @@ public class GamePresenterTest {
                           "  13 |  14 |  X  |  16 \n"  +
                           "\n";
 
-        assertEquals(expected, new GamePresenter(game).present());
-    }
-
-    private class FakeFinder extends Finder {
-        @Override
-        public Space getNextMove(Game game) {
-            return new Space(0, 2);
-        }
+        assertEquals(expected, new BoardPresenter(board).present());
     }
 }

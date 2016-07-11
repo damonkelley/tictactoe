@@ -1,11 +1,14 @@
 package me.damonkelley.ui;
 
+import me.damonkelley.tictactoe.Board;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 
 import java.util.ArrayList;
 
-class GamePresenter {
+class BoardPresenter {
+    private final String template;
+    private Board board;
     private Game game;
     private int id = 1;
 
@@ -16,33 +19,33 @@ class GamePresenter {
                                           " %s | %s | %s \n" +
                                           "\n";
 
-   private final String FOUR_BY_FOUR =    " %s | %s | %s | %s \n" +
-                                          "-----+-----+-----+-----\n" +
-                                          " %s | %s | %s | %s \n"  +
-                                          "-----+-----+-----+-----\n" +
-                                          " %s | %s | %s | %s \n"  +
-                                          "-----+-----+-----+-----\n" +
-                                          " %s | %s | %s | %s \n"  +
-                                          "\n";
+    private final String FOUR_BY_FOUR = " %s | %s | %s | %s \n" +
+                                        "-----+-----+-----+-----\n" +
+                                        " %s | %s | %s | %s \n" +
+                                        "-----+-----+-----+-----\n" +
+                                        " %s | %s | %s | %s \n" +
+                                        "-----+-----+-----+-----\n" +
+                                        " %s | %s | %s | %s \n" +
+                                        "\n";
 
-    public GamePresenter(Game game) {
-        this.game = game;
+    public BoardPresenter(Board board) {
+        this.board = board;
+        this.template = (board.getSize() == 4) ? FOUR_BY_FOUR : THREE_BY_THREE;
     }
 
     public String present() {
-        String template = (game.getBoard().getSize() == 4)? FOUR_BY_FOUR : THREE_BY_THREE;
-        return addMarkersToTemplate(template, getMarkersFromBoard());
+        return addMarkersToTemplate(getMarkersFromBoard());
     }
 
-    private String addMarkersToTemplate(String template, ArrayList<String> markers) {
+    private String addMarkersToTemplate(ArrayList<String> markers) {
         return String.format(template, markers.toArray());
     }
 
     private ArrayList<String> getMarkersFromBoard() {
         ArrayList<String> markers = new ArrayList<>();
 
-        game.getBoard().forEach(space -> {
-            MarkerPresenter presenter = new MarkerPresenter(id, game.getBoard().get(space));
+        board.forEach(space -> {
+            MarkerPresenter presenter = new MarkerPresenter(id, board.get(space));
             markers.add(center(presenter.present()));
             id++;
         });
@@ -76,12 +79,12 @@ class GamePresenter {
     }
 
     private int calculateSpaceWidth() {
-        int width = game.getBoard().getSize() / 2;
-        return (width % 2 == 0)? width + 1 : width;
+        int width = board.getSize() / 2;
+        return (width % 2 == 0) ? width + 1 : width;
     }
 
     private String padRight(String s, int width) {
-        return String.format("%-" + width  + "s", s);
+        return String.format("%-" + width + "s", s);
     }
 
     private String padLeft(String s, int padStart) {
