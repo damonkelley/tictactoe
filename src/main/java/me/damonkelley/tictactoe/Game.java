@@ -35,17 +35,11 @@ public class Game {
         return state.getNextMarker();
     }
 
-    public Marker determineWinner() {
-        if (isWinner(Marker.X)) {
-            return Marker.X;
-        } else if (isWinner((Marker.O))) {
-            return Marker.O;
-        } else {
-            return null;
-        }
+    public boolean hasWinner() {
+        return isWinner(Marker.O) || isWinner(Marker.X);
     }
 
-    private boolean isWinner(Marker marker) {
+    public boolean isWinner(Marker marker) {
         return new BoardFormatter(getBoard())
                 .collect()
                 .stream()
@@ -55,11 +49,11 @@ public class Game {
     }
 
     public boolean isOver() {
-        return determineWinner() != null || isDraw();
+        return hasWinner() || isDraw();
     }
 
     public boolean isDraw() {
-        return state.getBoard().isFull() && determineWinner() == null;
+        return state.getBoard().isFull() && !hasWinner();
     }
 
     public Board getBoard() {

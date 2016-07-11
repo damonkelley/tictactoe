@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(Parameterized.class)
 public class ArtificialIntelligenceAlwaysWinsTest {
@@ -44,7 +44,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
 
         new GameLoop(new FakeUI()).play(players, game);
 
-        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
+        assertFalse("The opponent never wins", game.isWinner(randomPlayer.getMarker()));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
 
         new GameLoop(new FakeUI()).play(players, game);
 
-        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
+        assertFalse("The opponent never wins", game.isWinner(randomPlayer.getMarker()));
     }
 
     private class RandomFinder extends Finder {
@@ -74,7 +74,7 @@ public class ArtificialIntelligenceAlwaysWinsTest {
 
         new GameLoop(new FakeUI()).play(players, game);
 
-        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
+        assertFalse("The opponent never wins", game.isWinner(randomPlayer.getMarker()));
     }
 
     @Test
@@ -84,6 +84,6 @@ public class ArtificialIntelligenceAlwaysWinsTest {
 
         new GameLoop(new FakeUI()).play(players, game);
 
-        assertNotEquals(randomPlayer.getMarker(), game.determineWinner());
+        assertFalse("The opponent never wins", game.isWinner(randomPlayer.getMarker()));
     }
 }

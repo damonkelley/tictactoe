@@ -64,7 +64,7 @@ public class ArtificialIntelligenceFinder extends Finder {
     }
 
     private int scoreFor(Game game, int depth) {
-        if (game.determineWinner() == marker) {
+        if (game.isWinner(marker)) {
             return 10 + depth;
         } else if (game.isOver() && !game.isDraw()) {
             return -10 - depth;

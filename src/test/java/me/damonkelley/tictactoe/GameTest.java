@@ -25,7 +25,7 @@ public class GameTest {
                 .move(new Space(0, 2), Marker.O)
                 .move(new Space(2, 2), Marker.X);
 
-        assertEquals(Marker.X, game.determineWinner());
+        assertEquals(true, game.isWinner(Marker.X));
         assertFalse(game.isDraw());
         assertTrue(game.isOver());
     }
@@ -149,7 +149,7 @@ public class GameTest {
                 .move(new Space(2, 2), Marker.X)
                 .move(new Space(1, 2), Marker.O);
 
-        assertEquals(Marker.O, game.determineWinner());
+        assertEquals(true, game.isWinner(Marker.O));
     }
 
     @Test
@@ -162,17 +162,17 @@ public class GameTest {
                 .move(new Space(2, 0), Marker.O)
                 .move(new Space(2, 2), Marker.X);
 
-        assertEquals(Marker.X, game.determineWinner());
+        assertEquals(true, game.isWinner(Marker.X));
     }
 
     @Test
-    public void itCanDetermineWhenThereIsNoWinner() {
+    public void itDoesNotHaveAWinner() {
         Game game = new Game(Marker.O);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O);
 
-        assertEquals(null, game.determineWinner());
+        assertEquals(false, game.hasWinner());
     }
 
     @Test
