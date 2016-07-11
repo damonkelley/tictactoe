@@ -2,7 +2,7 @@ package me.damonkelley.tictactoe;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 public class PlayersTest {
     @Test
@@ -11,7 +11,7 @@ public class PlayersTest {
         Player playerB = new Player(Marker.O, null);
 
         Players players = new Players(playerA, playerB);
-        assertTrue("It can get Player A", playerA == players.get(Marker.X));
-        assertTrue("It can get Player B", playerB == players.get(Marker.O));
+        assertSame(playerA, players.get(Marker.X));
+        assertSame(playerB, players.get(Marker.O));
     }
 }
