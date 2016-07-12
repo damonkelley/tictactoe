@@ -40,8 +40,8 @@ public class Game {
     }
 
     public boolean isWinner(Marker marker) {
-        return new BoardFormatter(getBoard())
-                .collect()
+        return new Partitioner(getBoard())
+                .partition()
                 .stream()
                 .filter(collection -> collection.stream().allMatch(e -> e == marker))
                 .findAny()
