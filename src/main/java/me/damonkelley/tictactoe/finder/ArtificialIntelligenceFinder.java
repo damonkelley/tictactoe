@@ -10,7 +10,7 @@ public class ArtificialIntelligenceFinder extends Finder {
     private Marker marker;
     private Space choice;
 
-    private final int DEPTH = 7;
+    private final int DEPTH = 8;
 
     public ArtificialIntelligenceFinder(Marker marker) {
         this.marker = marker;
