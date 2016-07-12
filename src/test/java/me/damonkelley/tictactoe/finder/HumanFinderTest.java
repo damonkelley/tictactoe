@@ -5,7 +5,6 @@ import me.damonkelley.fake.FakeWriter;
 import me.damonkelley.io.validators.InputValidationError;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
-import me.damonkelley.tictactoe.Player;
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.ui.UI;
 import org.hamcrest.CoreMatchers;
@@ -29,7 +28,7 @@ public class HumanFinderTest {
         writer = new FakeWriter();
         ui = new UI(reader, writer);
 
-        game = new Game(new Player(Marker.O, null), new Player(Marker.X, null));
+        game = new Game(Marker.O);
     }
 
     @Test
@@ -73,6 +72,16 @@ public class HumanFinderTest {
         Finder finder = new HumanFinder(ui);
 
         assertEquals(new Space(1, 0), finder.getNextMove(game));
+    }
+
+    @Test
+    public void itWillAcceptInputForAllBoardSizes() {
+        Game game = new Game(Marker.O, 4);
+        reader.addLine("16");
+
+        Finder finder = new HumanFinder(ui);
+
+        assertEquals(new Space(3, 3), finder.getNextMove(game));
     }
 
     @Test

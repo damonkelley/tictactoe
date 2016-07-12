@@ -10,17 +10,17 @@ public class GameLoop {
         this.ui = ui;
     }
 
-    public void play(Game game) {
+    public void play(Players players, Game game) {
         ui.render(game);
         while (!game.isOver()) {
-            nextTurn(game);
+            nextTurn(players.get(game.nextTurn()), game);
         }
         ui.message("Game Over");
     }
 
-    private void nextTurn(Game game) {
+    private void nextTurn(Player player, Game game) {
         try {
-            game.nextMove();
+            player.move(game);
             ui.render(game);
         } catch (InputValidationError e) {
             ui.message(e.getMessage());

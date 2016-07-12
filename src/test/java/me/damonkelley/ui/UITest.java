@@ -40,7 +40,7 @@ public class UITest {
 
     @Test
     public void itWritesToOut() throws IOException {
-        Game game = new Game(new Player(Marker.O, null), new Player(Marker.X, null));
+        Game game = new Game(Marker.O);
         new UI(reader, writer).render(game);
 
         String expected =

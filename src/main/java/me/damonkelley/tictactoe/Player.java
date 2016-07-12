@@ -12,7 +12,7 @@ public class Player {
     }
 
     public void move(Game game) {
-        game.getState().move(finder.getNextMove(game), getMarker());
+        game.move(finder.getNextMove(game), getMarker());
     }
 
     public Marker getMarker() {

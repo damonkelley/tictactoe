@@ -1,16 +1,16 @@
 package me.damonkelley.tictactoe.finder;
 
 import me.damonkelley.tictactoe.Game;
-import me.damonkelley.tictactoe.GameRules;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe.State;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public class ArtificialIntelligenceFinder extends Finder {
     private Marker marker;
     private Space choice;
+
+    private final int DEPTH = 8;
 
     public ArtificialIntelligenceFinder(Marker marker) {
         this.marker = marker;
@@ -18,53 +18,56 @@ public class ArtificialIntelligenceFinder extends Finder {
 
     @Override
     public Space getNextMove(Game game) {
-        minimax(game.getState(), 6, true);
+        minimax(game, DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
         return choice;
     }
 
-    private int minimax(State state, int depth, boolean maximizingPlayer) {
-        if (new GameRules(state).isOver() || depth == 0) return scoreFor(state, depth);
+    private int minimax(Game game, int depth, int alpha, int beta, boolean maximizingPlayer) {
+        if (game.isOver() || depth == 0) return scoreFor(game, depth);
 
-        HashMap<Integer, Space> scores = new HashMap<>();
+        TreeMap<Integer, Space> scores = new TreeMap<>();
 
-        for (Space space : state.getBoard().availableSpaces()) {
-            State futureState = state.copy();
-            futureState.move(space, futureState.getNextMarker());
+        if (maximizingPlayer) {
+            int score = alpha;
+            for (Space space : game.getBoard().availableSpaces()) {
+                Game futureGame = game.copy()
+                        .move(space, game.nextTurn());
 
-            scores.put(minimax(futureState, depth - 1, !maximizingPlayer), space);
+                score = Integer.max(score, minimax(futureGame, depth - 1, alpha, beta, !maximizingPlayer));
+                scores.putIfAbsent(score, space);
+
+                alpha = Integer.max(alpha, score);
+                if (beta <= alpha)
+                    break;
+            }
+
+            choice = scores.lastEntry().getValue();
+            return score;
+        } else {
+            int score = beta;
+            for (Space space : game.getBoard().availableSpaces()) {
+                Game futureGame = game.copy()
+                        .move(space, game.nextTurn());
+
+                score = Integer.min(score, minimax(futureGame, depth - 1, alpha, beta, !maximizingPlayer));
+                scores.putIfAbsent(score, space);
+
+                beta = Integer.min(score, beta);
+                if (beta <= alpha)
+                    break;
+            }
+
+            choice = scores.firstEntry().getValue();
+            return score;
         }
-
-        int bestScore = bestScoreFor(maximizingPlayer, scores);
-        choice = scores.get(bestScore);
-
-        return bestScore;
     }
 
-    private int scoreFor(State state, int depth) {
-        GameRules rules = new GameRules(state);
-        if (rules.determineWinner() == marker) {
+    private int scoreFor(Game game, int depth) {
+        if (game.isWinner(marker)) {
             return 10 + depth;
-        } else if (rules.isOver() && !rules.isDraw()) {
+        } else if (game.isOver() && !game.isDraw()) {
             return -10 - depth;
         }
-        return 0;
-    }
-
-    private int bestScoreFor(boolean maximizingPlayer, HashMap<Integer, Space> scores) {
-        if (maximizingPlayer) {
-            return findMaximumScore(scores);
-        } else {
-            return findMinimumScore(scores);
-        }
-    }
-
-    private Integer findMinimumScore(HashMap<Integer, Space> scores) {
-        return scores.keySet().stream()
-                .reduce(Integer.MAX_VALUE, Integer::min);
-    }
-
-    private Integer findMaximumScore(HashMap<Integer, Space> scores) {
-        return scores.keySet().stream()
-                .reduce(Integer.MIN_VALUE, Integer::max);
+        return depth;
     }
 }

@@ -8,20 +8,35 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board implements Iterable<Space> {
+
+    private final int size;
     private Map<Space, Marker> spaces;
 
-    public Board() {
+    public Board(int size) {
+        this.size = size;
         this.spaces = new HashMap<>();
+        build(size);
+    }
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+    public Board() {
+        this(3);
+    }
+
+    private Board(Map<Space, Marker> spaces, int size) {
+        this.size = size;
+        this.spaces = spaces;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    private void build(int size) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 this.spaces.put(new Space(i, j), null);
             }
         }
-    }
-
-    private Board(Map<Space, Marker> spaces) {
-        this.spaces = spaces;
     }
 
     public Marker get(Space space) {
@@ -37,6 +52,10 @@ public class Board implements Iterable<Space> {
         return spaces.entrySet()
                 .stream()
                 .noneMatch(m -> m.getValue() == null);
+    }
+
+    Map<Space, Marker> getSpaces() {
+        return spaces;
     }
 
     @Override
@@ -55,33 +74,7 @@ public class Board implements Iterable<Space> {
     }
 
     public Board copy() {
-        return new Board(new HashMap<>(this.spaces));
-    }
-
-    @Override
-    public String toString() {
-        StringBuffer output = new StringBuffer();
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-
-                Marker marker = spaces.get(new Space(j, i));
-                if (j < 2) {
-                    output.append(" ")
-                            .append((marker != null) ? marker.toString() : " ")
-                            .append(" |");
-                } else {
-                    output.append(" ")
-                            .append((marker != null) ? marker.toString() : " ")
-                            .append(" \n");
-                }
-
-            }
-            if (i < 2) {
-                output.append("---+---+---\n");
-            }
-        }
-        return output.toString();
+        return new Board(new HashMap<>(this.spaces), size);
     }
 
     public List<Space> availableSpaces() {

@@ -2,65 +2,77 @@ package me.damonkelley.tictactoe;
 
 public class Game {
 
-    private GameRules rules;
     private State state;
-    private Player player1;
-    private Player player2;
+    private Marker initialMarker;
 
-    public Game(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        state = new State(player1.getMarker());
-        rules = new GameRules(state);
+    public Game(Marker marker) {
+        initialMarker = marker;
+        state = new State(marker);
     }
 
-    public void nextMove() {
-        nextTurn().move(this);
+    public Game(Marker marker, int boardSize) {
+        initialMarker = marker;
+        state = new State(new Board(boardSize), marker);
     }
 
-    private Player nextTurn() {
-        if (state.getNextMarker() == player1.getMarker()) {
-            return player1;
-        } else {
-            return player2;
+    private Game(State state) {
+        initialMarker = state.getNextMarker();
+        this.state = state;
+    }
+
+    public Game move(Space space, Marker marker) {
+        if (canMove(space)) {
+            state.move(space, marker);
         }
+        return this;
     }
 
-    public State getState() {
-        return state;
+    private boolean canMove(Space point) {
+        return state.getBoard().get(point) == null;
     }
 
-    public Player getWinner() {
-        Marker winningMarker = rules.determineWinner();
+    public Marker nextTurn() {
+        return state.getNextMarker();
+    }
 
-        if (winningMarker == player1.getMarker()) {
-            return player1;
-        } else if (winningMarker == player2.getMarker()) {
-            return player2;
-        }
+    public boolean hasWinner() {
+        return isWinner(Marker.O) || isWinner(Marker.X);
+    }
 
-        return null;
+    public boolean isWinner(Marker marker) {
+        return new Partitioner(getBoard())
+                .partition()
+                .stream()
+                .filter(collection -> collection.stream().allMatch(e -> e == marker))
+                .findAny()
+                .isPresent();
     }
 
     public boolean isOver() {
-        return rules.isOver();
+        return hasWinner() || isDraw();
     }
 
     public boolean isDraw() {
-        return rules.isDraw();
+        return state.getBoard().isFull() && !hasWinner();
     }
 
     public Board getBoard() {
         return state.getBoard();
     }
 
+    public Game reset() {
+        state = new State(new Board(getBoard().getSize()), initialMarker);
+        return this;
+    }
+
+    public Game copy() {
+        return new Game(state.copy());
+    }
+
     @Override
     public String toString() {
-        return "me.damonkelley.tictactoe.Game{" +
-                "rules=" + rules +
-                ", state=" + state +
-                ", player1=" + player1 +
-                ", player2=" + player2 +
+        return "Game{" +
+                "state=" + state +
                 '}';
     }
 
@@ -71,14 +83,7 @@ public class Game {
 
         Game game = (Game) o;
 
-        if (state != null ? !state.equals(game.state) : game.state != null) return false;
-        if (player1 != null ? !player1.equals(game.player1) : game.player1 != null) return false;
-        return player2 != null ? player2.equals(game.player2) : game.player2 == null;
-    }
+        return state != null ? state.equals(game.state) : game.state == null;
 
-    public Game reset() {
-        state = new State(player1.getMarker());
-        rules = new GameRules(state);
-        return this;
     }
 }

@@ -10,7 +10,7 @@ public class PlayerTest {
     @Test
     public void itUsesAMoveFinderToFindAMove() {
         Player player = new Player(Marker.O, new FakeFinder());
-        Game game = new Game(player, new Player(Marker.X, new FakeFinder()));
+        Game game = new Game(Marker.O);
 
         player.move(game);
         player.move(game);

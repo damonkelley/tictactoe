@@ -4,6 +4,7 @@ import me.damonkelley.fake.FakeUI;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.GameException;
 import me.damonkelley.tictactoe.GameLoop;
+import me.damonkelley.tictactoe.Players;
 import me.damonkelley.ui.GameConfigurationMenu;
 import me.damonkelley.ui.PlayAgainMenu;
 import me.damonkelley.ui.UI;
@@ -74,7 +75,7 @@ public class ApplicationTest {
     public void itWillExitGracefullyIfTheGameIsQuit() {
         gameLoop = new FakeGameLoop(ui) {
             @Override
-            public void play(Game game) {
+            public void play(Players player, Game game) {
                 log += "play ";
                 throw new GameException("Goodbye");
             }
@@ -130,7 +131,7 @@ public class ApplicationTest {
         }
 
         @Override
-        public void play(Game game) {
+        public void play(Players players, Game game) {
             log += "play ";
         }
 

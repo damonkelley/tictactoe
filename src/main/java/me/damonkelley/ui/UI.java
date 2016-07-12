@@ -43,7 +43,7 @@ public class UI {
 
     public void render(Game game) {
         clearScreen();
-        write(new GamePresenter(game).present());
+        write(new BoardPresenter(game.getBoard()).present());
     }
 
     private void clearScreen() {
