@@ -1,1 +1,1 @@
-# tictactoe  [![Build Status](https://travis-ci.org/damonkelley/tictactoe.svg?branch=master)](https://travis-ci.org/damonkelley/tictactoe)
+# tictactoe [![CircleCI](https://circleci.com/gh/damonkelley/tictactoe.svg?style=svg)](https://circleci.com/gh/damonkelley/tictactoe)

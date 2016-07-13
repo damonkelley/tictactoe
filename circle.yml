@@ -1,0 +1,20 @@
+machine:
+  environment:
+    _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+test:
+  override:
+    - ./gradlew test:
+        environment:
+            TERM: dumb
+        timeout: 1200
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit
+    - cp -r tictactoe/build/test-results/* $CIRCLE_TEST_REPORTS/junit
+    - emulator -avd circleci-android23 -no-audio -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    - ./gradlew connectedCheck:
+        environment:
+            TERM: dumb
+        timeout: 1200
