@@ -1,6 +1,7 @@
 package me.damonkelley.tictactoe_app;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -36,10 +37,18 @@ public class BoardAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        TextView textView = new TextView(context);
-        Object marker = getItem(i);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (marker != null) textView.setText(marker.toString());
-        return textView;
+        TextView spaceView;
+        if (view == null) {
+            spaceView = (TextView) inflater.inflate(R.layout.space_layout, null);
+        } else {
+            spaceView = (TextView) view;
+        }
+
+        Object marker = getItem(i);
+        if (marker != null) spaceView.setText(marker.toString());
+
+        return spaceView;
     }
 }

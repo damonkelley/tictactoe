@@ -9,14 +9,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="me.damonkelley.tictactoe_app.GameActivity">
 
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:id="@+id/game"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:gravity="center"
+        android:layout_above="@+id/game_message" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/game_message"
-        android:text="Good luck!"/>
-
-    <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/game"/>
+        android:text="@string/new_game_message"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:textSize="50dp"
+        android:textColor="@color/colorAccent"/>
 </RelativeLayout>

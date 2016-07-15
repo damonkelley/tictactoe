@@ -11,6 +11,7 @@ import me.damonkelley.tictactoe.Marker;
 public class GameActivity extends AppCompatActivity {
 
     private Game game;
+    private TextView gameMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,7 @@ public class GameActivity extends AppCompatActivity {
 
         game = new Game(Marker.X);
 
-        TextView gameMessage = (TextView) this.findViewById(R.id.game_message);
+        gameMessage = (TextView) this.findViewById(R.id.game_message);
         GridView gameView = (GridView) this.findViewById(R.id.game);
 
         gameView.setAdapter(new BoardAdapter(this, game.getBoard()));
@@ -27,14 +28,25 @@ public class GameActivity extends AppCompatActivity {
         gameView.setOnItemClickListener((adapterView, view, i, l) -> {
             game.move(new SpaceIDConverter(3, 3).convert(i + 1), game.nextTurn());
             gameView.invalidateViews();
-            if (game.isOver()) {
-                if (game.hasWinner()) {
-                    Marker winner = (game.isWinner(Marker.X)) ? Marker.X : Marker.O;
-                    gameMessage.setText(String.format("%s wins!", winner));
-                } else {
-                    gameMessage.setText("Draw");
-                }
-            }
+            updateGameMessage();
         });
+    }
+
+    private void updateGameMessage() {
+        if (game.isOver()) {
+            if (game.hasWinner()) {
+                gameMessage.setText(getGameWinnerText());
+            } else {
+                gameMessage.setText(R.string.draw);
+            }
+        }
+    }
+
+    private int getGameWinnerText() {
+        if (game.isWinner(Marker.X)) {
+            return R.string.x_wins;
+        } else {
+            return R.string.o_wins;
+        }
     }
 }
