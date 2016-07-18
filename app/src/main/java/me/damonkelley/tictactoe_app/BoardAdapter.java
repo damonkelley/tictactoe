@@ -41,7 +41,7 @@ public class BoardAdapter extends BaseAdapter {
 
         TextView spaceView;
         if (view == null) {
-            spaceView = (TextView) inflater.inflate(R.layout.space_layout, null);
+            spaceView = (TextView) inflater.inflate(R.layout.view_space, null);
         } else {
             spaceView = (TextView) view;
         }
