@@ -1,31 +1,33 @@
 package me.damonkelley.tictactoe_app;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.mock.MockContext;
 import android.widget.TextView;
 import me.damonkelley.tictactoe.Board;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
 
-@RunWith(AndroidJUnit4.class)
 @SmallTest
+@RunWith(AndroidJUnit4.class)
 public class BoardAdapterTest {
 
     private Board board;
     private BoardAdapter adapter;
 
+    @Rule
+    public ActivityTestRule<GameActivity> mActivityRule = new ActivityTestRule(GameActivity.class);
+
     @Before
     public void setUp() throws Exception {
         board = new Board();
-        adapter = new BoardAdapter(InstrumentationRegistry.getContext(), board);
+        adapter = new BoardAdapter(mActivityRule.getActivity(), board);
     }
 
     @Test
@@ -39,7 +41,7 @@ public class BoardAdapterTest {
     @Test
     public void itGetsAViewAtThePositionForA4By4Board() {
         Board board = new Board(4);
-        BoardAdapter adapter = new BoardAdapter(new MockContext(), board);
+        BoardAdapter adapter = new BoardAdapter(mActivityRule.getActivity(), board);
 
         board.put(new Space(3, 3), Marker.X);
 
@@ -49,8 +51,8 @@ public class BoardAdapterTest {
 
     @Test
     public void theCount() {
-        assertEquals(9, new BoardAdapter(new MockContext(), new Board()).getCount());
-        assertEquals(16, new BoardAdapter(new MockContext(), new Board(4)).getCount());
+        assertEquals(9, new BoardAdapter(mActivityRule.getActivity(), new Board()).getCount());
+        assertEquals(16, new BoardAdapter(mActivityRule.getActivity(), new Board(4)).getCount());
     }
 
     @Test
@@ -61,7 +63,6 @@ public class BoardAdapterTest {
     }
 
     @Test
-    @Ignore(value = "Unable to make the Resource available for inflation during testing")
     public void viewsAreTextViewsCorrespondingToBoardSpaces() {
         board.put(new Space(1, 1), Marker.O);
         board.put(new Space(1, 0), Marker.X);
