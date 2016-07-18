@@ -1,6 +1,7 @@
 package me.damonkelley.tictactoe_app;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -19,17 +20,25 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         game = new Game(Marker.X);
-
         gameMessage = (TextView) this.findViewById(R.id.game_message);
-        GridView gameView = (GridView) this.findViewById(R.id.game);
 
-        gameView.setAdapter(new BoardAdapter(this, game.getBoard()));
-
-        gameView.setOnItemClickListener((adapterView, view, i, l) -> {
+        createGameView().setOnItemClickListener((adapterView, view, i, l) -> {
             game.move(new SpaceIDConverter(3, 3).convert(i + 1), game.nextTurn());
-            gameView.invalidateViews();
+
+            updateGameBoard((GridView) adapterView);
             updateGameMessage();
         });
+    }
+
+    @NonNull
+    private GridView createGameView() {
+        GridView gameView = (GridView) this.findViewById(R.id.game);
+        gameView.setAdapter(new BoardAdapter(this, game.getBoard()));
+        return gameView;
+    }
+
+    private void updateGameBoard(GridView gameView) {
+        gameView.invalidateViews();
     }
 
     private void updateGameMessage() {
