@@ -34,11 +34,15 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateGameMessage() {
         if (game.isOver()) {
-            if (game.hasWinner()) {
-                gameMessage.setText(getGameWinnerText());
-            } else {
-                gameMessage.setText(R.string.draw);
-            }
+            getGameMessage();
+        }
+    }
+
+    private void getGameMessage() {
+        if (game.hasWinner()) {
+            gameMessage.setText(getGameWinnerText());
+        } else {
+            gameMessage.setText(R.string.draw);
         }
     }
 
