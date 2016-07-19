@@ -9,10 +9,13 @@ class GameLoopMachine implements StateMachine {
         this.one = one;
         this.two = two;
         this.next = one;
+
+        next();
     }
 
     public void next() {
-        next.go(this);
+        Turn turn = next;
         next = (next == one) ? two : one;
+        turn.go(this);
     }
 }

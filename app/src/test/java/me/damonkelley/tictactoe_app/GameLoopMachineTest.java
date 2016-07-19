@@ -9,16 +9,14 @@ public class GameLoopMachineTest {
 
     @Test
     public void oneMoveIsMade() {
-        GameLoopMachine machine = new GameLoopMachine(new MockTurn("one"), new MockTurn("two"));
-        machine.next();
-        
+        new GameLoopMachine(new MockTurn("one"), new MockTurn("two"));
+
         assertEquals("one ", log);
     }
 
     @Test
     public void twoMovesAreMade() {
         GameLoopMachine machine = new GameLoopMachine(new MockTurn("one"), new MockTurn("two"));
-        machine.next();
         machine.next();
 
         assertEquals("one two ", log);
@@ -27,11 +25,26 @@ public class GameLoopMachineTest {
     @Test
     public void threeMovesAreMade() {
         GameLoopMachine machine = new GameLoopMachine(new MockTurn("one"), new MockTurn("two"));
-        machine.next();
+
         machine.next();
         machine.next();
 
         assertEquals("one two one ", log);
+    }
+
+    @Test
+    public void anInfiniteLoopCannotBeCreated() {
+        Turn turn = new Turn() {
+            @Override
+            public void go(StateMachine machine) {
+                log += "one ";
+                machine.next();
+            }
+        };
+
+        new GameLoopMachine(turn, new MockTurn("two"));
+
+        assertEquals("one two ", log);
     }
 
     private class MockTurn implements Turn {
