@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">TicTacToe-App</string>
+    <string name="app_name">TicTacToe</string>
+    <string name="new_game_message">Good luck!</string>
+    <string name="x_wins">X wins!</string>
+    <string name="o_wins">O wins!</string>
+    <string name="draw">Draw</string>
 </resources>
