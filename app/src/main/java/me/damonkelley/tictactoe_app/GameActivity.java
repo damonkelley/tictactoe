@@ -12,7 +12,6 @@ import me.damonkelley.tictactoe.Marker;
 public class GameActivity extends AppCompatActivity {
 
     private Game game;
-    private TextView gameMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,46 +19,24 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         game = new Game(Marker.X);
-        gameMessage = (TextView) this.findViewById(R.id.game_message);
 
-        createGameView().setOnItemClickListener((adapterView, view, i, l) -> {
+        TextView gameMessage = (TextView) this.findViewById(R.id.game_message);
+        GridView boardView = createBoardView();
+
+        GameViews gameViews = new GameViews()
+                .add(new MessageViewWrapper(game, gameMessage))
+                .add(new BoardViewWrapper(boardView));
+
+        boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             game.move(new SpaceIDConverter(3, 3).convert(i + 1), game.nextTurn());
-
-            updateGameBoard((GridView) adapterView);
-            updateGameMessage();
+            gameViews.update();
         });
     }
 
     @NonNull
-    private GridView createGameView() {
-        GridView gameView = (GridView) this.findViewById(R.id.game);
-        gameView.setAdapter(new BoardAdapter(this, game.getBoard()));
-        return gameView;
-    }
-
-    private void updateGameBoard(GridView gameView) {
-        gameView.invalidateViews();
-    }
-
-    private void updateGameMessage() {
-        if (game.isOver()) {
-            getGameMessage();
-        }
-    }
-
-    private void getGameMessage() {
-        if (game.hasWinner()) {
-            gameMessage.setText(getGameWinnerText());
-        } else {
-            gameMessage.setText(R.string.draw);
-        }
-    }
-
-    private int getGameWinnerText() {
-        if (game.isWinner(Marker.X)) {
-            return R.string.x_wins;
-        } else {
-            return R.string.o_wins;
-        }
+    private GridView createBoardView() {
+        GridView boardView = (GridView) this.findViewById(R.id.game);
+        boardView.setAdapter(new BoardAdapter(this, game.getBoard()));
+        return boardView;
     }
 }
