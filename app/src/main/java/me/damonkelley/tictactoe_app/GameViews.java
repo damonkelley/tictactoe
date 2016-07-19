@@ -16,6 +16,6 @@ class GameViews {
     }
 
     public void update() {
-        wrappers.forEach(wrapper -> wrapper.update());
+        wrappers.forEach(ViewWrapper::update);
     }
 }
