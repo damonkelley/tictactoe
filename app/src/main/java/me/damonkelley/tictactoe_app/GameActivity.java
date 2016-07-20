@@ -1,6 +1,7 @@
 package me.damonkelley.tictactoe_app;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
@@ -22,14 +23,29 @@ public class GameActivity extends AppCompatActivity {
 
         TextView gameMessage = (TextView) this.findViewById(R.id.game_message);
         GridView boardView = createBoardView();
-
         GameViews gameViews = new GameViews()
                 .add(new MessageViewWrapper(game, gameMessage))
                 .add(new BoardViewWrapper(boardView));
 
+        String gameType = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("game_type", "human_vs_human");
+
+        GameLoopMachine loop;
+        if (gameType.equals("human_vs_human")) {
+            loop = new GameLoopMachine(
+                    new HumanTurn(() -> {}),
+                    new HumanTurn(() -> {})
+            );
+        } else {
+            loop = new GameLoopMachine(
+                    new HumanTurn(() -> {}),
+                    new ComputerTurn(() -> new ComputerTask(gameViews).execute(game))
+            );
+        }
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             game.move(new SpaceIDConverter(3, 3).convert(i + 1), game.nextTurn());
             gameViews.update();
+            loop.next();
         });
     }
 
