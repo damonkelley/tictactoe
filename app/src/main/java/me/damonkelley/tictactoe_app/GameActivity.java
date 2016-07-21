@@ -28,20 +28,14 @@ public class GameActivity extends AppCompatActivity {
                 .add(new BoardViewWrapper(boardView));
 
         String gameType = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("game_type", "human_vs_human");
+                .getString("game_type", "human-vs-human");
 
-        GameLoopMachine loop;
-        if (gameType.equals("human_vs_human")) {
-            loop = new GameLoopMachine(
-                    new NullTurn(),
-                    new NullTurn()
-            );
-        } else {
-            loop = new GameLoopMachine(
-                    new NullTurn(),
-                    new RunnableTurn(new ComputerTurnRunnable(game, gameViews))
-            );
-        }
+        Loop loop = new Loop.LoopBuilder()
+                .withComputerTurn(new RunnableTurn(() -> new ComputerTask(gameViews).execute(game)))
+                .withHumanTurn(new NullTurn())
+                .withGameType(gameType)
+                .build();
+
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             SpaceIDConverter converter = new SpaceIDConverter(3, 3);
             new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), game)).go(loop);

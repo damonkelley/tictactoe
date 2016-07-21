@@ -4,19 +4,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class GameLoopMachineTest {
+public class LoopTest {
     private String log = "";
 
     @Test
     public void oneMoveIsMade() {
-        new GameLoopMachine(new MockTurn("one"), new MockTurn("two"));
+        new Loop(new MockTurn("one"), new MockTurn("two"));
 
         assertEquals("one ", log);
     }
 
     @Test
     public void twoMovesAreMade() {
-        GameLoopMachine machine = new GameLoopMachine(new MockTurn("one"), new MockTurn("two"));
+        Loop machine = new Loop(new MockTurn("one"), new MockTurn("two"));
         machine.next();
 
         assertEquals("one two ", log);
@@ -24,7 +24,7 @@ public class GameLoopMachineTest {
 
     @Test
     public void threeMovesAreMade() {
-        GameLoopMachine machine = new GameLoopMachine(new MockTurn("one"), new MockTurn("two"));
+        Loop machine = new Loop(new MockTurn("one"), new MockTurn("two"));
 
         machine.next();
         machine.next();
@@ -42,9 +42,33 @@ public class GameLoopMachineTest {
             }
         };
 
-        new GameLoopMachine(turn, new MockTurn("two"));
+        new Loop(turn, new MockTurn("two"));
 
         assertEquals("one two ", log);
+    }
+
+    @Test
+    public void itBuildsAHumanVsHumanGame() {
+        Loop loop = new Loop.LoopBuilder()
+                .withHumanTurn(new MockTurn("human"))
+                .withComputerTurn(new MockTurn("computer"))
+                .withGameType(Loop.LoopBuilder.HUMAN_VS_HUMAN)
+                .build();
+
+        loop.next();
+        assertEquals("human human ", log);
+    }
+
+    @Test
+    public void itBuildsAHumanVsComputerGame() {
+        Loop loop = new Loop.LoopBuilder()
+                .withHumanTurn(new MockTurn("human"))
+                .withComputerTurn(new MockTurn("computer"))
+                .withGameType(Loop.LoopBuilder.HUMAN_VS_COMPUTER)
+                .build();
+
+        loop.next();
+        assertEquals("human computer ", log);
     }
 
     private class MockTurn implements Turn {

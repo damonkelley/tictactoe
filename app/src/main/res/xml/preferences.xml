@@ -6,6 +6,6 @@
         android:entryValues="@array/game_type_values"
         android:title="Game Type"
         android:key="game_type"
-        android:defaultValue="human_vs_human"
+        android:defaultValue="human-vs-human"
         android:summary="%s"/>
 </PreferenceScreen>
