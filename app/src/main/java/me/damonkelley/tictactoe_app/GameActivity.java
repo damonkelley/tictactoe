@@ -33,19 +33,19 @@ public class GameActivity extends AppCompatActivity {
         GameLoopMachine loop;
         if (gameType.equals("human_vs_human")) {
             loop = new GameLoopMachine(
-                    new HumanTurn(() -> {}),
-                    new HumanTurn(() -> {})
+                    new NullTurn(),
+                    new NullTurn()
             );
         } else {
             loop = new GameLoopMachine(
-                    new HumanTurn(() -> {}),
-                    new ComputerTurn(() -> new ComputerTask(gameViews).execute(game))
+                    new NullTurn(),
+                    new RunnableTurn(new ComputerTurnRunnable(game, gameViews))
             );
         }
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
-            game.move(new SpaceIDConverter(3, 3).convert(i + 1), game.nextTurn());
+            SpaceIDConverter converter = new SpaceIDConverter(3, 3);
+            new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), game)).go(loop);
             gameViews.update();
-            loop.next();
         });
     }
 

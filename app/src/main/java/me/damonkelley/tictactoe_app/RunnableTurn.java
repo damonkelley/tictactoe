@@ -1,9 +1,9 @@
 package me.damonkelley.tictactoe_app;
 
-public class ComputerTurn implements Turn {
+public class RunnableTurn implements Turn {
     private final Runnable runnable;
 
-    public ComputerTurn(Runnable runnable) {
+    public RunnableTurn(Runnable runnable) {
         this.runnable = runnable;
     }
 
