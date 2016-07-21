@@ -13,6 +13,9 @@ import me.damonkelley.tictactoe.Marker;
 public class GameActivity extends AppCompatActivity {
 
     private Game game;
+    private GameViews gameViews;
+    private GridView boardView;
+    private TextView gameMessageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,21 +23,14 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         game = new Game(Marker.X);
+        boardView = getBoardView();
+        gameMessageView = getGameMessageView();
 
-        TextView gameMessage = (TextView) this.findViewById(R.id.game_message);
-        GridView boardView = createBoardView();
-        GameViews gameViews = new GameViews()
-                .add(new MessageViewWrapper(game, gameMessage))
+        gameViews = new GameViews()
+                .add(new MessageViewWrapper(game, gameMessageView))
                 .add(new BoardViewWrapper(boardView));
 
-        String gameType = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("game_type", "human-vs-human");
-
-        Loop loop = new Loop.LoopBuilder()
-                .withComputerTurn(new RunnableTurn(() -> new ComputerTask(gameViews).execute(game)))
-                .withHumanTurn(new NullTurn())
-                .withGameType(gameType)
-                .build();
+        Loop loop = makeLoop();
 
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             SpaceIDConverter converter = new SpaceIDConverter(3, 3);
@@ -43,8 +39,27 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    private TextView getGameMessageView() {
+        return (TextView) this.findViewById(R.id.game_message);
+    }
+
+    private Loop makeLoop() {
+        String gameType = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("game_type", Loop.LoopBuilder.HUMAN_VS_HUMAN);
+
+        RunnableTurn computerTurn = new RunnableTurn(() -> {
+            new ComputerTask(gameViews).execute(game);
+        });
+
+        return new Loop.LoopBuilder()
+                .withComputerTurn(computerTurn)
+                .withHumanTurn(new NullTurn())
+                .withGameType(gameType)
+                .build();
+    }
+
     @NonNull
-    private GridView createBoardView() {
+    private GridView getBoardView() {
         GridView boardView = (GridView) this.findViewById(R.id.game);
         boardView.setAdapter(new BoardAdapter(this, game.getBoard()));
         return boardView;
