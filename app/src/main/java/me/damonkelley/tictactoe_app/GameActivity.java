@@ -34,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             SpaceIDConverter converter = new SpaceIDConverter(3, 3);
-            new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), game)).go(loop);
+            new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), Marker.X, game)).go(loop);
             gameViews.update();
         });
     }

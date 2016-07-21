@@ -12,11 +12,10 @@ public class HumanTurnRunnableTest {
     public void itMakesAMove() {
         Game game = new Game(Marker.X);
 
-        new HumanTurnRunnable(new Space(0, 1), game).run();
+        new HumanTurnRunnable(new Space(0, 1), Marker.X, game).run();
         assertEquals(Marker.X, game.getBoard().get(new Space(0, 1)));
 
-        new HumanTurnRunnable(new Space(1, 1), game).run();
-        assertEquals(Marker.O, game.getBoard().get(new Space(1, 1)));
+        new HumanTurnRunnable(new Space(1, 1), Marker.X, game).run();
+        assertEquals(Marker.X, game.getBoard().get(new Space(1, 1)));
     }
-
 }
