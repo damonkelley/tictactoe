@@ -56,6 +56,7 @@ public class MessageViewWrapperTest {
     }
 
     private void makeOWin() {
+        game.move(new Space(2, 2), Marker.X);
         game.move(new Space(1, 0), Marker.O);
         game.move(new Space(0, 1), Marker.X);
         game.move(new Space(1, 1), Marker.O);
@@ -73,14 +74,14 @@ public class MessageViewWrapperTest {
 
     private void makeDraw() {
         game.move(new Space(0, 0), Marker.X);
+        game.move(new Space(1, 0), Marker.O);
         game.move(new Space(2, 0), Marker.X);
+        game.move(new Space(0, 2), Marker.O);
         game.move(new Space(1, 1), Marker.X);
+        game.move(new Space(2, 2), Marker.O);
         game.move(new Space(1, 2), Marker.X);
+        game.move(new Space(0, 1), Marker.O);
         game.move(new Space(2, 1), Marker.X);
 
-        game.move(new Space(1, 0), Marker.O);
-        game.move(new Space(0, 2), Marker.O);
-        game.move(new Space(2, 2), Marker.O);
-        game.move(new Space(0, 1), Marker.O);
     }
 }

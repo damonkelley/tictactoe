@@ -15,6 +15,7 @@ public class HumanTurnRunnableTest {
         new HumanTurnRunnable(new Space(0, 1), Marker.X, game).run();
         assertEquals(Marker.X, game.getBoard().get(new Space(0, 1)));
 
+        game = new Game(Marker.X);
         new HumanTurnRunnable(new Space(1, 1), Marker.X, game).run();
         assertEquals(Marker.X, game.getBoard().get(new Space(1, 1)));
     }

@@ -80,6 +80,30 @@ public class GameTest {
     }
 
     @Test
+    public void movesCantBeMadeIfItIsNotTheMarkersTurn() {
+        Game game = new Game(Marker.X);
+
+        game.move(new Space(0, 0), Marker.O);
+
+        assertEquals(null, game.getBoard().get(new Space(0, 0)));
+    }
+
+    @Test
+    public void movesCantBeMadeWhenTheGameIsOver() {
+        Game game = new Game(Marker.X);
+
+        game.move(new Space(0, 0), Marker.X)
+                .move(new Space(1, 0), Marker.O)
+                .move(new Space(1, 1), Marker.X)
+                .move(new Space(2, 0), Marker.O)
+                .move(new Space(2, 2), Marker.X);
+
+        game.move(new Space(0, 2), Marker.O);
+
+        assertEquals(null, game.getBoard().get(new Space(0, 2)));
+    }
+
+    @Test
     public void itOnlyAllowsMovesToAvailableSpaces() {
         Game game = new Game(Marker.X);
 
@@ -93,10 +117,13 @@ public class GameTest {
 
     @Test
     public void itCanResetItself() {
-        Game game = new Game(Marker.X);
-        game.move(new Space(0, 0), Marker.O);
-        game.move(new Space(1, 1), Marker.O);
-        game.move(new Space(2, 2), Marker.O);
+        Game game = new Game(Marker.O);
+
+        game.move(new Space(0, 0), Marker.O)
+                .move(new Space(0, 1), Marker.X)
+                .move(new Space(1, 1), Marker.O)
+                .move(new Space(0, 2), Marker.X)
+                .move(new Space(2, 2), Marker.O);
 
         assertTrue(game.isOver());
         game.reset();
@@ -129,10 +156,12 @@ public class GameTest {
 
     @Test
     public void itIsOverWhenThereIsAWinner() {
-        Game game = new Game(Marker.O);
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X)
+                .move(new Space(0, 2), Marker.O)
                 .move(new Space(1, 0), Marker.X)
+                .move(new Space(1, 1), Marker.O)
                 .move(new Space(2, 0), Marker.X);
 
         assertEquals(true, game.isOver());
@@ -154,7 +183,7 @@ public class GameTest {
 
     @Test
     public void itCanDetermineWhenXIsTheWinner() {
-        Game game = new Game(Marker.O);
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O)
@@ -207,7 +236,7 @@ public class GameTest {
 
     @Test
     public void itIsADrawIfThereIsNoWinnerAndNoMoreSpaces() {
-        Game game = new Game(Marker.O);
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(2, 0), Marker.O)
