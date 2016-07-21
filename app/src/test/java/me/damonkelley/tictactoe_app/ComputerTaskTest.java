@@ -12,7 +12,7 @@ public class ComputerTaskTest {
     @Test
     public void itMakesAMoveInTheBackground() {
         Game game = new Game(Marker.X);
-        ComputerTask task = new ComputerTask(new GameViews());
+        ComputerTask task = new ComputerTask(Marker.X, new GameViews());
 
         task.doInBackground(game);
 
@@ -22,7 +22,7 @@ public class ComputerTaskTest {
     @Test
     public void itWillWinTheGame() {
         Game game = new Game(Marker.X);
-        ComputerTask task = new ComputerTask(new GameViews());
+        ComputerTask task = new ComputerTask(Marker.O, new GameViews());
 
         game.move(new Space(0, 0), Marker.X);
         task.doInBackground(game);
@@ -39,7 +39,7 @@ public class ComputerTaskTest {
     @Test
     public void itUpdatesTheViewsPostExecute() {
         MockGameViews views = new MockGameViews();
-        new ComputerTask(views).onPostExecute(views);
+        new ComputerTask(Marker.O, views).onPostExecute(views);
         assertEquals("update", views.log);
     }
 

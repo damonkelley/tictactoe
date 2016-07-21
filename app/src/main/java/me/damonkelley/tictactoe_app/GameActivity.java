@@ -16,6 +16,7 @@ public class GameActivity extends AppCompatActivity {
     private GameViews gameViews;
     private GridView boardView;
     private TextView gameMessageView;
+    private String gameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +31,27 @@ public class GameActivity extends AppCompatActivity {
                 .add(new MessageViewWrapper(game, gameMessageView))
                 .add(new BoardViewWrapper(boardView));
 
+        gameType = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("game_type", Loop.LoopBuilder.HUMAN_VS_HUMAN);
+
+
         Loop loop = makeLoop();
 
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             SpaceIDConverter converter = new SpaceIDConverter(3, 3);
-            new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), Marker.X, game)).go(loop);
+            System.out.println(getMarker());
+            new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), getMarker(), game)).go(loop);
             gameViews.update();
         });
+    }
+
+    private Marker getMarker() {
+        if (gameType.equals(Loop.LoopBuilder.HUMAN_VS_HUMAN)) {
+            return game.nextTurn();
+        }
+        else {
+            return Marker.X;
+        }
     }
 
     private TextView getGameMessageView() {
@@ -44,11 +59,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private Loop makeLoop() {
-        String gameType = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("game_type", Loop.LoopBuilder.HUMAN_VS_HUMAN);
-
         RunnableTurn computerTurn = new RunnableTurn(() -> {
-            new ComputerTask(gameViews).execute(game);
+            new ComputerTask(Marker.O, gameViews).execute(game);
         });
 
         return new Loop.LoopBuilder()
