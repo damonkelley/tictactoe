@@ -132,4 +132,3 @@ public class UITest {
         onView(withId(R.id.game_message)).check(matches(withText("O wins!")));
     }
 }
-

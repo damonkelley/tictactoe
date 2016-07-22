@@ -82,6 +82,5 @@ public class MessageViewWrapperTest {
         game.move(new Space(1, 2), Marker.X);
         game.move(new Space(0, 1), Marker.O);
         game.move(new Space(2, 1), Marker.X);
-
     }
 }

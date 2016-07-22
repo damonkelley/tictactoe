@@ -83,5 +83,4 @@ public class LoopTest {
             log += message + " ";
         }
     }
-
 }

@@ -34,7 +34,6 @@ public class GameActivity extends AppCompatActivity {
         gameType = PreferenceManager.getDefaultSharedPreferences(this)
                 .getString("game_type", Loop.LoopBuilder.HUMAN_VS_HUMAN);
 
-
         Loop loop = makeLoop();
 
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {

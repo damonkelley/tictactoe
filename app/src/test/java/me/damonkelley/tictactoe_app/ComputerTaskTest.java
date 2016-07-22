@@ -50,5 +50,4 @@ public class ComputerTaskTest {
             log += "update";
         }
     }
-
 }
