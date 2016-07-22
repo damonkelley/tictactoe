@@ -37,6 +37,18 @@ public class ComputerTaskTest {
     }
 
     @Test
+    public void itOnlyUsesItsOwnMarker() {
+        Game game = new Game(Marker.X);
+        ComputerTask task = new ComputerTask(Marker.O, new GameViews());
+
+        task.doInBackground(game);
+        task.doInBackground(game);
+        task.doInBackground(game);
+
+        assertEquals(new Game(Marker.X), game);
+    }
+
+    @Test
     public void itUpdatesTheViewsPostExecute() {
         MockGameViews views = new MockGameViews();
         new ComputerTask(Marker.O, views).onPostExecute(views);
