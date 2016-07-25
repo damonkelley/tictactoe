@@ -21,34 +21,22 @@ public class Loop implements StateMachine {
 
     public static class LoopBuilder {
 
-        private Turn humanTurn;
-        private Turn computerTurn;
-        private String type;
+        private Turn first;
+        private Turn second;
 
-        public static final String HUMAN_VS_COMPUTER = "human-vs-computer";
         public static final String HUMAN_VS_HUMAN = "human-vs-human";
 
-        public LoopBuilder withHumanTurn(Turn turn) {
-            humanTurn = turn;
+        public LoopBuilder withFirstTurn(Turn turn) {
+            first = turn;
             return this;
         }
 
-        public LoopBuilder withComputerTurn(Turn turn) {
-            computerTurn = turn;
+        public LoopBuilder withSecondTurn(Turn turn) {
+            second = turn;
             return this;
         }
-
-        public LoopBuilder withGameType(String type) {
-            this.type = type;
-            return this;
-        }
-
         public Loop build() {
-            if (HUMAN_VS_COMPUTER.equals(type)) {
-                return new Loop(humanTurn, computerTurn);
-            } else {
-                return new Loop(humanTurn, humanTurn);
-            }
+            return new Loop(first, second);
         }
     }
 }

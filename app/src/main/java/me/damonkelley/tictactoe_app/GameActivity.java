@@ -63,9 +63,8 @@ public class GameActivity extends AppCompatActivity {
         });
 
         return new Loop.LoopBuilder()
-                .withComputerTurn(computerTurn)
-                .withHumanTurn(new NullTurn())
-                .withGameType(gameType)
+                .withFirstTurn(new NullTurn())
+                .withSecondTurn(computerTurn)
                 .build();
     }
 
