@@ -68,6 +68,11 @@ public class GameLoopTest {
         }
 
         @Override
+        public Game move(Space space, Marker marker) {
+            return this;
+        }
+
+        @Override
         public boolean isOver() {
             if (currentIteration == 0) {
                 return true;

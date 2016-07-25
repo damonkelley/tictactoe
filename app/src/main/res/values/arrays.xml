@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="game_type_values">
+        <item>human-vs-human</item>
+        <item>human-vs-computer</item>
+    </string-array>
+    <string-array name="game_type_labels">
+        <item>Human vs. Human</item>
+        <item>Human vs. Computer</item>
+    </string-array>
+</resources>

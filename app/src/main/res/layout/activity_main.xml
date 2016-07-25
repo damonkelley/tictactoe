@@ -9,6 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="me.damonkelley.tictactoe_app.MainActivity">
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/settings"
+        class="me.damonkelley.tictactoe_app.SettingsFragment"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

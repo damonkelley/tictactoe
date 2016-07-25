@@ -21,14 +21,16 @@ public class Game {
     }
 
     public Game move(Space space, Marker marker) {
-        if (canMove(space)) {
+        if (canMove(space, marker)) {
             state.move(space, marker);
         }
         return this;
     }
 
-    private boolean canMove(Space point) {
-        return state.getBoard().get(point) == null;
+    private boolean canMove(Space point, Marker marker) {
+        return getBoard().get(point) == null
+                && marker == nextTurn()
+                && !isOver();
     }
 
     public Marker nextTurn() {

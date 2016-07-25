@@ -1,6 +1,7 @@
 package me.damonkelley.tictactoe_app;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
@@ -12,7 +13,10 @@ import me.damonkelley.tictactoe.Marker;
 public class GameActivity extends AppCompatActivity {
 
     private Game game;
-    private TextView gameMessage;
+    private GameViews gameViews;
+    private GridView boardView;
+    private TextView gameMessageView;
+    private String gameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,46 +24,55 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         game = new Game(Marker.X);
-        gameMessage = (TextView) this.findViewById(R.id.game_message);
+        boardView = getBoardView();
+        gameMessageView = getGameMessageView();
 
-        createGameView().setOnItemClickListener((adapterView, view, i, l) -> {
-            game.move(new SpaceIDConverter(3, 3).convert(i + 1), game.nextTurn());
+        gameViews = new GameViews()
+                .add(new MessageViewWrapper(game, gameMessageView))
+                .add(new BoardViewWrapper(boardView));
 
-            updateGameBoard((GridView) adapterView);
-            updateGameMessage();
+        gameType = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("game_type", Loop.LoopBuilder.HUMAN_VS_HUMAN);
+
+        Loop loop = makeLoop();
+
+        boardView.setOnItemClickListener((adapterView, view, i, l) -> {
+            SpaceIDConverter converter = new SpaceIDConverter(3, 3);
+            System.out.println(getMarker());
+            new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), getMarker(), game)).go(loop);
+            gameViews.update();
         });
     }
 
+    private Marker getMarker() {
+        if (gameType.equals(Loop.LoopBuilder.HUMAN_VS_HUMAN)) {
+            return game.nextTurn();
+        }
+        else {
+            return Marker.X;
+        }
+    }
+
+    private TextView getGameMessageView() {
+        return (TextView) this.findViewById(R.id.game_message);
+    }
+
+    private Loop makeLoop() {
+        RunnableTurn computerTurn = new RunnableTurn(() -> {
+            new ComputerTask(Marker.O, gameViews).execute(game);
+        });
+
+        return new Loop.LoopBuilder()
+                .withComputerTurn(computerTurn)
+                .withHumanTurn(new NullTurn())
+                .withGameType(gameType)
+                .build();
+    }
+
     @NonNull
-    private GridView createGameView() {
-        GridView gameView = (GridView) this.findViewById(R.id.game);
-        gameView.setAdapter(new BoardAdapter(this, game.getBoard()));
-        return gameView;
-    }
-
-    private void updateGameBoard(GridView gameView) {
-        gameView.invalidateViews();
-    }
-
-    private void updateGameMessage() {
-        if (game.isOver()) {
-            getGameMessage();
-        }
-    }
-
-    private void getGameMessage() {
-        if (game.hasWinner()) {
-            gameMessage.setText(getGameWinnerText());
-        } else {
-            gameMessage.setText(R.string.draw);
-        }
-    }
-
-    private int getGameWinnerText() {
-        if (game.isWinner(Marker.X)) {
-            return R.string.x_wins;
-        } else {
-            return R.string.o_wins;
-        }
+    private GridView getBoardView() {
+        GridView boardView = (GridView) this.findViewById(R.id.game);
+        boardView.setAdapter(new BoardAdapter(this, game.getBoard()));
+        return boardView;
     }
 }

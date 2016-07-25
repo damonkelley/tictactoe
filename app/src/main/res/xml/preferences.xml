@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:id="@+id/game_type_preference"
+        android:entries="@array/game_type_labels"
+        android:entryValues="@array/game_type_values"
+        android:title="Game Type"
+        android:key="game_type"
+        android:defaultValue="human-vs-human"
+        android:summary="%s"/>
+</PreferenceScreen>
