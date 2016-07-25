@@ -1,6 +1,5 @@
 package me.damonkelley.tictactoe_app;
 
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -14,9 +13,6 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withKey;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withSummaryText;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
@@ -101,7 +97,6 @@ public class UITest {
                 .inAdapterView(withId(R.id.game))
                 .atPosition(position)
                 .perform(click());
-
     }
 
     private void clickAndCheck(int position, String marker) {
@@ -114,14 +109,8 @@ public class UITest {
 
     @Test
     public void playAHumanVsComputerGame() {
-        onData(allOf(is(instanceOf(Preference.class)), withKey("game_type")))
-                .check(matches(isDisplayed()))
-                .perform(click());
-
-        onView(withText("Human vs. Computer")).perform(click());
-
-        onData(allOf(is(instanceOf(Preference.class)), withKey("game_type"), withSummaryText("Human vs. Computer")))
-                .check(matches(isDisplayed()));
+        choosePlayerType(R.id.player_one_type, "Human");
+        choosePlayerType(R.id.player_two_type, "Computer");
 
         onView(withId(R.id.start_button)).perform(click());
 
@@ -130,5 +119,10 @@ public class UITest {
         clickSpace(1);
 
         onView(withId(R.id.game_message)).check(matches(withText("O wins!")));
+    }
+
+    private void choosePlayerType(int player_type, String option) {
+        onView(withId(player_type)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is(option))).perform(click());
     }
 }

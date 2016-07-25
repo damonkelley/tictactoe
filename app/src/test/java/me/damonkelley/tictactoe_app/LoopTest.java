@@ -48,14 +48,39 @@ public class LoopTest {
     }
 
     @Test
-    public void itBuildsALoop() {
+    public void itBuildsAHumanVsHumanGame() {
         Loop loop = new Loop.LoopBuilder()
-                .withFirstTurn(new MockTurn("first"))
-                .withSecondTurn(new MockTurn("second"))
+                .withHumanTurn(new MockTurn("human"))
+                .withComputerTurn(new MockTurn("computer"))
+                .withGameType(Loop.LoopBuilder.HUMAN_VS_HUMAN)
                 .build();
 
         loop.next();
-        assertEquals("first second ", log);
+        assertEquals("human human ", log);
+    }
+
+    @Test
+    public void itBuildsAHumanVsComputerGame() {
+        Loop loop = new Loop.LoopBuilder()
+                .withHumanTurn(new MockTurn("human"))
+                .withComputerTurn(new MockTurn("computer"))
+                .withGameType(Loop.LoopBuilder.HUMAN_VS_COMPUTER)
+                .build();
+
+        loop.next();
+        assertEquals("human computer ", log);
+    }
+
+    @Test
+    public void itBuildsAComputerVsHumanGame() {
+        Loop loop = new Loop.LoopBuilder()
+                .withHumanTurn(new MockTurn("human"))
+                .withComputerTurn(new MockTurn("computer"))
+                .withGameType(Loop.LoopBuilder.COMPUTER_VS_HUMAN)
+                .build();
+
+        loop.next();
+        assertEquals("computer human ", log);
     }
 
     private class MockTurn implements Turn {

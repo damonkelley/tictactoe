@@ -1,7 +1,6 @@
 package me.damonkelley.tictactoe_app;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
@@ -16,7 +15,7 @@ public class GameActivity extends AppCompatActivity {
     private GameViews gameViews;
     private GridView boardView;
     private TextView gameMessageView;
-    private String gameType;
+    private int gameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +30,19 @@ public class GameActivity extends AppCompatActivity {
                 .add(new MessageViewWrapper(game, gameMessageView))
                 .add(new BoardViewWrapper(boardView));
 
-        gameType = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("game_type", Loop.LoopBuilder.HUMAN_VS_HUMAN);
+        gameType = this.getIntent().getIntExtra("gameType", Loop.LoopBuilder.HUMAN_VS_HUMAN);
 
         Loop loop = makeLoop();
 
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             SpaceIDConverter converter = new SpaceIDConverter(3, 3);
-            System.out.println(getMarker());
             new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), getMarker(), game)).go(loop);
             gameViews.update();
         });
     }
 
     private Marker getMarker() {
-        if (gameType.equals(Loop.LoopBuilder.HUMAN_VS_HUMAN)) {
+        if (gameType == Loop.LoopBuilder.HUMAN_VS_HUMAN) {
             return game.nextTurn();
         }
         else {
@@ -63,8 +60,9 @@ public class GameActivity extends AppCompatActivity {
         });
 
         return new Loop.LoopBuilder()
-                .withFirstTurn(new NullTurn())
-                .withSecondTurn(computerTurn)
+                .withHumanTurn(new NullTurn())
+                .withComputerTurn(computerTurn)
+                .withGameType(gameType)
                 .build();
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import me.damonkelley.tictactoe_app.Loop;
 import me.damonkelley.tictactoe_app.R;
 
 public class GameOptions extends Fragment {
@@ -39,5 +40,17 @@ public class GameOptions extends Fragment {
         otherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(otherAdapter);
+    }
+
+    public int getGameType() {
+        String playerOne = (String) playerOneSpinner.getSelectedItem();
+        String playerTwo = (String) playerTwoSpinner.getSelectedItem();
+
+        if ("Computer".equals(playerOne) && "Human".equals(playerTwo)) {
+            return Loop.LoopBuilder.COMPUTER_VS_HUMAN;
+        } else if ("Human".equals(playerOne) && "Computer".equals(playerTwo)) {
+            return Loop.LoopBuilder.HUMAN_VS_COMPUTER;
+        }
+        return Loop.LoopBuilder.HUMAN_VS_HUMAN;
     }
 }
