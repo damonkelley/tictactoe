@@ -8,4 +8,8 @@
         <item>Human vs. Human</item>
         <item>Human vs. Computer</item>
     </string-array>
+    <string-array name="player_type">
+        <item>Human</item>
+        <item>Computer</item>
+    </string-array>
 </resources>
