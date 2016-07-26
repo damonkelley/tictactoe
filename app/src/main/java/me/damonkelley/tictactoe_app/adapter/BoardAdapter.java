@@ -1,4 +1,4 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import me.damonkelley.io.converters.SpaceIDConverter;
 import me.damonkelley.tictactoe.Board;
+import me.damonkelley.tictactoe_app.R;
 
 public class BoardAdapter extends BaseAdapter {
     private Context context;

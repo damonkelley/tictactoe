@@ -3,7 +3,7 @@ package me.damonkelley.tictactoe_app.turn;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.Loop;
+import me.damonkelley.tictactoe_app.loop.Loop;
 import org.junit.Before;
 import org.junit.Test;
 

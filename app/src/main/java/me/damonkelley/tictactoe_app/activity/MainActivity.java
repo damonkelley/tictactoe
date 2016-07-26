@@ -1,9 +1,10 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import me.damonkelley.tictactoe_app.R;
 import me.damonkelley.tictactoe_app.fragment.GameOptions;
 
 public class MainActivity extends AppCompatActivity {

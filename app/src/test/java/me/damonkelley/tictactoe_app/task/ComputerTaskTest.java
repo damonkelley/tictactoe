@@ -1,9 +1,10 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.task;
 
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.IllegalMoveException;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
+import me.damonkelley.tictactoe_app.wrapper.GameViews;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

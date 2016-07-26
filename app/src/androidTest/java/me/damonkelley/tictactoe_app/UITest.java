@@ -4,6 +4,7 @@ import android.preference.PreferenceManager;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import me.damonkelley.tictactoe_app.activity.MainActivity;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,8 +1,8 @@
 package me.damonkelley.tictactoe_app.turn;
 
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.GameViews;
-import me.damonkelley.tictactoe_app.Loop;
+import me.damonkelley.tictactoe_app.wrapper.GameViews;
+import me.damonkelley.tictactoe_app.loop.Loop;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

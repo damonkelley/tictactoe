@@ -3,7 +3,7 @@ package me.damonkelley.tictactoe_app.turn;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.StateMachine;
+import me.damonkelley.tictactoe_app.loop.StateMachine;
 
 public abstract class Turn {
     protected Turn next;

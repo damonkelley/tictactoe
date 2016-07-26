@@ -1,8 +1,10 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.loop;
 
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
+import me.damonkelley.tictactoe_app.loop.Loop;
+import me.damonkelley.tictactoe_app.loop.LoopBuilder;
 import me.damonkelley.tictactoe_app.turn.Turn;
 import org.junit.Test;
 

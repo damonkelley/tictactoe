@@ -1,8 +1,8 @@
 package me.damonkelley.tictactoe_app.turn;
 
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.ComputerTask;
-import me.damonkelley.tictactoe_app.GameViews;
+import me.damonkelley.tictactoe_app.task.ComputerTask;
+import me.damonkelley.tictactoe_app.wrapper.GameViews;
 
 public class AsyncComputerTurn extends Turn {
     private final GameViews views;

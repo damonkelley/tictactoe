@@ -1,4 +1,4 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.wrapper;
 
 import android.test.mock.MockContext;
 import android.widget.GridView;

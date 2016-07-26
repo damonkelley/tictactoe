@@ -1,4 +1,4 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.loop;
 
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;

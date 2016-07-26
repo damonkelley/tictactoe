@@ -1,7 +1,7 @@
 package me.damonkelley.tictactoe_app.fragment;
 
 import android.support.test.rule.ActivityTestRule;
-import me.damonkelley.tictactoe_app.MainActivity;
+import me.damonkelley.tictactoe_app.activity.MainActivity;
 import me.damonkelley.tictactoe_app.R;
 import org.junit.Before;
 import org.junit.Rule;

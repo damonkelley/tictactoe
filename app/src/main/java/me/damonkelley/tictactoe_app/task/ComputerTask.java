@@ -1,9 +1,10 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.task;
 
 import android.os.AsyncTask;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.finder.ArtificialIntelligenceFinder;
+import me.damonkelley.tictactoe_app.wrapper.GameViews;
 
 public class ComputerTask extends AsyncTask<Game, Object, GameViews> {
 

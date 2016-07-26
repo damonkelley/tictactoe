@@ -1,4 +1,4 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.loop;
 
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.tictactoe_app.turn.NullTurn;

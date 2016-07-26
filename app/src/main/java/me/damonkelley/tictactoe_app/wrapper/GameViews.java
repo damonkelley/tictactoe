@@ -1,4 +1,4 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.wrapper;
 
 import java.util.ArrayList;
 import java.util.List;

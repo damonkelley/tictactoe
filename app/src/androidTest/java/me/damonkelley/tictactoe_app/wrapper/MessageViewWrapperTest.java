@@ -1,10 +1,11 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.wrapper;
 
 import android.support.test.rule.ActivityTestRule;
 import android.widget.TextView;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
+import me.damonkelley.tictactoe_app.activity.GameActivity;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

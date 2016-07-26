@@ -1,4 +1,4 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +8,17 @@ import android.widget.TextView;
 import me.damonkelley.io.converters.SpaceIDConverter;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
+import me.damonkelley.tictactoe_app.adapter.BoardAdapter;
+import me.damonkelley.tictactoe_app.R;
+import me.damonkelley.tictactoe_app.loop.Loop;
+import me.damonkelley.tictactoe_app.loop.LoopBuilder;
 import me.damonkelley.tictactoe_app.turn.AsyncComputerTurn;
 import me.damonkelley.tictactoe_app.turn.MultiPlayerHumanTurn;
 import me.damonkelley.tictactoe_app.turn.SinglePlayerHumanTurn;
 import me.damonkelley.tictactoe_app.turn.Turn;
+import me.damonkelley.tictactoe_app.wrapper.BoardViewWrapper;
+import me.damonkelley.tictactoe_app.wrapper.GameViews;
+import me.damonkelley.tictactoe_app.wrapper.MessageViewWrapper;
 
 public class GameActivity extends AppCompatActivity {
 

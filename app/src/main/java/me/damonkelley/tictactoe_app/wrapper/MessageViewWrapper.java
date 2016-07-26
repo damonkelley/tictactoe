@@ -1,8 +1,9 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.wrapper;
 
 import android.widget.TextView;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
+import me.damonkelley.tictactoe_app.R;
 
 public class MessageViewWrapper implements ViewWrapper {
     private final Game game;

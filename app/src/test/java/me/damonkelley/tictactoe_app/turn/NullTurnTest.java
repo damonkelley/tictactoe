@@ -1,7 +1,7 @@
 package me.damonkelley.tictactoe_app.turn;
 
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.MockStateMachine;
+import me.damonkelley.tictactoe_app.loop.MockStateMachine;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
