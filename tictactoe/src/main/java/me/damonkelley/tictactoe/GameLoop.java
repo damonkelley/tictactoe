@@ -22,7 +22,7 @@ public class GameLoop {
         try {
             player.move(game);
             ui.render(game);
-        } catch (InputValidationError e) {
+        } catch (InputValidationError | IllegalMoveException e) {
             ui.message(e.getMessage());
         }
     }

@@ -13,7 +13,6 @@ public class PlayerTest {
         Game game = new Game(Marker.O);
 
         player.move(game);
-        player.move(game);
 
         assertEquals(player.getMarker(), game.getBoard().get(new Space(2, 2)));
     }

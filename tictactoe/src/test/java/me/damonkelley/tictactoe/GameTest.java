@@ -79,16 +79,13 @@ public class GameTest {
         assertEquals(game.getBoard().get(new Space(0, 0)), Marker.X);
     }
 
-    @Test
+    @Test(expected=IllegalMoveException.class)
     public void movesCantBeMadeIfItIsNotTheMarkersTurn() {
         Game game = new Game(Marker.X);
-
         game.move(new Space(0, 0), Marker.O);
-
-        assertEquals(null, game.getBoard().get(new Space(0, 0)));
     }
 
-    @Test
+    @Test(expected = IllegalMoveException.class)
     public void movesCantBeMadeWhenTheGameIsOver() {
         Game game = new Game(Marker.X);
 
@@ -99,20 +96,14 @@ public class GameTest {
                 .move(new Space(2, 2), Marker.X);
 
         game.move(new Space(0, 2), Marker.O);
-
-        assertEquals(null, game.getBoard().get(new Space(0, 2)));
     }
 
-    @Test
+    @Test(expected=IllegalMoveException.class)
     public void itOnlyAllowsMovesToAvailableSpaces() {
         Game game = new Game(Marker.X);
 
-        assertEquals(game.getBoard().get(new Space(0, 0)), null);
-
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(0, 0), Marker.O);
-
-        assertEquals(game.getBoard().get(new Space(0, 0)), Marker.X);
     }
 
     @Test
@@ -169,7 +160,7 @@ public class GameTest {
 
     @Test
     public void itCanDetermineWhenOIsTheWinner() {
-        Game game = new Game(Marker.O);
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O)
@@ -196,7 +187,7 @@ public class GameTest {
 
     @Test
     public void itDoesNotHaveAWinner() {
-        Game game = new Game(Marker.O);
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O);
@@ -206,30 +197,13 @@ public class GameTest {
 
     @Test
     public void itIsNotADrawIfThereIsAWinner() {
-        Game game = new Game(Marker.O);
+        Game game = new Game(Marker.X);
 
         game.move(new Space(0, 0), Marker.X)
                 .move(new Space(1, 0), Marker.O)
                 .move(new Space(1, 1), Marker.X)
                 .move(new Space(2, 0), Marker.O)
                 .move(new Space(2, 2), Marker.X);
-
-        assertEquals(false, game.isDraw());
-    }
-
-    @Test
-    public void itIsNotADrawIfTheBoardIsFullAndThereIsAWinner() {
-        Game game = new Game(Marker.O);
-
-        game.move(new Space(0, 0), Marker.X)
-                .move(new Space(2, 0), Marker.O)
-                .move(new Space(0, 2), Marker.X)
-                .move(new Space(0, 1), Marker.O)
-                .move(new Space(1, 1), Marker.X)
-                .move(new Space(2, 2), Marker.X)
-                .move(new Space(1, 0), Marker.X)
-                .move(new Space(1, 2), Marker.O)
-                .move(new Space(2, 1), Marker.X);
 
         assertEquals(false, game.isDraw());
     }

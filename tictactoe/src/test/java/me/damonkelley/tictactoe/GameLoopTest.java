@@ -44,6 +44,28 @@ public class GameLoopTest {
     }
 
     @Test
+    public void itLogsIllegalMovesAttemptedToTheUI() {
+        Game game = new FakeGame(2);
+        FakeUI ui = new FakeUI();
+
+        class ExceptionalFinder extends Finder {
+            @Override
+            public Space getNextMove(Game game) {
+                throw new IllegalMoveException("Bad move");
+            }
+        }
+
+        Players players = new Players(
+                new Player(Marker.O, new ExceptionalFinder()),
+                new Player(Marker.X, new ExceptionalFinder())
+        );
+
+        new GameLoop(ui).play(players, game);
+
+        assertEquals("render Bad move Bad move Game Over ", ui.log);
+    }
+
+    @Test
     public void itCanResetTheGame() {
         FakeUI ui = new FakeUI();
         FakeGame game = new FakeGame(1);

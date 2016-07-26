@@ -23,6 +23,8 @@ public class Game {
     public Game move(Space space, Marker marker) {
         if (canMove(space, marker)) {
             state.move(space, marker);
+        } else {
+            throw new IllegalMoveException("Illegal move");
         }
         return this;
     }
