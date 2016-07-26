@@ -3,7 +3,7 @@ package me.damonkelley.tictactoe_app;
 import java.util.ArrayList;
 import java.util.List;
 
-class GameViews {
+public class GameViews {
     private final List<ViewWrapper> wrappers;
 
     public GameViews() {
