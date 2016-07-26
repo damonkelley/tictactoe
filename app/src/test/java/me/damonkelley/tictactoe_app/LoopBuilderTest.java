@@ -24,7 +24,7 @@ public class LoopBuilderTest {
         loop.next(new Space(0, 0));
         loop.next(new Space(0, 1));
 
-        assertEquals("first-X second-O ", log);
+        assertEquals("first-initialized first-X second-O ", log);
     }
 
     private class FakeTurn extends Turn {
@@ -38,6 +38,11 @@ public class LoopBuilderTest {
         public void go(Space space) {
             this.loop.setNext(next);
             log += message+ "-" + marker + " ";
+        }
+
+        @Override
+        public void initialize() {
+            log += message + "-initialized ";
         }
     }
 }

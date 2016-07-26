@@ -5,7 +5,6 @@ import me.damonkelley.tictactoe_app.ComputerTask;
 import me.damonkelley.tictactoe_app.GameViews;
 
 public class AsyncComputerTurn extends Turn {
-
     private final GameViews views;
 
     public AsyncComputerTurn(GameViews views) {
@@ -16,5 +15,10 @@ public class AsyncComputerTurn extends Turn {
     public void go(Space space) {
         new ComputerTask(marker, views).exec(game);
         loop.setNext(next);
+    }
+
+    @Override
+    public void initialize() {
+        loop.next(new Space(-1, -1));
     }
 }

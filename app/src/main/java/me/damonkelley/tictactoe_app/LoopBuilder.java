@@ -19,12 +19,6 @@ public class LoopBuilder {
         return this;
     }
 
-    public Loop build() {
-        this.first.setNext(second);
-        this.second.setNext(first);
-        return new Loop().setNext(first);
-    }
-
     public LoopBuilder withFirstMarker(Marker marker) {
         first.setMarker(marker);
         return this;
@@ -39,5 +33,14 @@ public class LoopBuilder {
         this.first.setGame(game);
         this.second.setGame(game);
         return this;
+    }
+
+    public Loop build() {
+        this.first.setNext(second);
+        this.second.setNext(first);
+        Loop loop = new Loop().setNext(first);
+
+        this.first.initialize();
+        return loop;
     }
 }

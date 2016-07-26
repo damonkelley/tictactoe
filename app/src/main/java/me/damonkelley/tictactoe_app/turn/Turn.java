@@ -31,5 +31,9 @@ public abstract class Turn {
         return this;
     }
 
+    public void initialize() {
+
+    }
+
     public abstract void go(Space space);
 }

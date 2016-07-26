@@ -46,6 +46,16 @@ public class HumanTurnTest {
     }
 
     @Test
+    public void itDoesNotAdvanceTheLoopDuringInitialization() {
+        machine.setNext(turn);
+
+        turn.setLoop(machine);
+        turn.initialize();
+
+        assertEquals("set-next ", machine.log);
+    }
+
+    @Test
     public void itWillNotTransitionTheLoopToTheNextStateWithAnIllegalMove() {
         game.move(new Space(0, 1), Marker.X);
         turn.go(new Space(0, 1));
