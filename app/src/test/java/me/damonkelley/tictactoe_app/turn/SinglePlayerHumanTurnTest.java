@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class HumanTurnTest {
+public class SinglePlayerHumanTurnTest {
 
     private FakeStateMachine machine;
     private Game game;
@@ -20,7 +20,7 @@ public class HumanTurnTest {
         machine = new FakeStateMachine();
         game = new Game(Marker.X);
 
-        turn = new HumanTurn()
+        turn = new SinglePlayerHumanTurn()
                 .setGame(game)
                 .setLoop(machine)
                 .setMarker(Marker.X);

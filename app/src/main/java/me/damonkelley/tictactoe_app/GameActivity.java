@@ -8,8 +8,10 @@ import android.widget.TextView;
 import me.damonkelley.io.converters.SpaceIDConverter;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
-import me.damonkelley.tictactoe_app.turn.ComputerTurn;
-import me.damonkelley.tictactoe_app.turn.HumanTurn;
+import me.damonkelley.tictactoe_app.turn.AsyncComputerTurn;
+import me.damonkelley.tictactoe_app.turn.MultiPlayerHumanTurn;
+import me.damonkelley.tictactoe_app.turn.SinglePlayerHumanTurn;
+import me.damonkelley.tictactoe_app.turn.Turn;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -17,6 +19,9 @@ public class GameActivity extends AppCompatActivity {
     private GameViews gameViews;
     private GridView boardView;
     private TextView gameMessageView;
+
+    private String playerOneType;
+    private String playerTwoType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,8 @@ public class GameActivity extends AppCompatActivity {
                 .add(new MessageViewWrapper(game, gameMessageView))
                 .add(new BoardViewWrapper(boardView));
 
-//        gameType = this.getIntent().getIntExtra("gameType", Loop.LoopBuilder.HUMAN_VS_HUMAN);
+        playerOneType = this.getIntent().getStringExtra("player-one-type");
+        playerTwoType = this.getIntent().getStringExtra("player-two-type");
 
         Loop loop = makeLoop();
 
@@ -46,18 +52,32 @@ public class GameActivity extends AppCompatActivity {
         return (TextView) this.findViewById(R.id.game_message);
     }
 
-    private Loop makeLoop() {
-        ComputerTurn computerTurn = new ComputerTurn(() -> {
-            new ComputerTask(Marker.O, gameViews).execute(game);
-        });
+    private Turn createTurnForPlayerType(String type) {
+        if ("Computer".equals(type)) {
+            return new AsyncComputerTurn(gameViews);
+        } else {
+            return new SinglePlayerHumanTurn();
+        }
+    }
 
-        return new LoopBuilder()
-                .withFirstTurn(new HumanTurn())
-                .withSecondTurn(computerTurn)
-                .withFirstMarker(Marker.X)
-                .withSecondMarker(Marker.O)
-                .withGame(game)
-                .build();
+    private Loop makeLoop() {
+        if ("Human".equals(playerOneType) && "Human".equals(playerTwoType)) {
+            return new LoopBuilder()
+                    .withFirstTurn(new MultiPlayerHumanTurn())
+                    .withSecondTurn(new MultiPlayerHumanTurn())
+                    .withFirstMarker(Marker.X)
+                    .withSecondMarker(Marker.O)
+                    .withGame(game)
+                    .build();
+        } else {
+            return new LoopBuilder()
+                    .withFirstTurn(createTurnForPlayerType(playerOneType))
+                    .withSecondTurn(createTurnForPlayerType(playerTwoType))
+                    .withFirstMarker(Marker.X)
+                    .withSecondMarker(Marker.O)
+                    .withGame(game)
+                    .build();
+        }
     }
 
     @NonNull

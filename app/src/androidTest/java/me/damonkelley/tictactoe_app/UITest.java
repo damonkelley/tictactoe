@@ -121,6 +121,19 @@ public class UITest {
         onView(withId(R.id.game_message)).check(matches(withText("O wins!")));
     }
 
+    @Test
+    public void playAComputerVsHumanGame() {
+        choosePlayerType(R.id.player_one_type, "Computer");
+        choosePlayerType(R.id.player_two_type, "Human");
+
+        onView(withId(R.id.start_button)).perform(click());
+
+        clickSpace(0);
+        clickSpace(1);
+
+        onView(withId(R.id.game_message)).check(matches(withText("X wins!")));
+    }
+
     private void choosePlayerType(int player_type, String option) {
         onView(withId(player_type)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(option))).perform(click());

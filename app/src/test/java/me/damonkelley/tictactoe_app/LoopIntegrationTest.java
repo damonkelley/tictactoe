@@ -5,7 +5,7 @@ import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.tictactoe.finder.ArtificialIntelligenceFinder;
 import me.damonkelley.tictactoe.finder.Finder;
-import me.damonkelley.tictactoe_app.turn.HumanTurn;
+import me.damonkelley.tictactoe_app.turn.SinglePlayerHumanTurn;
 import me.damonkelley.tictactoe_app.turn.Turn;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class LoopIntegrationTest {
         Game game = new Game(Marker.X);
 
         Loop loop = new LoopBuilder()
-                .withFirstTurn(new HumanTurn())
+                .withFirstTurn(new SinglePlayerHumanTurn())
                 .withSecondTurn(new ComputerTurn())
                 .withFirstMarker(Marker.X)
                 .withSecondMarker(Marker.O)

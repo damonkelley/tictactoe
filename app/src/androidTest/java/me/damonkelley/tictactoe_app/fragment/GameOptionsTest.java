@@ -1,7 +1,8 @@
-package me.damonkelley.tictactoe_app;
+package me.damonkelley.tictactoe_app.fragment;
 
 import android.support.test.rule.ActivityTestRule;
-import me.damonkelley.tictactoe_app.fragment.GameOptions;
+import me.damonkelley.tictactoe_app.MainActivity;
+import me.damonkelley.tictactoe_app.R;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,7 +33,8 @@ public class GameOptionsTest {
         choosePlayerType(R.id.player_one_type, "Human");
         choosePlayerType(R.id.player_two_type, "Human");
 
-        assertEquals(Loop.LoopBuilder.HUMAN_VS_HUMAN, fragment.getGameType());
+        assertEquals("Human", fragment.getPlayerOneType());
+        assertEquals("Human", fragment.getPlayerTwoType());
     }
 
     @Test
@@ -40,7 +42,8 @@ public class GameOptionsTest {
         choosePlayerType(R.id.player_one_type, "Computer");
         choosePlayerType(R.id.player_two_type, "Human");
 
-        assertEquals(Loop.LoopBuilder.COMPUTER_VS_HUMAN, fragment.getGameType());
+        assertEquals("Computer", fragment.getPlayerOneType());
+        assertEquals("Human", fragment.getPlayerTwoType());
     }
 
     @Test
@@ -48,7 +51,8 @@ public class GameOptionsTest {
         choosePlayerType(R.id.player_one_type, "Human");
         choosePlayerType(R.id.player_two_type, "Computer");
 
-        assertEquals(Loop.LoopBuilder.HUMAN_VS_COMPUTER, fragment.getGameType());
+        assertEquals("Human", fragment.getPlayerOneType());
+        assertEquals("Computer", fragment.getPlayerTwoType());
     }
 
     private void choosePlayerType(int player_type, String option) {

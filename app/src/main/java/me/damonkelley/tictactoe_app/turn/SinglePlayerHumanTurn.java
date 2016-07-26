@@ -1,18 +1,10 @@
 package me.damonkelley.tictactoe_app.turn;
 
-import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.IllegalMoveException;
 import me.damonkelley.tictactoe.Space;
 
-public class HumanTurn extends Turn {
-    private Space space;
-
-    public HumanTurn(Game game, Space space) {
-        this.game = game;
-        this.space = space;
-    }
-
-    public HumanTurn() {}
+public class SinglePlayerHumanTurn extends Turn {
+    public SinglePlayerHumanTurn() {}
 
     @Override
     public void go(Space space) {

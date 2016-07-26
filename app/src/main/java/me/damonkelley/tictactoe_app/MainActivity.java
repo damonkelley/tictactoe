@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGame(View view) {
-        startActivity(new Intent(this, GameActivity.class));
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("player-one-type", options.getPlayerOneType());
+        intent.putExtra("player-two-type", options.getPlayerTwoType());
+        startActivity(intent);
     }
 }

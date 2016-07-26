@@ -40,4 +40,12 @@ public class GameOptions extends Fragment {
 
         spinner.setAdapter(otherAdapter);
     }
+
+    public String getPlayerOneType() {
+        return (String) playerOneSpinner.getSelectedItem();
+    }
+
+    public String getPlayerTwoType() {
+        return (String) playerTwoSpinner.getSelectedItem();
+    }
 }
