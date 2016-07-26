@@ -1,5 +1,8 @@
 package me.damonkelley.tictactoe_app;
 
+import me.damonkelley.tictactoe.Space;
+import me.damonkelley.tictactoe_app.turn.NullTurn;
+import me.damonkelley.tictactoe_app.turn.Turn;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,90 +11,28 @@ public class LoopTest {
     private String log = "";
 
     @Test
-    public void oneMoveIsMade() {
-        new Loop(new MockTurn("one"), new MockTurn("two"));
+    public void itDispatchesToTheNextTurn() {
+        FakeTurn turn = new FakeTurn("called");
+        Loop loop = new Loop()
+                .setNext(turn);
 
-        assertEquals("one ", log);
+        loop.next(new Space(0, 1));
+
+        assertEquals("called ", log);
     }
 
-    @Test
-    public void twoMovesAreMade() {
-        Loop machine = new Loop(new MockTurn("one"), new MockTurn("two"));
-        machine.next();
+    private class FakeTurn extends Turn {
+        public String message;
 
-        assertEquals("one two ", log);
-    }
+        public Turn next = new NullTurn();
 
-    @Test
-    public void threeMovesAreMade() {
-        Loop machine = new Loop(new MockTurn("one"), new MockTurn("two"));
-
-        machine.next();
-        machine.next();
-
-        assertEquals("one two one ", log);
-    }
-
-    @Test
-    public void anInfiniteLoopCannotBeCreated() {
-        Turn turn = new Turn() {
-            @Override
-            public void go(StateMachine machine) {
-                log += "one ";
-                machine.next();
-            }
-        };
-
-        new Loop(turn, new MockTurn("two"));
-
-        assertEquals("one two ", log);
-    }
-
-    @Test
-    public void itBuildsAHumanVsHumanGame() {
-        Loop loop = new Loop.LoopBuilder()
-                .withHumanTurn(new MockTurn("human"))
-                .withComputerTurn(new MockTurn("computer"))
-                .withGameType(Loop.LoopBuilder.HUMAN_VS_HUMAN)
-                .build();
-
-        loop.next();
-        assertEquals("human human ", log);
-    }
-
-    @Test
-    public void itBuildsAHumanVsComputerGame() {
-        Loop loop = new Loop.LoopBuilder()
-                .withHumanTurn(new MockTurn("human"))
-                .withComputerTurn(new MockTurn("computer"))
-                .withGameType(Loop.LoopBuilder.HUMAN_VS_COMPUTER)
-                .build();
-
-        loop.next();
-        assertEquals("human computer ", log);
-    }
-
-    @Test
-    public void itBuildsAComputerVsHumanGame() {
-        Loop loop = new Loop.LoopBuilder()
-                .withHumanTurn(new MockTurn("human"))
-                .withComputerTurn(new MockTurn("computer"))
-                .withGameType(Loop.LoopBuilder.COMPUTER_VS_HUMAN)
-                .build();
-
-        loop.next();
-        assertEquals("computer human ", log);
-    }
-
-    private class MockTurn implements Turn {
-        private String message;
-
-        MockTurn(String message) {
+        FakeTurn(String message) {
             this.message = message;
         }
 
         @Override
-        public void go(StateMachine machine) {
+        public void go(Space space) {
+            this.loop.setNext(next);
             log += message + " ";
         }
     }

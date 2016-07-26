@@ -8,6 +8,8 @@ import android.widget.TextView;
 import me.damonkelley.io.converters.SpaceIDConverter;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
+import me.damonkelley.tictactoe_app.turn.ComputerTurn;
+import me.damonkelley.tictactoe_app.turn.HumanTurn;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -15,7 +17,6 @@ public class GameActivity extends AppCompatActivity {
     private GameViews gameViews;
     private GridView boardView;
     private TextView gameMessageView;
-    private int gameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +31,15 @@ public class GameActivity extends AppCompatActivity {
                 .add(new MessageViewWrapper(game, gameMessageView))
                 .add(new BoardViewWrapper(boardView));
 
-        gameType = this.getIntent().getIntExtra("gameType", Loop.LoopBuilder.HUMAN_VS_HUMAN);
+//        gameType = this.getIntent().getIntExtra("gameType", Loop.LoopBuilder.HUMAN_VS_HUMAN);
 
         Loop loop = makeLoop();
 
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             SpaceIDConverter converter = new SpaceIDConverter(3, 3);
-            new RunnableTurn(new HumanTurnRunnable(converter.convert(i+1), getMarker(), game)).go(loop);
+            loop.next(converter.convert(i+1));
             gameViews.update();
         });
-    }
-
-    private Marker getMarker() {
-        if (gameType == Loop.LoopBuilder.HUMAN_VS_HUMAN) {
-            return game.nextTurn();
-        }
-        else {
-            return Marker.X;
-        }
     }
 
     private TextView getGameMessageView() {
@@ -55,14 +47,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private Loop makeLoop() {
-        RunnableTurn computerTurn = new RunnableTurn(() -> {
+        ComputerTurn computerTurn = new ComputerTurn(() -> {
             new ComputerTask(Marker.O, gameViews).execute(game);
         });
 
-        return new Loop.LoopBuilder()
-                .withHumanTurn(new NullTurn())
-                .withComputerTurn(computerTurn)
-                .withGameType(gameType)
+        return new LoopBuilder()
+                .withFirstTurn(new HumanTurn())
+                .withSecondTurn(computerTurn)
+                .withFirstMarker(Marker.X)
+                .withSecondMarker(Marker.O)
+                .withGame(game)
                 .build();
     }
 

@@ -5,7 +5,7 @@ import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.finder.ArtificialIntelligenceFinder;
 
-class ComputerTask extends AsyncTask<Game, Object, GameViews> {
+public class ComputerTask extends AsyncTask<Game, Object, GameViews> {
 
     private Marker marker;
     private GameViews views;
@@ -25,5 +25,9 @@ class ComputerTask extends AsyncTask<Game, Object, GameViews> {
     @Override
     protected void onPostExecute(GameViews gameViews) {
         gameViews.update();
+    }
+
+    public void exec(Game game) {
+        this.execute(game);
     }
 }

@@ -1,6 +1,7 @@
 package me.damonkelley.tictactoe_app;
 
 import me.damonkelley.tictactoe.Game;
+import me.damonkelley.tictactoe.IllegalMoveException;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import org.junit.Test;
@@ -36,16 +37,13 @@ public class ComputerTaskTest {
         assertEquals(true, game.isWinner(Marker.O));
     }
 
-    @Test
+    @Test(expected = IllegalMoveException.class)
     public void itOnlyUsesItsOwnMarker() {
         Game game = new Game(Marker.X);
         ComputerTask task = new ComputerTask(Marker.O, new GameViews());
 
         task.doInBackground(game);
         task.doInBackground(game);
-        task.doInBackground(game);
-
-        assertEquals(new Game(Marker.X), game);
     }
 
     @Test
