@@ -36,6 +36,12 @@ public class LoopBuilder {
         return this;
     }
 
+    public LoopBuilder withUpdater(UserInterfaceUpdater updater) {
+        this.first.setUpdater(updater);
+        this.second.setUpdater(updater);
+        return this;
+    }
+
     public Loop build() {
         this.first.setNext(second);
         this.second.setNext(first);
@@ -45,9 +51,11 @@ public class LoopBuilder {
         return loop;
     }
 
-    public LoopBuilder withUpdater(UserInterfaceUpdater updater) {
-        this.first.setUpdater(updater);
-        this.second.setUpdater(updater);
-        return this;
+    public Turn getFirstTurn() {
+        return first;
+    }
+
+    public Turn getSecondTurn() {
+        return second;
     }
 }
