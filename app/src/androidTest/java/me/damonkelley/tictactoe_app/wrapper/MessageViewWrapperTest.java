@@ -6,6 +6,7 @@ import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.tictactoe_app.activity.GameActivity;
+import me.damonkelley.tictactoe_app.rule.GameActivityTestRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,11 +15,11 @@ import static org.junit.Assert.assertEquals;
 
 public class MessageViewWrapperTest {
 
+    @Rule
+    public ActivityTestRule<GameActivity> mActivityRule = new GameActivityTestRule();
+
     private Game game;
     private TextView view;
-
-    @Rule
-    public ActivityTestRule<GameActivity> mActivityRule = new ActivityTestRule(GameActivity.class);
 
     @Before
     public void setUp() throws Exception {

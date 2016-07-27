@@ -8,27 +8,30 @@ import me.damonkelley.tictactoe.Board;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.tictactoe_app.activity.GameActivity;
+import me.damonkelley.tictactoe_app.rule.GameActivityTestRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 public class BoardAdapterTest {
 
+    @Rule
+    public ActivityTestRule<GameActivity> mActivityRule = new GameActivityTestRule();
+
     private Board board;
     private BoardAdapter adapter;
-
-    @Rule
-    public ActivityTestRule<GameActivity> mActivityRule = new ActivityTestRule(GameActivity.class);
+    private GameActivity mActivity;
 
     @Before
     public void setUp() throws Exception {
         board = new Board();
-        adapter = new BoardAdapter(mActivityRule.getActivity(), board);
+        mActivity = mActivityRule.getActivity();
+        adapter = new BoardAdapter(mActivity, board);
     }
 
     @Test
@@ -42,7 +45,7 @@ public class BoardAdapterTest {
     @Test
     public void itGetsAViewAtThePositionForA4By4Board() {
         Board board = new Board(4);
-        BoardAdapter adapter = new BoardAdapter(mActivityRule.getActivity(), board);
+        BoardAdapter adapter = new BoardAdapter(mActivity, board);
 
         board.put(new Space(3, 3), Marker.X);
 
@@ -52,8 +55,8 @@ public class BoardAdapterTest {
 
     @Test
     public void theCount() {
-        assertEquals(9, new BoardAdapter(mActivityRule.getActivity(), new Board()).getCount());
-        assertEquals(16, new BoardAdapter(mActivityRule.getActivity(), new Board(4)).getCount());
+        assertEquals(9, new BoardAdapter(mActivity, new Board()).getCount());
+        assertEquals(16, new BoardAdapter(mActivity, new Board(4)).getCount());
     }
 
     @Test
