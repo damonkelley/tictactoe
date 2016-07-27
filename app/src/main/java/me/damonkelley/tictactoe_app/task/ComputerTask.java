@@ -4,28 +4,28 @@ import android.os.AsyncTask;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.finder.ArtificialIntelligenceFinder;
-import me.damonkelley.tictactoe_app.wrapper.GameViews;
+import me.damonkelley.tictactoe_app.wrapper.UserInterfaceUpdater;
 
-public class ComputerTask extends AsyncTask<Game, Object, GameViews> {
+public class ComputerTask extends AsyncTask<Game, Object, UserInterfaceUpdater> {
 
     private Marker marker;
-    private GameViews views;
+    private UserInterfaceUpdater updater;
 
-    public ComputerTask(Marker marker, GameViews views) {
+    public ComputerTask(Marker marker, UserInterfaceUpdater updater) {
         this.marker = marker;
-        this.views = views;
+        this.updater = updater;
     }
 
     @Override
-    protected GameViews doInBackground(Game... games) {
+    protected UserInterfaceUpdater doInBackground(Game... games) {
         Game game = games[0];
         game.move(new ArtificialIntelligenceFinder(marker).getNextMove(game), marker);
-        return this.views;
+        return this.updater;
     }
 
     @Override
-    protected void onPostExecute(GameViews gameViews) {
-        gameViews.update();
+    protected void onPostExecute(UserInterfaceUpdater updater) {
+        updater.update();
     }
 
     public void exec(Game game) {

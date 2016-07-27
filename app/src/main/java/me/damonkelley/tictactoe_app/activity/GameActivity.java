@@ -51,7 +51,6 @@ public class GameActivity extends AppCompatActivity {
         boardView.setOnItemClickListener((adapterView, view, i, l) -> {
             SpaceIDConverter converter = new SpaceIDConverter(3, 3);
             loop.next(converter.convert(i+1));
-            gameViews.update();
         });
     }
 
@@ -61,7 +60,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Turn createTurnForPlayerType(String type) {
         if ("Computer".equals(type)) {
-            return new AsyncComputerTurn(gameViews);
+            return new AsyncComputerTurn();
         } else {
             return new SinglePlayerHumanTurn();
         }
@@ -74,6 +73,7 @@ public class GameActivity extends AppCompatActivity {
                     .withSecondTurn(new MultiPlayerHumanTurn())
                     .withFirstMarker(Marker.X)
                     .withSecondMarker(Marker.O)
+                    .withUpdater(gameViews)
                     .withGame(game)
                     .build();
         } else {
@@ -82,6 +82,7 @@ public class GameActivity extends AppCompatActivity {
                     .withSecondTurn(createTurnForPlayerType(playerTwoType))
                     .withFirstMarker(Marker.X)
                     .withSecondMarker(Marker.O)
+                    .withUpdater(gameViews)
                     .withGame(game)
                     .build();
         }

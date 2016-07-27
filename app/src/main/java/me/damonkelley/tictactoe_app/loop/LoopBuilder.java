@@ -3,6 +3,7 @@ package me.damonkelley.tictactoe_app.loop;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe_app.turn.Turn;
+import me.damonkelley.tictactoe_app.wrapper.UserInterfaceUpdater;
 
 public class LoopBuilder {
 
@@ -42,5 +43,11 @@ public class LoopBuilder {
 
         this.first.initialize();
         return loop;
+    }
+
+    public LoopBuilder withUpdater(UserInterfaceUpdater updater) {
+        this.first.setUpdater(updater);
+        this.second.setUpdater(updater);
+        return this;
     }
 }

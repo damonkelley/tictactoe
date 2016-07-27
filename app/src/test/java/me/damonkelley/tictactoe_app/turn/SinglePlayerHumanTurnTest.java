@@ -4,6 +4,7 @@ import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.tictactoe_app.loop.StateMachine;
+import me.damonkelley.tictactoe_app.wrapper.UserInterfaceUpdater;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,15 +15,18 @@ public class SinglePlayerHumanTurnTest {
     private FakeStateMachine machine;
     private Game game;
     private Turn turn;
+    private FakeUpdater updater;
 
     @Before
     public void setUp() throws Exception {
         machine = new FakeStateMachine();
         game = new Game(Marker.X);
+        updater = new FakeUpdater();
 
         turn = new SinglePlayerHumanTurn()
                 .setGame(game)
                 .setLoop(machine)
+                .setUpdater(updater)
                 .setMarker(Marker.X);
     }
 
@@ -56,6 +60,12 @@ public class SinglePlayerHumanTurnTest {
     }
 
     @Test
+    public void itUpdatesTheUserInterface() {
+        turn.go(new Space(0, 0));
+        assertEquals("updated ", updater.log);
+    }
+
+    @Test
     public void itWillNotTransitionTheLoopToTheNextStateWithAnIllegalMove() {
         game.move(new Space(0, 1), Marker.X);
         turn.go(new Space(0, 1));
@@ -77,4 +87,12 @@ public class SinglePlayerHumanTurnTest {
         }
     }
 
+    private class FakeUpdater implements UserInterfaceUpdater {
+        public String log = "";
+
+        @Override
+        public void update() {
+            log += "updated ";
+        }
+    }
 }

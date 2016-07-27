@@ -12,5 +12,6 @@ public class SinglePlayerHumanTurn extends Turn {
             game.move(space, marker);
             loop.setNext(next).next(new Space(-1, -1));
         } catch (IllegalMoveException e) {}
+        updater.update();
     }
 }

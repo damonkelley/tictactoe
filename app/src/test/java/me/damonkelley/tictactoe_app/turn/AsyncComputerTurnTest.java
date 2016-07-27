@@ -1,17 +1,17 @@
 package me.damonkelley.tictactoe_app.turn;
 
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.wrapper.GameViews;
 import me.damonkelley.tictactoe_app.loop.Loop;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class AsyncComputerTurnTest {
+
     @Test
     public void itAdvancesTheLoopDuringInitialization() {
         FakeLoop loop = new FakeLoop();
-        AsyncComputerTurn turn = new AsyncComputerTurn(new GameViews());
+        Turn turn = new AsyncComputerTurn();
 
         loop.setNext(turn);
         turn.setLoop(loop);

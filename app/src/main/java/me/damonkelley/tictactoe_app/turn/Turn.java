@@ -4,12 +4,14 @@ import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.tictactoe_app.loop.StateMachine;
+import me.damonkelley.tictactoe_app.wrapper.UserInterfaceUpdater;
 
 public abstract class Turn {
     protected Turn next;
     protected Game game;
     protected Marker marker;
     protected StateMachine loop;
+    protected UserInterfaceUpdater updater;
 
     public Turn setLoop(StateMachine loop) {
         this.loop = loop;
@@ -30,6 +32,12 @@ public abstract class Turn {
         this.game = game;
         return this;
     }
+
+    public Turn setUpdater(UserInterfaceUpdater updater) {
+        this.updater = updater;
+        return this;
+    }
+
 
     public void initialize() {
 

@@ -7,5 +7,6 @@ public class MultiPlayerHumanTurn extends Turn {
     public void go(Space space) {
         game.move(space, marker);
         loop.setNext(next);
+        updater.update();
     }
 }
