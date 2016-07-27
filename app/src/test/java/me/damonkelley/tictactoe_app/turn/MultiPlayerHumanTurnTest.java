@@ -37,6 +37,12 @@ public class MultiPlayerHumanTurnTest {
     }
 
     @Test
+    public void itCanHandleAnIllegalMove() {
+        turn.go(new Space(0, 0));
+        turn.go(new Space(0, 0));
+    }
+
+    @Test
     public void itSetsNextTurnButDoesNotAdvanceTheLoop() {
         turn.go(new Space(0, 0));
         assertEquals("set-next ", loop.log);
