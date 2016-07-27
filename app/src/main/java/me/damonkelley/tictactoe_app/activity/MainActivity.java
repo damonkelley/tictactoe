@@ -20,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void startGame(View view) {
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("player-one-type", options.getPlayerOneType());
-        intent.putExtra("player-two-type", options.getPlayerTwoType());
+
+        intent.putExtra("preset", options.getPreset())
+                .putExtra("first-marker", options.getFirstMarker());
+
         startActivity(intent);
     }
 }
