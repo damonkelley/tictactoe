@@ -43,8 +43,6 @@ public class GameOptionsTest {
         choosePlayerType(R.id.player_two_type, "Human");
 
         assertEquals("human-vs-human", fragment.getPreset());
-        assertEquals("Human", fragment.getPlayerOneType());
-        assertEquals("Human", fragment.getPlayerTwoType());
     }
 
     @Test
@@ -53,8 +51,6 @@ public class GameOptionsTest {
         choosePlayerType(R.id.player_two_type, "Human");
 
         assertEquals("computer-vs-human", fragment.getPreset());
-        assertEquals("Computer", fragment.getPlayerOneType());
-        assertEquals("Human", fragment.getPlayerTwoType());
     }
 
     @Test
@@ -63,8 +59,6 @@ public class GameOptionsTest {
         choosePlayerType(R.id.player_two_type, "Computer");
 
         assertEquals("human-vs-computer", fragment.getPreset());
-        assertEquals("Human", fragment.getPlayerOneType());
-        assertEquals("Computer", fragment.getPlayerTwoType());
     }
 
     @Test
