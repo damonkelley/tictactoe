@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
+import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe_app.R;
 
 public class GameOptions extends Fragment {
@@ -61,5 +62,16 @@ public class GameOptions extends Fragment {
 
     public String getPlayerTwoType() {
         return (String) playerTwoSpinner.getSelectedItem();
+    }
+
+    public String getPreset() {
+        return String.format(
+                "%s-vs-%s",
+                getPlayerOneType().toLowerCase(),
+                getPlayerTwoType().toLowerCase());
+    }
+
+    public Marker getFirstMarker() {
+        return Marker.valueOf((String) playerOneMarkerToggle.getText());
     }
 }
