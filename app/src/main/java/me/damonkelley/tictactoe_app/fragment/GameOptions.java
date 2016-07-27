@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.ToggleButton;
 import me.damonkelley.tictactoe_app.R;
 
 public class GameOptions extends Fragment {
 
     private Spinner playerOneSpinner;
     private Spinner playerTwoSpinner;
+    private ToggleButton playerOneMarkerToggle;
+    private ToggleButton playerTwoMarkerToggle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +31,17 @@ public class GameOptions extends Fragment {
 
         setupSpinnerFor(playerOneSpinner);
         setupSpinnerFor(playerTwoSpinner);
+
+        playerOneMarkerToggle = (ToggleButton) getView().findViewById(R.id.player_one_marker);
+        playerTwoMarkerToggle = (ToggleButton) getView().findViewById(R.id.player_two_marker);
+
+        playerOneMarkerToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            playerTwoMarkerToggle.setChecked(!buttonView.isChecked());
+        });
+
+        playerTwoMarkerToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            playerOneMarkerToggle.setChecked(!buttonView.isChecked());
+        });
     }
 
     private void setupSpinnerFor(Spinner spinner) {
