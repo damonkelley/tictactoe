@@ -1,5 +1,7 @@
 package me.damonkelley.tictactoe_app.activity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +19,7 @@ import me.damonkelley.tictactoe_app.wrapper.BoardViewWrapper;
 import me.damonkelley.tictactoe_app.wrapper.GameViews;
 import me.damonkelley.tictactoe_app.wrapper.MessageViewWrapper;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements MessageViewWrapper.OnGameOverListener {
 
     private Game game;
     private Loop loop;
@@ -35,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
         GridView boardView = getBoardView();
 
         GameViews gameViews = new GameViews()
-                .add(new MessageViewWrapper(game, getGameMessageView()))
+                .add(new MessageViewWrapper(game, getGameMessageView()).setOnGameOverListener(this))
                 .add(new BoardViewWrapper(boardView));
 
         loop = PresetFactory.presetFor(preset)
@@ -75,4 +77,25 @@ public class GameActivity extends AppCompatActivity {
         return Marker.valueOf(getIntent().getStringExtra("first-marker"));
     }
 
+    @Override
+    public void onGameOver(int message) {
+        new AlertDialog.Builder(this)
+                .setTitle(message)
+                .setMessage(R.string.play_again_prompt)
+                .setPositiveButton(R.string.yes, (dialog, id) -> {
+                    restartGame();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.no, (dialog, id) -> {
+                    this.finish();
+                    dialog.cancel();
+                })
+                .show();
+    }
+
+    private void restartGame() {
+        Intent intent = this.getIntent();
+        this.finish();
+        this.startActivity(intent);
+    }
 }

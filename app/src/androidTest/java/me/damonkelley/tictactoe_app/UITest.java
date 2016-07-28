@@ -61,7 +61,7 @@ public class UITest {
         clickSpace(4);
         clickSpace(3);
 
-        onView(withId(R.id.game_message)).check(matches(withText("X wins!")));
+        onView(withText(R.string.x_wins)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class UITest {
         clickSpace(2);
         clickSpace(7);
 
-        onView(withId(R.id.game_message)).check(matches(withText("O wins!")));
+        onView(withText(R.string.o_wins)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class UITest {
         clickSpace(8);
         clickSpace(7);
 
-        onView(withId(R.id.game_message)).check(matches(withText("Draw")));
+        onView(withText(R.string.draw)).check(matches(isDisplayed()));
     }
 
     private void clickSpace(int position) {
@@ -121,7 +121,7 @@ public class UITest {
         clickSpace(3);
         clickSpace(1);
 
-        onView(withId(R.id.game_message)).check(matches(withText("O wins!")));
+        onView(withText(R.string.o_wins)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class UITest {
         clickSpace(0);
         clickSpace(1);
 
-        onView(withId(R.id.game_message)).check(matches(withText("X wins!")));
+        onView(withText(R.string.x_wins)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class UITest {
         clickSpace(0);
         clickSpace(1);
 
-        onView(withId(R.id.game_message)).check(matches(withText("O wins!")));
+        onView(withText(R.string.o_wins)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -163,6 +163,33 @@ public class UITest {
         onView(withId(R.id.player_two_type)).check(matches(withSpinnerText(R.string.human)));
     }
 
+    @Test
+    public void theUserCanPlayAgain() {
+        choosePlayerType(R.id.player_one_type, "Computer");
+        choosePlayerType(R.id.player_two_type, "Human");
+
+        onView(withId(R.id.player_one_marker)).perform(click());
+
+        onView(withId(R.id.start_button)).perform(click());
+
+        clickSpace(0);
+        clickSpace(1);
+
+        onView(withText("Yes"))
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onView(withId(R.id.game_message)).check(matches(withText("Good luck!")));
+
+        clickSpace(0);
+        clickSpace(1);
+
+        onView(withText("No"))
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onView(withId(R.id.start_button)).check(matches(isDisplayed()));
+    }
 
     private void choosePlayerType(int player_type, String option) {
         onView(withId(player_type)).perform(click());

@@ -11,4 +11,7 @@
     <string name="new_game">New Game</string>
     <string name="human">Human</string>
     <string name="computer">Computer</string>
+    <string name="play_again_prompt">Would you like to play again?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
