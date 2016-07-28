@@ -4,4 +4,11 @@
     <string name="x_wins">X wins!</string>
     <string name="o_wins">O wins!</string>
     <string name="draw">Draw</string>
+    <string name="player_1">Player 1</string>
+    <string name="player_2">Player 2</string>
+    <string name="marker_x">X</string>
+    <string name="marker_o">O</string>
+    <string name="new_game">New Game</string>
+    <string name="human">Human</string>
+    <string name="computer">Computer</string>
 </resources>

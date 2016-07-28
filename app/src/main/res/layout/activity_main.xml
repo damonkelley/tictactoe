@@ -14,13 +14,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/options"
         class="me.damonkelley.tictactoe_app.fragment.GameOptions"
-        android:layout_alignParentStart="true"
-        android:name="tg" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Game"
+        android:text="@string/new_game"
         android:layout_centerInParent="true"
         android:id="@+id/start_button"
         android:onClick="startGame"/>

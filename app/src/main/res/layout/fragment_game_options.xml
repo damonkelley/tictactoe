@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Player 1" />
+                android:text="@string/player_1" />
 
             <Spinner
                 android:id="@+id/player_one_type"
@@ -27,8 +27,8 @@
 
             <ToggleButton
                 android:id="@+id/player_one_marker"
-                android:textOn="X"
-                android:textOff="O"
+                android:textOn="@string/marker_x"
+                android:textOff="@string/marker_o"
                 android:checked="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Player 2" />
+                android:text="@string/player_2" />
 
             <Spinner
                 android:id="@+id/player_two_type"
@@ -51,8 +51,8 @@
 
             <ToggleButton
                 android:id="@+id/player_two_marker"
-                android:textOn="X"
-                android:textOff="O"
+                android:textOn="@string/marker_x"
+                android:textOff="@string/marker_o"
                 android:checked="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
