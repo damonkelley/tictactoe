@@ -54,7 +54,7 @@ public class GameOptions extends Fragment {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if (playerOneSpinner.getSelectedItem().equals("Computer") && playerTwoSpinner.getSelectedItem().equals("Computer")) {
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Woah")
+                        .setTitle("Sorry!")
                         .setMessage("Computer vs. Computer is not supported yet.")
                         .setPositiveButton("OK", (dialog, id) -> {
                             playerOneSpinner.setSelection(0);
