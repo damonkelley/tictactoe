@@ -6,12 +6,19 @@ import me.damonkelley.tictactoe_app.turn.MultiPlayerHumanTurn;
 import me.damonkelley.tictactoe_app.turn.SinglePlayerHumanTurn;
 
 public class PresetFactory {
+
+    private static final String COMPUTER_VS_HUMAN = "computer-vs-human";
+    private static final String HUMAN_VS_COMPUTER = "human-vs-computer";
+    private static final String HUMAN_VS_HUMAN = "human-vs-human";
+
     public static LoopBuilder presetFor(String preset) {
         switch(preset) {
-            case "computer-vs-human":
+            case COMPUTER_VS_HUMAN:
                 return computerVsHuman();
-            case "human-vs-computer":
+            case HUMAN_VS_COMPUTER:
                 return humanVsComputer();
+            case HUMAN_VS_HUMAN:
+                return humanVsHuman();
             default:
                 return humanVsHuman();
         }
