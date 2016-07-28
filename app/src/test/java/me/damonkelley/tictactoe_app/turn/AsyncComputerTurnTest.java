@@ -10,7 +10,7 @@ public class AsyncComputerTurnTest {
 
     @Test
     public void itAdvancesTheLoopDuringInitialization() {
-        FakeLoop loop = new FakeLoop();
+        MockLoop loop = new MockLoop();
         Turn turn = new AsyncComputerTurn();
 
         loop.setNext(turn);
@@ -20,7 +20,7 @@ public class AsyncComputerTurnTest {
         assertEquals(true, loop.calledNext);
     }
 
-    private class FakeLoop extends Loop {
+    private class MockLoop extends Loop {
         public boolean calledNext = false;
         @Override
         public void next(Space space) {

@@ -3,8 +3,8 @@ package me.damonkelley.tictactoe_app.turn;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.loop.StateMachine;
-import me.damonkelley.tictactoe_app.wrapper.UserInterfaceUpdater;
+import me.damonkelley.tictactoe_app.helpers.LoggingStateMachine;
+import me.damonkelley.tictactoe_app.helpers.LoggingUpdater;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,16 +12,16 @@ import static org.junit.Assert.assertEquals;
 
 public class SinglePlayerHumanTurnTest {
 
-    private FakeStateMachine machine;
+    private LoggingStateMachine machine;
     private Game game;
     private Turn turn;
-    private FakeUpdater updater;
+    private LoggingUpdater updater;
 
     @Before
     public void setUp() throws Exception {
-        machine = new FakeStateMachine();
+        machine = new LoggingStateMachine();
         game = new Game(Marker.X);
-        updater = new FakeUpdater();
+        updater = new LoggingUpdater();
 
         turn = new SinglePlayerHumanTurn()
                 .setGame(game)
@@ -70,29 +70,5 @@ public class SinglePlayerHumanTurnTest {
         game.move(new Space(0, 1), Marker.X);
         turn.go(new Space(0, 1));
         assertEquals("", machine.log);
-    }
-
-    class FakeStateMachine implements StateMachine {
-        public String log = "";
-
-        @Override
-        public void next(Space space) {
-            log += "next ";
-        }
-
-        @Override
-        public FakeStateMachine setNext(Turn turn) {
-            log += "set-next ";
-            return this;
-        }
-    }
-
-    private class FakeUpdater implements UserInterfaceUpdater {
-        public String log = "";
-
-        @Override
-        public void update() {
-            log += "updated ";
-        }
     }
 }

@@ -1,7 +1,7 @@
 package me.damonkelley.tictactoe_app.turn;
 
 import me.damonkelley.tictactoe.Space;
-import me.damonkelley.tictactoe_app.loop.MockStateMachine;
+import me.damonkelley.tictactoe_app.helpers.LoggingStateMachine;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,8 +11,9 @@ public class NullTurnTest {
 
     @Test
     public void theStateMachineIsNotAdvanced() {
+        LoggingStateMachine machine = new LoggingStateMachine();
         new NullTurn()
-                .setLoop(new MockStateMachine(log, "this-should-not-be-present-in-the-log"))
+                .setLoop(machine)
                 .go(new Space(0, 0));
 
         assertEquals("", log.toString());

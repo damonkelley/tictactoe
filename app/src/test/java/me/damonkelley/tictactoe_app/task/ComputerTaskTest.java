@@ -4,6 +4,7 @@ import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.IllegalMoveException;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
+import me.damonkelley.tictactoe_app.helpers.LoggingUpdater;
 import me.damonkelley.tictactoe_app.wrapper.GameViews;
 import org.junit.Test;
 
@@ -49,16 +50,8 @@ public class ComputerTaskTest {
 
     @Test
     public void itUpdatesTheViewsPostExecute() {
-        MockGameViews views = new MockGameViews();
-        new ComputerTask(Marker.O, views).onPostExecute(views);
-        assertEquals("update", views.log);
-    }
-
-    private class MockGameViews extends GameViews {
-        public String log = "";
-        @Override
-        public void update() {
-            log += "update";
-        }
+        LoggingUpdater updater = new LoggingUpdater();
+        new ComputerTask(Marker.O, updater).onPostExecute(updater);
+        assertEquals("updated ", updater.log);
     }
 }

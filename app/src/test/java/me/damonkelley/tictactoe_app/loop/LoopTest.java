@@ -8,32 +8,27 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class LoopTest {
-    private String log = "";
 
     @Test
     public void itDispatchesToTheNextTurn() {
-        FakeTurn turn = new FakeTurn("called");
+        FakeTurn turn = new FakeTurn();
         Loop loop = new Loop()
                 .setNext(turn);
 
         loop.next(new Space(0, 1));
 
-        assertEquals("called ", log);
+        assertEquals(true, turn.called);
     }
 
     private class FakeTurn extends Turn {
-        public String message;
+        public boolean called;
 
         public Turn next = new NullTurn();
-
-        FakeTurn(String message) {
-            this.message = message;
-        }
 
         @Override
         public void go(Space space) {
             this.loop.setNext(next);
-            log += message + " ";
+            called = true;
         }
     }
 }

@@ -3,8 +3,8 @@ package me.damonkelley.tictactoe_app.turn;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
+import me.damonkelley.tictactoe_app.helpers.LoggingUpdater;
 import me.damonkelley.tictactoe_app.loop.Loop;
-import me.damonkelley.tictactoe_app.wrapper.UserInterfaceUpdater;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,16 +12,16 @@ import static org.junit.Assert.assertEquals;
 
 public class MultiPlayerHumanTurnTest {
 
-    private FakeLoop loop;
+    private ExceptionalLoop loop;
     private Game game;
     private Turn turn;
-    private FakeUpdater updater;
+    private LoggingUpdater updater;
 
     @Before
     public void setUp() throws Exception {
-        loop = new FakeLoop();
+        loop = new ExceptionalLoop();
         game = new Game(Marker.O);
-        updater = new FakeUpdater();
+        updater = new LoggingUpdater();
 
         turn = new MultiPlayerHumanTurn()
                 .setMarker(Marker.O)
@@ -54,7 +54,7 @@ public class MultiPlayerHumanTurnTest {
         assertEquals("updated ", updater.log);
     }
 
-    private class FakeLoop extends Loop {
+    private class ExceptionalLoop extends Loop {
         public String log = "";
 
         @Override
@@ -69,12 +69,4 @@ public class MultiPlayerHumanTurnTest {
         }
     }
 
-    private class FakeUpdater implements UserInterfaceUpdater {
-        public String log = "";
-
-        @Override
-        public void update() {
-            log += "updated ";
-        }
-    }
 }
