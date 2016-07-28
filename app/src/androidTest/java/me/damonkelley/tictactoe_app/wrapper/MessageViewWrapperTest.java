@@ -5,6 +5,7 @@ import android.widget.TextView;
 import me.damonkelley.tictactoe.Game;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
+import me.damonkelley.tictactoe_app.R;
 import me.damonkelley.tictactoe_app.activity.GameActivity;
 import me.damonkelley.tictactoe_app.rule.GameActivityTestRule;
 import org.junit.Before;
@@ -55,6 +56,47 @@ public class MessageViewWrapperTest {
         wrapper.update();
 
         assertEquals("O wins!", view.getText());
+    }
+
+    @Test
+    public void itNotifiesAnOnGameOverListenerWhenTheGameIsOver() {
+        MessageViewWrapper wrapper = new MessageViewWrapper(game, view);
+
+        MockListener listener = new MockListener();
+        wrapper.setOnGameOverListener(listener);
+
+        wrapper.update();
+        assertEquals(-1, listener.message);
+
+        makeXWin();
+        wrapper.update();
+
+        assertEquals(R.string.x_wins, listener.message);
+    }
+
+    @Test
+    public void itWillNotNotifyTheListenerIfItIsNotSet() {
+        MessageViewWrapper wrapper = new MessageViewWrapper(game, view);
+
+        MockListener listener = new MockListener();
+        wrapper.setOnGameOverListener(null);
+
+        wrapper.update();
+        assertEquals(-1, listener.message);
+
+        makeXWin();
+        wrapper.update();
+
+        assertEquals(-1, listener.message);
+    }
+
+    private class MockListener implements MessageViewWrapper.OnGameOverListener {
+        public int message = -1;
+
+        @Override
+        public void onGameOver(int message) {
+            this.message = message;
+        }
     }
 
     private void makeOWin() {

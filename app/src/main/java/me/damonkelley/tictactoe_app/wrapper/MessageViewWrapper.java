@@ -8,16 +8,31 @@ import me.damonkelley.tictactoe_app.R;
 public class MessageViewWrapper implements ViewWrapper {
     private final Game game;
     private final TextView view;
+    private OnGameOverListener listener;
 
     public MessageViewWrapper(Game game, TextView view) {
         this.game = game;
         this.view = view;
     }
 
+    public MessageViewWrapper setOnGameOverListener(OnGameOverListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
+    public interface OnGameOverListener {
+        void onGameOver(int message);
+    }
+
     public void update() {
         if (game.isOver()) {
             view.setText(getGameMessage());
+            notifyListener();
         }
+    }
+
+    private void notifyListener() {
+        if (listener != null) listener.onGameOver(getGameMessage());
     }
 
     private int getGameMessage() {
