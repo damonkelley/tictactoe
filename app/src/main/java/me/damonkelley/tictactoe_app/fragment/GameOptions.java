@@ -1,10 +1,12 @@
 package me.damonkelley.tictactoe_app.fragment;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
@@ -29,6 +31,9 @@ public class GameOptions extends Fragment {
         playerOneSpinner = (Spinner) getView().findViewById(R.id.player_one_type);
         playerTwoSpinner = (Spinner) getView().findViewById(R.id.player_two_type);
 
+        playerOneSpinner.setOnItemSelectedListener(new ComputerVsComputerWarning());
+        playerTwoSpinner.setOnItemSelectedListener(new ComputerVsComputerWarning());
+
         setupSpinnerFor(playerOneSpinner);
         setupSpinnerFor(playerTwoSpinner);
 
@@ -42,6 +47,26 @@ public class GameOptions extends Fragment {
         playerTwoMarkerToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             playerOneMarkerToggle.setChecked(!buttonView.isChecked());
         });
+    }
+
+    private class ComputerVsComputerWarning implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if (playerOneSpinner.getSelectedItem().equals("Computer") && playerTwoSpinner.getSelectedItem().equals("Computer")) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Woah")
+                        .setMessage("Computer vs. Computer is not supported yet.")
+                        .setPositiveButton("OK", (dialog, id) -> {
+                            playerOneSpinner.setSelection(0);
+                            playerTwoSpinner.setSelection(0);
+                            dialog.dismiss();
+                        })
+                        .show();
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {}
     }
 
     private void setupSpinnerFor(Spinner spinner) {
