@@ -3,6 +3,7 @@ package me.damonkelley.tictactoe_app.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import me.damonkelley.io.converters.SpaceIDConverter;
@@ -19,6 +20,7 @@ import me.damonkelley.tictactoe_app.wrapper.MessageViewWrapper;
 public class GameActivity extends AppCompatActivity {
 
     private Game game;
+    private Loop loop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,42 +31,48 @@ public class GameActivity extends AppCompatActivity {
         String preset = getPreset();
 
         game = new Game(marker);
+
         GridView boardView = getBoardView();
 
         GameViews gameViews = new GameViews()
                 .add(new MessageViewWrapper(game, getGameMessageView()))
                 .add(new BoardViewWrapper(boardView));
 
-        Loop loop = PresetFactory.presetFor(preset)
+        loop = PresetFactory.presetFor(preset)
                 .withFirstMarker(marker)
                 .withSecondMarker(marker.opposite())
                 .withUpdater(gameViews)
                 .withGame(game)
                 .build();
 
-        boardView.setOnItemClickListener((adapterView, view, i, l) -> {
-            SpaceIDConverter converter = new SpaceIDConverter(3, 3);
-            loop.next(converter.convert(i+1));
-        });
-    }
-
-    private String getPreset() {
-        return this.getIntent().getStringExtra("preset");
-    }
-
-    private Marker getFirstMarker() {
-        return (Marker) this.getIntent()
-                .getSerializableExtra("first-marker");
-    }
-
-    private TextView getGameMessageView() {
-        return (TextView) this.findViewById(R.id.game_message);
+        boardView.setOnItemClickListener(advanceLoop());
     }
 
     @NonNull
     private GridView getBoardView() {
-        GridView boardView = (GridView) this.findViewById(R.id.game);
+        GridView boardView = (GridView) findViewById(R.id.game);
         boardView.setAdapter(new BoardAdapter(this, game.getBoard()));
         return boardView;
     }
+
+    @NonNull
+    private AdapterView.OnItemClickListener advanceLoop() {
+        return (adapterView, view, i, l) -> {
+            SpaceIDConverter converter = new SpaceIDConverter(3, 3);
+            loop.next(converter.convert(i + 1));
+        };
+    }
+
+    private TextView getGameMessageView() {
+        return (TextView) findViewById(R.id.game_message);
+    }
+
+    private String getPreset() {
+        return getIntent().getStringExtra("preset");
+    }
+
+    private Marker getFirstMarker() {
+        return Marker.valueOf(getIntent().getStringExtra("first-marker"));
+    }
+
 }

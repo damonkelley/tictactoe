@@ -21,8 +21,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class GameOptionsTest {
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
+
     private GameOptions fragment;
     private ViewInteraction playerOneMarkerToggle;
     private ViewInteraction playerTwoMarkerToggle;
@@ -85,9 +87,9 @@ public class GameOptionsTest {
 
     @Test
     public void getFirstMarker() {
-        assertEquals(Marker.X, fragment.getFirstMarker());
+        assertEquals(Marker.X.toString(), fragment.getFirstMarker());
         playerOneMarkerToggle.perform(click());
-        assertEquals(Marker.O, fragment.getFirstMarker());
+        assertEquals(Marker.O.toString(), fragment.getFirstMarker());
     }
 
     private void choosePlayerType(int player_type, String option) {
