@@ -2,6 +2,7 @@ package me.damonkelley.tictactoe_app.task;
 
 import android.os.AsyncTask;
 import me.damonkelley.tictactoe.Game;
+import me.damonkelley.tictactoe.IllegalMoveException;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.finder.ArtificialIntelligenceFinder;
 import me.damonkelley.tictactoe_app.wrapper.UserInterfaceUpdater;
@@ -19,8 +20,14 @@ public class ComputerTask extends AsyncTask<Game, Object, UserInterfaceUpdater> 
     @Override
     protected UserInterfaceUpdater doInBackground(Game... games) {
         Game game = games[0];
-        game.move(new ArtificialIntelligenceFinder(marker).getNextMove(game), marker);
+        move(game);
         return this.updater;
+    }
+
+    private void move(Game game) {
+        try {
+            game.move(new ArtificialIntelligenceFinder(marker).getNextMove(game), marker);
+        } catch (IllegalMoveException e) {}
     }
 
     @Override

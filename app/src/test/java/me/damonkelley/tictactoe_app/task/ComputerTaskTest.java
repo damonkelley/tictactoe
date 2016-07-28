@@ -1,7 +1,6 @@
 package me.damonkelley.tictactoe_app.task;
 
 import me.damonkelley.tictactoe.Game;
-import me.damonkelley.tictactoe.IllegalMoveException;
 import me.damonkelley.tictactoe.Marker;
 import me.damonkelley.tictactoe.Space;
 import me.damonkelley.tictactoe_app.helpers.LoggingUpdater;
@@ -39,8 +38,8 @@ public class ComputerTaskTest {
         assertEquals(true, game.isWinner(Marker.O));
     }
 
-    @Test(expected = IllegalMoveException.class)
-    public void itOnlyUsesItsOwnMarker() {
+    @Test
+    public void itHandlesIllegalMoves() {
         Game game = new Game(Marker.X);
         ComputerTask task = new ComputerTask(Marker.O, new GameViews());
 
